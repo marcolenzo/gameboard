@@ -10,12 +10,12 @@
 
 	<name>gameboard-master</name>
 	<description>Gameboard Master POM</description>
-	
+
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>1.3.2.RELEASE</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 
 	<properties>
@@ -40,6 +40,12 @@
 				<groupId>com.marcolenzo.gameboard</groupId>
 				<artifactId>gameboard-api</artifactId>
 				<version>${project.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.google.guava</groupId>
+				<artifactId>guava</artifactId>
+				<version>18.0</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
