@@ -16,6 +16,11 @@ public class WebController {
 		return "login";
 	}
 
+	@RequestMapping(value = "signup")
+	public String signup() {
+		return "signup";
+	}
+
 	@RequestMapping(value = "dashboard")
 	public String dashboard() {
 		return "dashboard";
