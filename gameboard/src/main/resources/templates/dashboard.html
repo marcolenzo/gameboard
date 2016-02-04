@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="myApp">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -31,7 +31,7 @@
     <![endif]-->
   </head>
 
-  <body>
+  <body ng-controller="MainCtrl" ng-cloak>
 
     <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container-fluid">
@@ -47,9 +47,9 @@
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
             <li><a href="#">Gameboard</a></li>
-            <li><a href="#">Settings</a></li>
-            <li><a href="#">Profile</a></li>
-            <li><a href="#">Help</a></li>
+            <li><a href="#/login">Settings</a></li>
+            <li><a href="#/login">Profile</a></li>
+            <li><a href="#/login">Help</a></li>
           </ul>
           <form class="navbar-form navbar-right">
             <input type="text" class="form-control" placeholder="Search...">
@@ -63,15 +63,18 @@
         <div class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar">
             <li class="active"><a href="#">Overview <span class="sr-only">(current)</span></a></li>
-            <li><a href="#">Boards</a></li>
-            <li><a href="#">Reports</a></li>
+            <li><a href="#/login">Boards</a></li>
+            <li><a href="#/login">Reports</a></li>
           </ul>
           <ul class="nav nav-sidebar">
             <li><a href="">Create new board</a></li>
             <li><a href="">Create new game</a></li>
           </ul>
         </div>
+        
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+        
+        <div ng-view></div>
 
           <h2 class="sub-header">Your Boards</h2>
           <div class="table-responsive">
@@ -155,12 +158,28 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<!--     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script> -->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="/js/vendor/jquery.min.js"><\/script>')</script>
     <script src="/js/bootstrap.min.js"></script>
     <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
     <script src="/js/vendor/holder.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="/js/ie10-viewport-bug-workaround.js"></script>
+    
+    
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-route.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-resource.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-animate.min.js"></script>
+	<script src="app/lib/bootstrap/bootstrap.min.js"></script>
+	<script src="app/lib/ui-bootstrap/ui-bootstrap-tpls-0.10.0.min.js"></script>
+	<script src="app/app.js"></script>
+	<script src="app/app-services.js"></script>
+	<script src="app/views/home/home.js"></script>
+	<script src="app/views/dashboard/dashboard.js"></script>
+	<script src="app/components/version/version.js"></script>
+	<script src="app/components/version/version-directive.js"></script>
+	<script src="app/components/version/interpolate-filter.js"></script>
   </body>
 </html>
