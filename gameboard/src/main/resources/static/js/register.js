@@ -15,10 +15,10 @@ function register() {
 		        'Content-Type': 'application/json' 
 		},
 		success: function(result){	
-			window.location.replace("dashboard");
+			window.location.replace("signup-success.html");
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
-			alert(xhr.status + ' ' + thrownError);
+			alert(xhr.responseText);
 		}
 	});
 }
