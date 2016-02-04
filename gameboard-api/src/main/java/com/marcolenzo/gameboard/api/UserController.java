@@ -37,6 +37,7 @@ public class UserController {
 
 	@RequestMapping(value = "/api/user", method = RequestMethod.POST)
 	public User createUser(@Valid @RequestBody User user) {
+		user.setId(UUID.randomUUID().toString());
 		User savedUser = repository.save(user);
 		return savedUser;
 	}

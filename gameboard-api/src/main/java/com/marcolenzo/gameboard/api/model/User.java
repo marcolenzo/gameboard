@@ -4,13 +4,19 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
 
+@Document
 public class User {
 
+	@Id
 	private String id;
 
 	@NotEmpty
 	@Email
+	@Indexed(unique = true)
 	private String email;
 	
 	@NotEmpty
