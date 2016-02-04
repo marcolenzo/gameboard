@@ -18,7 +18,7 @@ function register() {
 			window.location.replace("signup-success.html");
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
-			alert(xhr.responseText);
+			window.location.replace("signup-failed.html");
 		}
 	});
 }
