@@ -36,9 +36,9 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/api/user", method = RequestMethod.POST)
-	public String getUser(@Valid @RequestBody User user) {
+	public User createUser(@Valid @RequestBody User user) {
 		User savedUser = repository.save(user);
-		return savedUser.getId();
+		return savedUser;
 	}
 
 
