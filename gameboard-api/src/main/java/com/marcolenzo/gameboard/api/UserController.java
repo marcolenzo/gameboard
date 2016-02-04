@@ -4,6 +4,7 @@ import java.util.UUID;
 
 import javax.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.marcolenzo.gameboard.api.model.User;
+import com.marcolenzo.gameboard.api.repositories.UserRepository;
 
 /**
  * Sample REST Controller.
@@ -19,6 +21,9 @@ import com.marcolenzo.gameboard.api.model.User;
  */
 @RestController
 public class UserController {
+
+	@Autowired
+	private UserRepository repository;
 
 	@RequestMapping(value = "/api/user/{id}", method = RequestMethod.GET)
 	public User getUser(@PathVariable String id) {
@@ -31,9 +36,9 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/api/user", method = RequestMethod.POST)
-	public String getUser(@Valid @RequestBody User user) {
-		// TODO persist user.
-		return user.getId();
+	public User createUser(@Valid @RequestBody User user) {
+		User savedUser = repository.save(user);
+		return savedUser;
 	}
 
 
