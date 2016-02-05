@@ -3,9 +3,9 @@ Keep track of your games with Gameboard. Organize matches, log results and check
 
 Pre-Alpha Preview: 
 
-https://ironballs.ddns.net:8443/signup
-https://ironballs.ddns.net:8443/signup-success.html
-https://ironballs.ddns.net:8443/signup-failed.html
-https://ironballs.ddns.net:8443/login
-https://ironballs.ddns.net:8443/dashboard
+- https://gameboard.marcolenzo.eu/signup
+- https://gameboard.marcolenzo.eu/signup-success.html
+- https://gameboard.marcolenzo.eu/signup-failed.html
+- https://gameboard.marcolenzo.eu/login
+- https://gameboard.marcolenzo.eu/dashboard
 
