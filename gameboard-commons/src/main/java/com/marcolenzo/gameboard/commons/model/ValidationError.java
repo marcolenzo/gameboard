@@ -1,4 +1,4 @@
-package com.marcolenzo.gameboard.api.model;
+package com.marcolenzo.gameboard.commons.model;
 
 import java.util.List;
 
