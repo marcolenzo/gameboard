@@ -5,6 +5,7 @@ import java.util.UUID;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,6 +27,9 @@ public class UserController {
 	@Autowired
 	private UserRepository repository;
 
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
+
 	@RequestMapping(value = "/api/user/{id}", method = RequestMethod.GET)
 	public User getUser(@PathVariable String id) {
 		User user = new User();
@@ -39,6 +43,8 @@ public class UserController {
 	@RequestMapping(value = "/api/user", method = RequestMethod.POST)
 	public User createUser(@Valid @RequestBody User user) {
 		user.setId(UUID.randomUUID().toString());
+		String encodedPassword = passwordEncoder.encode(user.getPassword());
+		user.setPassword(encodedPassword);
 		User savedUser = repository.save(user);
 		return savedUser;
 	}
