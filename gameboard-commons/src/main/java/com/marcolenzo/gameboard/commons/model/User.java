@@ -1,4 +1,6 @@
-package com.marcolenzo.gameboard.api.model;
+package com.marcolenzo.gameboard.commons.model;
+
+import java.util.Collection;
 
 import javax.validation.constraints.Size;
 
@@ -7,9 +9,13 @@ import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 @Document
-public class User {
+public class User implements UserDetails {
+
+	private static final long serialVersionUID = -4735516610490938577L;
 
 	@Id
 	private String id;
@@ -81,6 +87,41 @@ public class User {
 	 */
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
+	}
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getUsername() {
+		return this.email;
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		// TODO Auto-generated method stub
+		return true;
 	}
 
 }

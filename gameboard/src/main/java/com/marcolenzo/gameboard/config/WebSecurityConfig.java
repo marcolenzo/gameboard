@@ -7,7 +7,10 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
+
+import com.marcolenzo.gameboard.commons.security.MongoUserDetailsService;
 
 @Configuration
 @EnableWebSecurity
@@ -18,6 +21,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		SavedRequestAwareAuthenticationSuccessHandler successHandler = new SavedRequestAwareAuthenticationSuccessHandler();
 		successHandler.setDefaultTargetUrl("/dashboard");
 		return successHandler;
+	}
+
+	@Bean
+	public UserDetailsService userDetailsService() {
+		return new MongoUserDetailsService();
 	}
 
 	@Override
@@ -34,7 +42,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-		auth.inMemoryAuthentication().withUser("user@user.com").password("password").roles("USER");
+		auth.userDetailsService(userDetailsService());
 	}
 
 }

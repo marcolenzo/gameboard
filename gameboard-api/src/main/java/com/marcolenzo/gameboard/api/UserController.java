@@ -11,8 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.marcolenzo.gameboard.api.model.User;
-import com.marcolenzo.gameboard.api.repositories.UserRepository;
+import com.marcolenzo.gameboard.commons.model.User;
+import com.marcolenzo.gameboard.commons.repositories.UserRepository;
+
 
 /**
  * Sample REST Controller.

@@ -12,8 +12,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-import com.marcolenzo.gameboard.api.model.FieldError;
-import com.marcolenzo.gameboard.api.model.ValidationError;
+import com.marcolenzo.gameboard.commons.model.FieldError;
+import com.marcolenzo.gameboard.commons.model.ValidationError;
+
 
 
 @ControllerAdvice

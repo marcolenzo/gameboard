@@ -24,6 +24,7 @@
 	</properties>
 
 	<modules>
+		<module>gameboard-commons</module>
 		<module>gameboard-api</module>
 		<module>gameboard</module>
 	</modules>
@@ -39,6 +40,12 @@
 			<dependency>
 				<groupId>com.marcolenzo.gameboard</groupId>
 				<artifactId>gameboard-api</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>com.marcolenzo.gameboard</groupId>
+				<artifactId>gameboard-commons</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 
