@@ -31,6 +31,7 @@ public class User implements UserDetails {
 
 	@NotEmpty
 	@Size(min = 1, max = 64)
+	@Indexed(unique = true)
 	private String nickname;
 
 	/**

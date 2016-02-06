@@ -1,19 +1,17 @@
-<form>
+<form name="createBoardForm">
 	<div class="form-group">
 		<label for="name">Board Name</label> <input type="text"
-			class="form-control" id="name" placeholder="Board Name">
+			class="form-control" id="name" placeholder="Board Name" ng-model="board.name" required>
 	</div>
 	<div class="form-group">
-		<label for="type">Password</label> <input type="text"
-			class="form-control" id="type" placeholder="Type" value="CUSTOM"
-			disabled>
+		<label for="type">Type</label> <input type="text"
+			class="form-control" id="type" placeholder="Type" ng-model="board.type" disabled>
 	</div>
 	<div class="form-group">
 		<label for="users">Users</label>
-		<tags-input ng-model="tags" add-on-paste="true">
-			<auto-complete source="states"></auto-complete>
+		<tags-input ng-model="tags" add-on-paste="true" add-on-blur="false" allow-leftover-text="false" required>
+			<auto-complete source="getMatchingStates($query)"></auto-complete>
 		</tags-input>
 	</div>
-	<button type="submit" class="btn btn-default">Submit</button>
-	
+	<button type="submit" class="btn btn-default" ng-click="createBoard()" ng-disabled="createBoardForm.$invalid">Submit</button>
 </form>
