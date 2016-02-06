@@ -10,14 +10,15 @@ angular.module('myApp.createboard', [ 'ngRoute', 'ngTagsInput' ])
 } ])
 
 .controller('CreateboardCtrl',
-		[ '$scope', 'User', 'Gameboard', function($scope, User, Gameboard) {
+		[ '$scope', '$location', 'User', 'Gameboard', function($scope, $location, User, Gameboard) {
 
 			var _selected;
 
 			$scope.board = {};
 			$scope.board.type = "RESISTANCE";
+			$scope.board.name = "";
 			$scope.tags = undefined;
-			$scope.name = undefined;
+			
 			$scope.users = User.query({
 				nicknameOnly : 'true'
 			});
@@ -41,6 +42,7 @@ angular.module('myApp.createboard', [ 'ngRoute', 'ngTagsInput' ])
 
 				Gameboard.save($scope.board, function() {
 					alert("Success");
+					$location.path('/dashboard');
 				}, function() {
 					alert("Fail");
 				});
