@@ -10,7 +10,8 @@ angular.module('myApp', [
   'myApp.dashboard',
   'myApp.createboard',
   'myApp.version',
-  'ui.bootstrap'
+  'ui.bootstrap',
+  'ngTagsInput'
 ]).
 
 config(['$routeProvider', function($routeProvider) {

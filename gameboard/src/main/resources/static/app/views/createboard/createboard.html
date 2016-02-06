@@ -1,21 +1,19 @@
 <form>
-  <div class="form-group">
-    <label for="name">Board Name</label>
-    <input type="text" class="form-control" id="name" placeholder="Board Name">
-  </div>
-  <div class="form-group">
-    <label for="type">Password</label>
-    <input type="text" class="form-control" id="type" placeholder="Type" value="CUSTOM" disabled>
-  </div>
-  <div class="form-group">
-    <label for="exampleInputFile">File input</label>
-    <input type="file" id="exampleInputFile">
-    <p class="help-block">Example block-level help text here.</p>
-  </div>
-  <div class="checkbox">
-    <label>
-      <input type="checkbox"> Check me out
-    </label>
-  </div>
-  <button type="submit" class="btn btn-default">Submit</button>
+	<div class="form-group">
+		<label for="name">Board Name</label> <input type="text"
+			class="form-control" id="name" placeholder="Board Name">
+	</div>
+	<div class="form-group">
+		<label for="type">Password</label> <input type="text"
+			class="form-control" id="type" placeholder="Type" value="CUSTOM"
+			disabled>
+	</div>
+	<div class="form-group">
+		<label for="users">Users</label>
+		<tags-input ng-model="tags" add-on-paste="true">
+			<auto-complete source="states"></auto-complete>
+		</tags-input>
+	</div>
+	<button type="submit" class="btn btn-default">Submit</button>
+	
 </form>
