@@ -20,7 +20,7 @@ public class Gameboard {
 	@Indexed(unique = true)
 	private String name;
 	
-	private String type = "CUSTOM";
+	private String type = "RESISTANCE";
 
 	private List<String> admins;
 
