@@ -38,6 +38,6 @@ angular.module('myApp.services', ['ngRoute'])
 }])
 
 .service('User', [ '$resource', function(resource) {
-	return resource('/classified/api/user/:username/');
+	return resource('/api/user/:username/');
 	// Note resource ignores trailing slash... need to switch to $http
 }]);

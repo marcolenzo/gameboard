@@ -1,5 +1,6 @@
 package com.marcolenzo.gameboard.api;
 
+import java.util.List;
 import java.util.UUID;
 
 import javax.validation.Valid;
@@ -10,11 +11,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.google.common.collect.Lists;
 import com.marcolenzo.gameboard.commons.model.User;
 import com.marcolenzo.gameboard.commons.repositories.UserRepository;
-
 
 /**
  * Sample REST Controller.
@@ -40,6 +42,16 @@ public class UserController {
 		return user;
 	}
 
+	@RequestMapping(value = "/api/user", method = RequestMethod.GET, params = { "nicknameOnly" })
+	public List<String> getNicknames(@RequestParam(value = "query", required = false) Boolean nicknameOnly) {
+		List<User> users = repository.findAll();
+		List<String> nicknames = Lists.newArrayList();
+		for (User user : users) {
+			nicknames.add(user.getNickname());
+		}
+		return nicknames;
+	}
+
 	@RequestMapping(value = "/api/user", method = RequestMethod.POST)
 	public User createUser(@Valid @RequestBody User user) {
 		user.setId(UUID.randomUUID().toString());
@@ -48,6 +60,5 @@ public class UserController {
 		User savedUser = repository.save(user);
 		return savedUser;
 	}
-
 
 }
