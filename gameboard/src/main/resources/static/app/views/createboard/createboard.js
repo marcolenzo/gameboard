@@ -17,5 +17,14 @@ angular.module('myApp.createboard', ['ngRoute', 'ngTagsInput'])
                    'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Dakota', 
                    'North Carolina', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Rhode Island', 'South Carolina', 'South Dakota', 
                    'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'];
+  
+  $scope.getMatchingStates = function(query) {
+	  return jQuery.grep($scope.states, function(n, i) {
+		  if(n.indexOf(query) > -1) {
+			  return true;
+		  }
+		  return false;
+	  });
+  }
 	
 }]);
