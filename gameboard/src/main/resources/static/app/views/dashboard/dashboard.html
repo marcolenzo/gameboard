@@ -12,7 +12,7 @@
 		</thead>
 		<tbody>
 			<tr ng-repeat="x in gameboards">
-				<td>{{x.name}}</td>
+				<td><a href="#/boarddetails?id={{x.id}}">{{x.name}}</a></td>
 				<td>{{x.type}}</td>
 				<td>{{x.role}}</td>
 				<td>{{x.users.length}}</td>

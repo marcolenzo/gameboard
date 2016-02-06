@@ -7,6 +7,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -37,22 +38,22 @@ public class GameboardController {
 	public Gameboard createGameboard(@Valid @RequestBody Gameboard gameboard) {
 		User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		List<String> users = Lists.newArrayList();
-		for (String nickname : gameboard.getUsers()) {
-			User boardUser = userRepository.findOneByNickname(nickname);
-			users.add(boardUser.getId());
-		}
 		if (!gameboard.getUsers().contains(currentUser.getNickname())) {
-			users.add(currentUser.getId());
+			gameboard.getUsers().add(currentUser.getNickname());
 		}
 		gameboard.setId(UUID.randomUUID().toString());
-		gameboard.setUsers(users);
-		gameboard.setAdmins(Lists.newArrayList(currentUser.getId()));
+		gameboard.setAdmins(Lists.newArrayList(currentUser.getNickname()));
 
 		return repository.save(gameboard);
 	}
 
+	@RequestMapping(value = "/api/gameboard/{id}", method = RequestMethod.GET)
+	public Gameboard getGameboardById(@PathVariable String id) {
+		return repository.findOne(id);
+	}
+
 	@RequestMapping(value = "/api/gameboard", method = RequestMethod.GET, params = { "user" })
-	public List<Gameboard> getGameboardByUser(@RequestParam(value = "user", required = false) String userId) {
+	public List<Gameboard> getGameboardByUser(@RequestParam(value = "user", required = true) String userId) {
 		return repository.findByUsers(userId);
 	}
 

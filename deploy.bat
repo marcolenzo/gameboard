@@ -1,0 +1,1 @@
+D:\Tools\Putty\PSCP.EXE -P 13131 D:\Workspace\gameboard\gameboard\target\gameboard*.jar marcol@marcol-snt.ddns.net:

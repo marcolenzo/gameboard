@@ -1,0 +1,9 @@
+<h2>Board > {{board.name}}</h2>
+<div class=well>
+	<h4>Type: {{board.type}}</h4>
+	<br/>
+	<h4>Users:</h4>
+	<tags-input ng-model="tags" ng-enabled="isAdmin" add-on-paste="true" add-on-blur="false"
+		allow-leftover-text="false" required> <auto-complete
+		source="getMatchingNicknames($query)"></auto-complete> </tags-input>
+</div>

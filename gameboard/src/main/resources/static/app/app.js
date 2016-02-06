@@ -4,7 +4,7 @@
 angular.module(
 		'myApp',
 		[ 'ngResource', 'ngRoute', 'myApp.services', 'myApp.home',
-				'myApp.dashboard', 'myApp.createboard', 'myApp.version',
+				'myApp.dashboard', 'myApp.createboard', 'myApp.boarddetails', 'myApp.version',
 				'ui.bootstrap', 'ngTagsInput' ]).
 
 config([ '$routeProvider', function($routeProvider) {
