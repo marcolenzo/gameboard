@@ -6,6 +6,7 @@ import java.util.UUID;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -33,12 +34,12 @@ public class UserController {
 
 	@RequestMapping(value = "/api/user/{id}", method = RequestMethod.GET)
 	public User getUser(@PathVariable String id) {
-		User user = new User();
-		user.setId(UUID.randomUUID().toString());
-		user.setEmail("bla@bla.com");
-		user.setNickname("Nickname");
-		user.setPassword("Passwd");
-		return user;
+		if (id.equals("me")) {
+			User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			user.setPassword(null);
+			return user;
+		}
+		return null;
 	}
 
 	@RequestMapping(value = "/api/user", method = RequestMethod.GET, params = { "nicknameOnly" })
