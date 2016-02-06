@@ -10,7 +10,7 @@ angular.module('myApp.createboard', ['ngRoute', 'ngTagsInput'])
 
 	var _selected;
 
-  $scope.selected = undefined;
+  $scope.tags = undefined;
   $scope.states = ['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware',
                    'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 
                    'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 
@@ -26,6 +26,10 @@ angular.module('myApp.createboard', ['ngRoute', 'ngTagsInput'])
 		  }
 		  return false;
 	  });
+  }
+  
+  $scope.createBoard = function() {
+	  console.log(JSON.stringify($scope.tags));
   }
 	
 }]);
