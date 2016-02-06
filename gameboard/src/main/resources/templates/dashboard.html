@@ -11,18 +11,10 @@
 
     <title>Gameboard</title>
 
-    <!-- Bootstrap core CSS -->
     <link href="/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <link href="/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
     <link href="/css/dashboard.css" rel="stylesheet">
-
-    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
-    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
-    <script src="/js/ie-emulation-modes-warning.js"></script>
+    <script src="/js/vendor/ie-emulation-modes-warning.js"></script>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -67,7 +59,7 @@
             <li><a href="#/login">Reports</a></li>
           </ul>
           <ul class="nav nav-sidebar">
-            <li><a href="">Create new board</a></li>
+            <li><a href="#/createboard">Create new board</a></li>
             <li><a href="">Create new game</a></li>
           </ul>
         </div>
@@ -76,108 +68,28 @@
         
         <div ng-view></div>
 
-          <h2 class="sub-header">Your Boards</h2>
-          <div class="table-responsive">
-            <table class="table table-striped">
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Name</th>
-                  <th>Type</th>
-                  <th>Role</th>
-                  <th># of Players</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>328748324</td>
-                  <td>Vive La Resistance</td>
-                  <td>Custom</td>
-                  <td>Administrator</td>
-                  <td>15</td>
-                </tr>
-                <tr>
-                  <td>432434224</td>
-                  <td>Fantacalcio</td>
-                  <td>Custom</td>
-                  <td>Administrator</td>
-                  <td>133</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          
-          <h2 class="sub-header">Your Recent Games</h2>
-          <div class="table-responsive">
-            <table class="table table-striped">
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Board #</th>
-                  <th>Board Name</th>
-                  <th>Status</th>
-                  <th>Last Updated</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>546456</td>
-                  <td>328748324</td>
-                  <td>Vive La Resistance</td>
-                  <td>In Progress</td>
-                  <td>3/2/2016 23:19 CET</td>
-                </tr>
-                <tr>
-                  <td>1,002</td>
-                  <td>amet</td>
-                  <td>consectetur</td>
-                  <td>adipiscing</td>
-                  <td>elit</td>
-                </tr>
-                <tr>
-                  <td>1,003</td>
-                  <td>Integer</td>
-                  <td>nec</td>
-                  <td>odio</td>
-                  <td>Praesent</td>
-                </tr>
-                <tr>
-                  <td>1,003</td>
-                  <td>libero</td>
-                  <td>Sed</td>
-                  <td>cursus</td>
-                  <td>ante</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
         </div>
       </div>
     </div>
 
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-<!--     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script> -->
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="/js/vendor/jquery.min.js"><\/script>')</script>
-    <script src="/js/bootstrap.min.js"></script>
-    <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
+    <script src="/js/vendor/bootstrap.min.js"></script>
     <script src="/js/vendor/holder.min.js"></script>
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="/js/ie10-viewport-bug-workaround.js"></script>
-    
+    <script src="/js/vendor/ie10-viewport-bug-workaround.js"></script>
     
 	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
 	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-route.min.js"></script>
 	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-resource.min.js"></script>
 	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-animate.min.js"></script>
-	<script src="app/lib/bootstrap/bootstrap.min.js"></script>
-	<script src="app/lib/ui-bootstrap/ui-bootstrap-tpls-0.10.0.min.js"></script>
+
+	<script src="js/vendor/ui-bootstrap-tpls-1.1.2.min.js"></script>
+	
 	<script src="app/app.js"></script>
 	<script src="app/app-services.js"></script>
 	<script src="app/views/home/home.js"></script>
 	<script src="app/views/dashboard/dashboard.js"></script>
+	<script src="app/views/createboard/createboard.js"></script>
 	<script src="app/components/version/version.js"></script>
 	<script src="app/components/version/version-directive.js"></script>
 	<script src="app/components/version/interpolate-filter.js"></script>
