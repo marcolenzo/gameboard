@@ -9,14 +9,6 @@
 		</filter>
 	</appender>
 
-	<appender name="fileAppender" class="ch.qos.logback.core.FileAppender">
-		<File>/var/log/quote-service/quote-service.log</File>
-		<encoder>
-			<Pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{35} - %msg %n
-			</Pattern>
-		</encoder>
-	</appender>
-
 	<logger name="com.marcolenzo" additivity="false">
 		<level value="DEBUG" />
 		<appender-ref ref="fileAppender" />
