@@ -4,7 +4,6 @@
 	<table class="table table-striped">
 		<thead>
 			<tr>
-				<th>#</th>
 				<th>Name</th>
 				<th>Type</th>
 				<th>Role</th>
@@ -12,19 +11,11 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr>
-				<td>328748324</td>
-				<td>Vive La Resistance</td>
-				<td>Custom</td>
-				<td>Administrator</td>
-				<td>15</td>
-			</tr>
-			<tr>
-				<td>432434224</td>
-				<td>Fantacalcio</td>
-				<td>Custom</td>
-				<td>Administrator</td>
-				<td>133</td>
+			<tr ng-repeat="x in gameboards">
+				<td>{{x.name}}</td>
+				<td>{{x.type}}</td>
+				<td>{{x.role}}</td>
+				<td>{{x.users.length}}</td>
 			</tr>
 		</tbody>
 	</table>

@@ -10,6 +10,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.common.collect.Lists;
@@ -48,6 +49,11 @@ public class GameboardController {
 		gameboard.setAdmins(Lists.newArrayList(currentUser.getId()));
 
 		return repository.save(gameboard);
+	}
+
+	@RequestMapping(value = "/api/gameboard", method = RequestMethod.GET, params = { "user" })
+	public List<Gameboard> getGameboardByUser(@RequestParam(value = "user", required = false) String userId) {
+		return repository.findByUsers(userId);
 	}
 
 	@RequestMapping(value = "/api/gameboard/test", method = RequestMethod.GET)
