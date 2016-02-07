@@ -1,9 +1,56 @@
-<h2>Board > {{board.name}}</h2>
-<div class=well>
-	<h4>Type: {{board.type}}</h4>
-	<br/>
-	<h4>Users:</h4>
-	<tags-input ng-model="tags" ng-enabled="isAdmin" add-on-paste="true" add-on-blur="false"
-		allow-leftover-text="false" required> <auto-complete
-		source="getMatchingNicknames($query)"></auto-complete> </tags-input>
+<div class="row">
+	<div class="col-xs-12 col-sm-12">
+		<h2>Board > {{board.name}}</h2>
+		<h4>Type: {{board.type}}</h4>
+	</div>
+</div>
+<div class="row">
+	<div class="col-xs-12 col-sm-6">
+		<h2 class="sub-header">Leaderboard</h2>
+		<div class="table-responsive">
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>Pos #</th>
+						<th>Name</th>
+						<th>ELO</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>1</td>
+						<td>Marco</td>
+						<td>2345</td>
+					</tr>
+					<tr>
+						<td>2</td>
+						<td>Andy</td>
+						<td>2325</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+	</div>
+	<div class="col-xs-12 col-sm-6">
+		<h2 class="sub-header">Board Stats</h2>
+		<div class="table-responsive">
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>Games Played</th>
+						<th>Last Game</th>
+						<th>Upcoming Game</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>121</td>
+						<td>10/02/2016 13:30</td>
+						<td>11/02/2016 13:30</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
 </div>

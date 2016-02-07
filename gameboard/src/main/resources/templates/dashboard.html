@@ -57,16 +57,12 @@
 		<div class="row">
 			<div class="col-sm-3 col-md-2 sidebar">
 				<ul class="nav nav-sidebar">
-					<li ng-class="getClass('/dashboard')"><a href="#/dashboard">Overview
-							<span class="sr-only">(current)</span>
-					</a></li>
-					<li><a href="#/login">Boards</a></li>
-					<li><a href="#/login">Reports</a></li>
+					<li ng-class="getClass('/dashboard')"><a href="#/dashboard">Overview</a></li>
+					<li ng-class="getClass('/createboard')"><a href="#/createboard">Create new board</a></li>
 				</ul>
-				<ul class="nav nav-sidebar">
-					<li ng-class="getClass('/createboard')"><a
-						href="#/createboard">Create new board</a></li>
-					<li><a href="">Create new game</a></li>
+				<ul class="nav nav-sidebar" id="boardMenu" ng-show="showBoardMenu()">
+					<li ng-class="getClass('/boarddetails')"><a href="">Board Details</a></li>
+					<li ng-class="getClass('/creategame')"><a href="#/creategame">Create new game</a></li>
 				</ul>
 			</div>
 
@@ -85,14 +81,10 @@
 	<script src="/js/vendor/holder.min.js"></script>
 	<script src="/js/vendor/ie10-viewport-bug-workaround.js"></script>
 
-	<script
-		src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
-	<script
-		src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-route.min.js"></script>
-	<script
-		src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-resource.min.js"></script>
-	<script
-		src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-animate.min.js"></script>
+	<script	src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
+	<script	src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-route.min.js"></script>
+	<script	src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-resource.min.js"></script>
+	<script	src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-animate.min.js"></script>
 
 	<script src="js/vendor/ui-bootstrap-tpls-1.1.2.min.js"></script>
 	<script src="js/vendor/ng-tags-input.min.js"></script>

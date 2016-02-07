@@ -21,4 +21,12 @@ controller('MainCtrl', [ '$scope', '$location', 'User', function($scope, $locati
 					return '';
 				}
 			}
+			
+			$scope.showBoardMenu = function() {
+				var pages = ["/boarddetails"]
+				if(pages.includes($location.path())){
+					return true;
+				}
+				return false;
+			}
 		} ]);

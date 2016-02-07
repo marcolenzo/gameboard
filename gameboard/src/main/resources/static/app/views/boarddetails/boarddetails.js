@@ -31,7 +31,7 @@ angular.module('myApp.boarddetails', [ 'ngRoute', 'ngTagsInput' ])
 		}, $scope.tags);
 		
 		$scope.user.$promise.then(function(data) {
-			if(board.admins.include(data.nickname)) {
+			if(board.admins.includes(data.nickname)) {
 				$scope.isAdmin = true;
 			}
 		});
