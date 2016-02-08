@@ -37,7 +37,6 @@ public class GameboardController {
 	@RequestMapping(value = "/api/gameboard", method = RequestMethod.POST)
 	public Gameboard createGameboard(@Valid @RequestBody Gameboard gameboard) {
 		User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		List<String> users = Lists.newArrayList();
 		if (!gameboard.getUsers().contains(currentUser.getNickname())) {
 			gameboard.getUsers().add(currentUser.getNickname());
 		}

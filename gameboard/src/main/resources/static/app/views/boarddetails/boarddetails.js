@@ -16,6 +16,8 @@ angular.module('myApp.boarddetails', [ 'ngRoute', 'ngTagsInput' ])
 		alert('Fuck up!');
 	}
 	
+	$scope.createGameHref = '#/creategame?boardId=' + params.id;
+	
 	$scope.user = User.get({username: 'me'});
 	
 	$scope.board = Gameboard.get({id: params.id});

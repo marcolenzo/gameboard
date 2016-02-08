@@ -9,6 +9,11 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+/**
+ * A Gameboard allows group of friends to organize their game sessions and keep track of their performance.
+ * @author Marco Lenzo
+ *
+ */
 @Document
 public class Gameboard {
 
