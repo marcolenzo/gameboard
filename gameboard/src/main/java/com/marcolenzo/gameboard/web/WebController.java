@@ -21,9 +21,9 @@ public class WebController {
 		return "signup";
 	}
 
-	@RequestMapping(value = "dashboard")
+	@RequestMapping(value = "index")
 	public String dashboard() {
-		return "dashboard";
+		return "index";
 	}
 
 }

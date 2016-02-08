@@ -1,12 +1,12 @@
 'use strict';
 
-angular.module('myApp.dashboard', ['ngRoute'])
+angular.module('myApp.overview', ['ngRoute'])
 
 .config(['$routeProvider', function($routeProvider) {
-	 $routeProvider.when('/dashboard', {templateUrl: 'app/views/dashboard/dashboard.html', controller: 'DashboardCtrl'});
+	 $routeProvider.when('/overview', {templateUrl: 'app/views/overview/overview.html', controller: 'OverviewCtrl'});
 }])
 
-.controller('DashboardCtrl', ['$scope', 'Gameboard', 'User', function($scope, Gameboard, User) {
+.controller('OverviewCtrl', ['$scope', 'Gameboard', 'User', function($scope, Gameboard, User) {
     $scope.user = User.get({username: 'me'});
     $scope.gameboards = undefined;
 	

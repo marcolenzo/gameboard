@@ -1,34 +1,19 @@
-<div class="container-fluid">
-	<div class="row">
-		<div class="col-sm-3 col-md-2 sidebar">
-			<ul class="nav nav-sidebar">
-				<li><a href="#/dashboard">Overview</a></li>
-				<li class="active"><a href="#/createboard">Create new board</a></li>
-			</ul>
-		</div>
-
-		<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-
-			<form name="createBoardForm">
-				<div class="form-group">
-					<label for="name">Board Name</label> <input type="text"
-						class="form-control" id="name" placeholder="Board Name"
-						ng-model="board.name" required>
-				</div>
-				<div class="form-group">
-					<label for="type">Type</label> <input type="text"
-						class="form-control" id="type" placeholder="Type"
-						ng-model="board.type" disabled>
-				</div>
-				<div class="form-group">
-					<label for="users">Users</label>
-					<tags-input ng-model="tags" add-on-paste="true" add-on-blur="false"
-						allow-leftover-text="false" required> <auto-complete
-						source="getMatchingStates($query)"></auto-complete> </tags-input>
-				</div>
-				<button type="submit" class="btn btn-default"
-					ng-click="createBoard()" ng-disabled="createBoardForm.$invalid">Submit</button>
-			</form>
-		</div>
+<form name="createBoardForm">
+	<div class="form-group">
+		<label for="name">Board Name</label> <input type="text"
+			class="form-control" id="name" placeholder="Board Name"
+			ng-model="board.name" required>
 	</div>
-</div>
+	<div class="form-group">
+		<label for="type">Type</label> <input type="text" class="form-control"
+			id="type" placeholder="Type" ng-model="board.type" disabled>
+	</div>
+	<div class="form-group">
+		<label for="users">Users</label>
+		<tags-input ng-model="tags" add-on-paste="true" add-on-blur="false"
+			allow-leftover-text="false" required> <auto-complete
+			source="getMatchingStates($query)"></auto-complete> </tags-input>
+	</div>
+	<button type="submit" class="btn btn-default" ng-click="createBoard()"
+		ng-disabled="createBoardForm.$invalid">Submit</button>
+</form>

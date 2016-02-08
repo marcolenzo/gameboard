@@ -53,18 +53,41 @@
 		</div>
 	</nav>
 
-
-	<div ng-view></div>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-sm-3 col-md-2 sidebar">
+				<ul class="nav nav-sidebar">
+					<li ng-class="isMenuItemActive('/overview')" href="#/overview"><a>Overview</a></li>
+					<li ng-class="isMenuItemActive('/createboard')"><a href="#/createboard">Create new board</a></li>
+				</ul>
+				<ul class="nav nav-sidebar">
+					<li ng-class="isMenuItemActive('/boardetails')"><a ng-href="#/boarddetails?id={{board.id}}">{{board.name}}</a></li>
+					<li><a ng-href="#/boarddetails?id={{board.id}}">Leaderboards</a></li>
+					<li><a ng-href="#/boarddetails?id={{board.id}}">Schedule</a></li>
+				</ul>
+			</div>
+			
+			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+				
+				<div ng-view></div>
+			
+			</div>
+		</div>
+	</div>
 
 
 	<script
 		src="//ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
-	<script>window.jQuery || document.write('<script src="/js/vendor/jquery.min.js"><\/script>')</script>
+	<script>
+				window.jQuery
+						|| document
+								.write('<script src="/js/vendor/jquery.min.js"><\/script>')
+			</script>
 	<script src="/js/vendor/bootstrap.min.js"></script>
 	<script src="/js/vendor/holder.min.js"></script>
 	<script src="/js/vendor/ie10-viewport-bug-workaround.js"></script>
 
-	<script	src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
 	<script	src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-route.min.js"></script>
 	<script	src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-resource.min.js"></script>
 	<script	src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-animate.min.js"></script>
@@ -74,8 +97,7 @@
 
 	<script src="app/app.js"></script>
 	<script src="app/app-services.js"></script>
-	<script src="app/views/home/home.js"></script>
-	<script src="app/views/dashboard/dashboard.js"></script>
+	<script src="app/views/overview/overview.js"></script>
 	<script src="app/views/createboard/createboard.js"></script>
 	<script src="app/views/creategame/creategame.js"></script>
 	<script src="app/views/boarddetails/boarddetails.js"></script>

@@ -1,0 +1,21 @@
+<h2 class="sub-header">Your Boards</h2>
+<div class="table-responsive">
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Type</th>
+				<th>Role</th>
+				<th># of Players</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="x in gameboards">
+				<td><a href="#/boarddetails?id={{x.id}}">{{x.name}}</a></td>
+				<td>{{x.type}}</td>
+				<td>{{x.role}}</td>
+				<td>{{x.users.length}}</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
