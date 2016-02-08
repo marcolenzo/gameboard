@@ -24,6 +24,10 @@ public class GameSession {
 
 	private List<String> users;
 	
+	private Boolean isRecurring;
+	
+	private List<String> recurringDays;
+	
 
 	public enum Status {
 		ACCEPTING_REGISTRATION, REGISTRATION_CLOSED, AWAITING_START, IN_PROGRESS, AWAITING_RESULT, DONE;
@@ -127,5 +131,32 @@ public class GameSession {
 		this.results = results;
 	}
 
+	/**
+	 * @return the isRecurring
+	 */
+	public Boolean getIsRecurring() {
+		return isRecurring;
+	}
+
+	/**
+	 * @param isRecurring the isRecurring to set
+	 */
+	public void setIsRecurring(Boolean isRecurring) {
+		this.isRecurring = isRecurring;
+	}
+
+	/**
+	 * @return the recurringDays
+	 */
+	public List<String> getRecurringDays() {
+		return recurringDays;
+	}
+
+	/**
+	 * @param recurringDays the recurringDays to set
+	 */
+	public void setRecurringDays(List<String> recurringDays) {
+		this.recurringDays = recurringDays;
+	}
 
 }

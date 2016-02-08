@@ -6,7 +6,7 @@
 				<li><a href="#/createboard">Create new board</a></li>
 			</ul>
 			<ul class="nav nav-sidebar">
-				<li><a href="">Board Details</a></li>
+				<li><a ng-href="#/boarddetails?id={{board.id}}">{{board.name}}</a></li>
 				<li class="active"><a ng-href="{{createGameHref}}">Create new game</a></li>
 			</ul>
 		</div>
@@ -17,7 +17,7 @@
 				<div class="form-group">
 					<label for="name">Board Name</label> <input type="text"
 						class="form-control" id="name" placeholder="Board Name"
-						ng-model="board.name" required>
+						value="{{board.name}}" disabled>
 				</div>
 				<div class="form-group">
 					<label for="type">Type</label> <input type="text"
@@ -25,14 +25,34 @@
 						ng-model="board.type" disabled>
 				</div>
 				<div class="form-group">
-					<label for="users">Users</label>
-					<tags-input ng-model="tags" add-on-paste="true" add-on-blur="false"
-						allow-leftover-text="false" required> <auto-complete
-						source="getMatchingStates($query)"></auto-complete> </tags-input>
+					<label for="date">Date</label>
+					<p class="input-group">
+						<input type="text" class="form-control"
+							uib-datepicker-popup="{{format}}" ng-model="dt"
+							is-open="popup1.opened" min-date="minDate" max-date="maxDate"
+							datepicker-options="dateOptions"
+							date-disabled="disabled(date, mode)" ng-required="true"
+							close-text="Close" alt-input-formats="altInputFormats" /> <span
+							class="input-group-btn">
+							<button type="button" class="btn btn-default" ng-click="open1()">
+								<i class="glyphicon glyphicon-calendar"></i>
+							</button>
+						</span>
+					</p>
+					<label for="time">Time</label>
+					<uib-timepicker ng-model="mytime" ng-change="changed()"
+						hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></uib-timepicker>
+				</div>
+				<div class="form-group">
+					<label><input type="checkbox" ng-model="isRecurring"><span></span>Recurring</label>
+				</div>
+				<div class="form-group">
+					<label> <input type="checkbox" ng-show="isRecurring"><span></span>Monday</label>
 				</div>
 				<button type="submit" class="btn btn-default"
 					ng-click="createBoard()" ng-disabled="createBoardForm.$invalid">Submit</button>
 			</form>
 		</div>
 	</div>
+</div>
 </div>

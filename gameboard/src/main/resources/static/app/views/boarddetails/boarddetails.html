@@ -6,8 +6,8 @@
 				<li><a href="#/createboard">Create new board</a></li>
 			</ul>
 			<ul class="nav nav-sidebar">
-				<li class="active"><a href="">Board	Details</a></li>
-				<li><a href="{{createGameHref}}">Create new game</a></li>
+				<li class="active"><a ng-href="#/boarddetails?id={{board.id}}">{{board.name}}</a></li>
+				<li><a ng-href="{{createGameHref}}">Create new game</a></li>
 			</ul>
 		</div>
 
