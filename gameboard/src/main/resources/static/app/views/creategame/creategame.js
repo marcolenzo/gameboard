@@ -10,24 +10,54 @@ angular.module('myApp.creategame', [ 'ngRoute', 'ngTagsInput' ])
 } ])
 
 .controller('CreategameCtrl',
-		[ '$scope', '$location', 'User', 'Gameboard', function($scope, $location, User, Gameboard) {
+		[ '$scope', '$location', 'Game', function($scope, $location, Game) {
 			
-			$scope.popup1 = {
+			$scope.user = undefined;
+			$scope.board = undefined;
+			$scope.game = {};
+			
+			/*
+			 * Date Picker Settings
+			 */
+			$scope.datePopup = {
 				    opened: false
 			};
+			$scope.game.date = new Date();
+			$scope.minDate = new Date();
+			$scope.openDatePicker = function() {
+			    $scope.datePopup.opened = true;
+			};
 			
-			$scope.isRecurring = false;
-
-			var params = $location.search();
-			if(params.boardId == null) {
-				alert('Fuck up!');
+			/*
+			 * Time Picker Settings
+			 */
+			$scope.game.time = new Date();
+			
+			/*
+			 * Events
+			 */
+			$scope.$on('user-me', function(event, data) {
+				$scope.user = data;
+			});
+			
+			$scope.$on('current-board', function(event, data) {
+				$scope.board = data;
+				$scope.game.boardId = data.id;
+			});
+			
+			/*
+			 * Create Game
+			 */
+			$scope.createGame = function() {
+				$scope.game.startTime = [$scope.game.date.getFullYear(), $scope.game.date.getMonth() + 1, 
+				                         $scope.game.date.getDate(), $scope.game.time.getHours(), 
+				                         $scope.game.time.getMinutes(), 0, 0];
+				Game.save($scope.game, function() {
+					alert('Success');
+					$location.path('/boarddetails');
+				}, function() {
+					alert('Failed');
+				})
 			}
 			
-			$scope.createGameHref = '#/creategame?boardId=' + params.boardId;
-			$scope.board = Gameboard.get({id: params.boardId});
-			
-			$scope.open1 = function() {
-			    $scope.popup1.opened = true;
-			};
-
 		} ]);

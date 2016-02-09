@@ -9,40 +9,39 @@ angular.module('myApp.boarddetails', [ 'ngRoute', 'ngTagsInput' ])
 	});
 } ])
 
-.controller('BoardDetailsCtrl',	[ '$scope', '$location', 'User', 'Gameboard', function($scope, $location, User, Gameboard) {
+.controller('BoardDetailsCtrl',	[ '$scope', '$location', 'User', 'Gameboard', 'Game', 
+                               	  function($scope, $location, User, Gameboard, Game) {
 
 	var params = $location.search();
 	
 	$scope.createGameHref = '#/creategame?boardId=' + params.id;
-	$scope.user = User.get({username: 'me'});
 	
-	$scope.board = Gameboard.get({id: params.boardId});
-	$scope.tags = new Array();
-	$scope.users = User.query({
-		nicknameOnly : 'true'
-	});
-	$scope.isAdmin = false;
+	$scope.user = undefined;
+	$scope.board = undefined;
+	$scope.showNoGamesInfo = false;
+	$scope.games = Game.query({boardId: params.boardId});
 	
-	$scope.board.$promise.then(function(board) {
-		angular.forEach(board.users, function(value, key) {
-			this.push({text: value})
-		}, $scope.tags);
-		
-		$scope.user.$promise.then(function(data) {
-			if(board.admins.includes(data.nickname)) {
-				$scope.isAdmin = true;
-			}
-		});
+	$scope.games.$promise.then(function(users) {
+		if(users.length < 1) {
+			$scope.showNoGamesInfo = true;
+		}
+		else {
+			$scope.showNoGamesInfo = false;
+		}
 	});
 	
-	$scope.getMatchingNicknames = function(query) {
-		return jQuery.grep($scope.users, function(n, i) {
-			if (n.indexOf(query) > -1) {
-				return true;
-			}
-			return false;
-		});
-	}
+	
+	
+	/**
+	 * Events
+	 */
+	$scope.$on('user-me', function(event, data) {
+		$scope.user = data;
+	});
+	
+	$scope.$on('current-board', function(event, data) {
+		$scope.board = data;
+	});
 
 
 }]);

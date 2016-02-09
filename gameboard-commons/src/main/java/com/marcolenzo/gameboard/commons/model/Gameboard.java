@@ -31,6 +31,7 @@ public class Gameboard {
 
 	private List<String> users;
 
+
 	/**
 	 * @return the id
 	 */

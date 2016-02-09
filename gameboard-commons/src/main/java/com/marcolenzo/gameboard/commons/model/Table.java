@@ -9,52 +9,54 @@ import java.util.List;
  */
 public class Table {
 
-	private String id;
+	private Integer number;
 
-	private String gameSessionId;
+	private List<String> userIds;
 
-	private List<User> users;
+	private Result result;
 
 	/**
-	 * @return the id
+	 * @return the number
 	 */
-	public String getId() {
-		return id;
+	public Integer getNumber() {
+		return number;
 	}
 
 	/**
-	 * @param id the id to set
+	 * @param number the number to set
 	 */
-	public void setId(String id) {
-		this.id = id;
+	public void setNumber(Integer number) {
+		this.number = number;
+	}
+
+
+		/**
+	 * @return the userIds
+	 */
+	public List<String> getUserIds() {
+		return userIds;
 	}
 
 	/**
-	 * @return the gameSessionId
+	 * @param userIds the userIds to set
 	 */
-	public String getGameSessionId() {
-		return gameSessionId;
+	public void setUserIds(List<String> userIds) {
+		this.userIds = userIds;
 	}
 
 	/**
-	 * @param gameSessionId the gameSessionId to set
+	 * @return the result
 	 */
-	public void setGameSessionId(String gameSessionId) {
-		this.gameSessionId = gameSessionId;
+	public Result getResult() {
+		return result;
 	}
 
 	/**
-	 * @return the users
+	 * @param result the result to set
 	 */
-	public List<User> getUsers() {
-		return users;
+	public void setResult(Result result) {
+		this.result = result;
 	}
 
-	/**
-	 * @param users the users to set
-	 */
-	public void setUsers(List<User> users) {
-		this.users = users;
-	}
 
 }

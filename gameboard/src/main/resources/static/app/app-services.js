@@ -10,4 +10,9 @@ angular.module('myApp.services', ['ngRoute'])
 .service('Gameboard', [ '$resource', function(resource) {
 	return resource('/api/gameboard/:id/');
 	// Note resource ignores trailing slash... need to switch to $http
+}])
+
+.service('Game', [ '$resource', function(resource) {
+	return resource('/api/game/:id/');
+	// Note resource ignores trailing slash... need to switch to $http
 }]);
