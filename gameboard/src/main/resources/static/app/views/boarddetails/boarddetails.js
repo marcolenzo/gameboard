@@ -14,35 +14,21 @@ angular.module('myApp.boarddetails', [ 'ngRoute', 'ngTagsInput' ])
 	var params = $location.search();
 	
 	$scope.createGameHref = '#/creategame?boardId=' + params.id;
-	$scope.user = User.get({username: 'me'});
 	
+	$scope.user = undefined;
 	$scope.board = Gameboard.get({id: params.boardId});
-	$scope.tags = new Array();
-	$scope.users = User.query({
-		nicknameOnly : 'true'
-	});
-	$scope.isAdmin = false;
 	
-	$scope.board.$promise.then(function(board) {
-		angular.forEach(board.users, function(value, key) {
-			this.push({text: value})
-		}, $scope.tags);
-		
-		$scope.user.$promise.then(function(data) {
-			if(board.admins.includes(data.nickname)) {
-				$scope.isAdmin = true;
-			}
-		});
+	
+	/**
+	 * Events
+	 */
+	$scope.$on('user-me', function(event, data) {
+		$scope.user = data;
 	});
 	
-	$scope.getMatchingNicknames = function(query) {
-		return jQuery.grep($scope.users, function(n, i) {
-			if (n.indexOf(query) > -1) {
-				return true;
-			}
-			return false;
-		});
-	}
+	$scope.$on('board-details', function(event, data) {
+		$scope.board = data;
+	});
 
 
 }]);

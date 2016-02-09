@@ -9,38 +9,24 @@ import java.util.List;
  */
 public class Table {
 
-	private String id;
-
-	private String gameSessionId;
+	private Integer number;
 
 	private List<User> users;
 
+	private Result result;
+
 	/**
-	 * @return the id
+	 * @return the number
 	 */
-	public String getId() {
-		return id;
+	public Integer getNumber() {
+		return number;
 	}
 
 	/**
-	 * @param id the id to set
+	 * @param number the number to set
 	 */
-	public void setId(String id) {
-		this.id = id;
-	}
-
-	/**
-	 * @return the gameSessionId
-	 */
-	public String getGameSessionId() {
-		return gameSessionId;
-	}
-
-	/**
-	 * @param gameSessionId the gameSessionId to set
-	 */
-	public void setGameSessionId(String gameSessionId) {
-		this.gameSessionId = gameSessionId;
+	public void setNumber(Integer number) {
+		this.number = number;
 	}
 
 	/**
@@ -56,5 +42,20 @@ public class Table {
 	public void setUsers(List<User> users) {
 		this.users = users;
 	}
+
+	/**
+	 * @return the result
+	 */
+	public Result getResult() {
+		return result;
+	}
+
+	/**
+	 * @param result the result to set
+	 */
+	public void setResult(Result result) {
+		this.result = result;
+	}
+
 
 }

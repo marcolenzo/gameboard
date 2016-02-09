@@ -23,19 +23,29 @@ config([ '$routeProvider', function($routeProvider) {
 controller('MainCtrl', [ '$scope', '$location', 'User', 'Gameboard', function($scope, $location, User, Gameboard) {
 			
 	/**
-	 * Start: Side navigation logic.
+	 * Start: Side navigation logic and resource preloading.
 	 */
 	$scope.showBoardMenu = false;
 	$scope.board = undefined;
+	$scope.user = undefined;
+	
 	$scope.currentPath = "/overview";
 	
 	$scope.boardDetailsPaths = ['/boarddetails']
 	
 	$scope.$on('$routeChangeSuccess', function (scope, next, current) {
+		// Load user details if still undefined
+		if($scope.user === undefined) {
+			$scope.user = User.get({username: 'me'});
+			$scope.$broadcast('user-me', $scope.user)
+		}
+		
+		
 		if(next.$$route != null) {
 			$scope.currentPath = next.$$route.originalPath;
 			if($scope.boardDetailsPaths.includes($scope.currentPath)) {
 				$scope.board = Gameboard.get({id: next.params.boardId});
+				$scope.$broadcast('current-board', $scope.board);
 				$scope.showBoardMenu = true;
 			}
 			else {
