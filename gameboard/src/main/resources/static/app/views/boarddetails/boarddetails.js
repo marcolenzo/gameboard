@@ -18,7 +18,19 @@ angular.module('myApp.boarddetails', [ 'ngRoute', 'ngTagsInput' ])
 	
 	$scope.user = undefined;
 	$scope.board = undefined;
+	$scope.showNoGamesInfo = false;
 	$scope.games = Game.query({boardId: params.boardId});
+	
+	$scope.games.$promise.then(function(users) {
+		if(users.length < 1) {
+			$scope.showNoGamesInfo = true;
+		}
+		else {
+			$scope.showNoGamesInfo = false;
+		}
+	});
+	
+	
 	
 	/**
 	 * Events
