@@ -3,9 +3,5 @@ Keep track of your games with Gameboard. Organize matches, log results and check
 
 Pre-Alpha Preview: 
 
-- https://gameboard.marcolenzo.eu/signup
-- https://gameboard.marcolenzo.eu/signup-success.html
-- https://gameboard.marcolenzo.eu/signup-failed.html
-- https://gameboard.marcolenzo.eu/login
-- https://gameboard.marcolenzo.eu/dashboard
+- https://gameboard.marcolenzo.eu/index
 
