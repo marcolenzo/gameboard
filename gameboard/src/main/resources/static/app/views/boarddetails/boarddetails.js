@@ -9,15 +9,16 @@ angular.module('myApp.boarddetails', [ 'ngRoute', 'ngTagsInput' ])
 	});
 } ])
 
-.controller('BoardDetailsCtrl',	[ '$scope', '$location', 'User', 'Gameboard', function($scope, $location, User, Gameboard) {
+.controller('BoardDetailsCtrl',	[ '$scope', '$location', 'User', 'Gameboard', 'Game', 
+                               	  function($scope, $location, User, Gameboard, Game) {
 
 	var params = $location.search();
 	
 	$scope.createGameHref = '#/creategame?boardId=' + params.id;
 	
 	$scope.user = undefined;
-	$scope.board = Gameboard.get({id: params.boardId});
-	
+	$scope.board = undefined;
+	$scope.games = Game.query({boardId: params.boardId});
 	
 	/**
 	 * Events
@@ -26,7 +27,7 @@ angular.module('myApp.boarddetails', [ 'ngRoute', 'ngTagsInput' ])
 		$scope.user = data;
 	});
 	
-	$scope.$on('board-details', function(event, data) {
+	$scope.$on('current-board', function(event, data) {
 		$scope.board = data;
 	});
 
