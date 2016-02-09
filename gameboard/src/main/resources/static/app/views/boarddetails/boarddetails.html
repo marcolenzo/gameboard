@@ -5,55 +5,29 @@
 	</div>
 </div>
 <div ng-show="showNoGamesInfo" class="row">
-	<br/>
-	<div class="alert alert-info" role="alert">You have no schedules games!
-		<a ng-href="#/creategame?boardId={{board.id}}" class="alert-link">Create a new game now!</a>
+	<br />
+	<div class="alert alert-info" role="alert">
+		You have no schedules games! <a
+			ng-href="#/creategame?boardId={{board.id}}" class="alert-link">Create
+			a new game now!</a>
 	</div>
 </div>
-<div class="row">
-	<div class="col-xs-12 col-sm-6">
-		<h2 class="sub-header">Leaderboard</h2>
+<div ng-hide="showNoGamesInfo" class="row">
+	<div class="col-xs-12 col-sm-12">
+		<h2 class="sub-header">Open Games</h2>
 		<div class="table-responsive">
 			<table class="table table-striped">
 				<thead>
 					<tr>
-						<th>Pos #</th>
-						<th>Name</th>
-						<th>ELO</th>
+						<th>Id</th>
+						<th>Start Time</th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
-						<td>1</td>
-						<td>Marco</td>
-						<td>2345</td>
-					</tr>
-					<tr>
-						<td>2</td>
-						<td>Andy</td>
-						<td>2325</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-
-	</div>
-	<div class="col-xs-12 col-sm-6">
-		<h2 class="sub-header">Board Stats</h2>
-		<div class="table-responsive">
-			<table class="table table-striped">
-				<thead>
-					<tr>
-						<th>Games Played</th>
-						<th>Last Game</th>
-						<th>Upcoming Game</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>121</td>
-						<td>10/02/2016 13:30</td>
-						<td>11/02/2016 13:30</td>
+					<tr ng-repeat="x in games">
+						<td>{{x.id}}</a></td>
+						<td>{{x.startTime[2]}}/{{x.startTime[1]}}/{{x.startTime[0]}}
+							{{x.startTime[3]}}:{{x.startTime[4]}}</td>
 					</tr>
 				</tbody>
 			</table>

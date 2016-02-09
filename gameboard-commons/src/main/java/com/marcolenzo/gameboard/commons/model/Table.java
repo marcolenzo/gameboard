@@ -11,7 +11,7 @@ public class Table {
 
 	private Integer number;
 
-	private List<User> users;
+	private List<String> userIds;
 
 	private Result result;
 
@@ -29,18 +29,19 @@ public class Table {
 		this.number = number;
 	}
 
-	/**
-	 * @return the users
+
+		/**
+	 * @return the userIds
 	 */
-	public List<User> getUsers() {
-		return users;
+	public List<String> getUserIds() {
+		return userIds;
 	}
 
 	/**
-	 * @param users the users to set
+	 * @param userIds the userIds to set
 	 */
-	public void setUsers(List<User> users) {
-		this.users = users;
+	public void setUserIds(List<String> userIds) {
+		this.userIds = userIds;
 	}
 
 	/**

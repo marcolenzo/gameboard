@@ -14,6 +14,7 @@ angular.module('myApp.creategame', [ 'ngRoute', 'ngTagsInput' ])
 			
 			$scope.user = undefined;
 			$scope.board = undefined;
+			$scope.game = {};
 			
 			/*
 			 * Date Picker Settings
@@ -21,7 +22,7 @@ angular.module('myApp.creategame', [ 'ngRoute', 'ngTagsInput' ])
 			$scope.datePopup = {
 				    opened: false
 			};
-			$scope.date = new Date();
+			$scope.game.date = new Date();
 			$scope.minDate = new Date();
 			$scope.openDatePicker = function() {
 			    $scope.datePopup.opened = true;
@@ -30,7 +31,7 @@ angular.module('myApp.creategame', [ 'ngRoute', 'ngTagsInput' ])
 			/*
 			 * Time Picker Settings
 			 */
-			$scope.time = new Date();
+			$scope.game.time = new Date();
 			
 			/*
 			 * Events
@@ -41,14 +42,19 @@ angular.module('myApp.creategame', [ 'ngRoute', 'ngTagsInput' ])
 			
 			$scope.$on('current-board', function(event, data) {
 				$scope.board = data;
+				$scope.game.boardId = data.id;
 			});
 			
 			/*
 			 * Create Game
 			 */
 			$scope.createGame = function() {
+				$scope.game.startTime = [$scope.game.date.getFullYear(), $scope.game.date.getMonth() + 1, 
+				                         $scope.game.date.getDate(), $scope.game.time.getHours(), 
+				                         $scope.game.time.getMinutes(), 0, 0];
 				Game.save($scope.game, function() {
 					alert('Success');
+					$location.path('/boarddetails');
 				}, function() {
 					alert('Failed');
 				})

@@ -83,7 +83,7 @@ public class Game {
 	}
 
 
-		/**
+	/**
 	 * @return the status
 	 */
 	public Status getStatus() {
