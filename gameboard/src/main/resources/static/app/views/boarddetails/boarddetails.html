@@ -7,7 +7,7 @@
 <div ng-show="showNoGamesInfo" class="row">
 	<br/>
 	<div class="alert alert-info" role="alert">You have no schedules games!
-		<a href="#" class="alert-link">Create a new game now!</a>
+		<a ng-href="#/creategame?boardId={{board.id}}" class="alert-link">Create a new game now!</a>
 	</div>
 </div>
 <div class="row">

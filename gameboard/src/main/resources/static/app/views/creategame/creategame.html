@@ -1,5 +1,5 @@
 
-<form name="createBoardForm">
+<form name="createGameForm">
 	<div class="form-group">
 		<label for="name">Board Name</label> <input type="text"
 			class="form-control" id="name" placeholder="Board Name"
@@ -12,29 +12,19 @@
 	<div class="form-group">
 		<label for="date">Date</label>
 		<p class="input-group">
-			<input type="text" class="form-control"
-				uib-datepicker-popup="{{format}}" ng-model="dt"
-				is-open="popup1.opened" min-date="minDate" max-date="maxDate"
-				datepicker-options="dateOptions"
-				date-disabled="disabled(date, mode)" ng-required="true"
-				close-text="Close" alt-input-formats="altInputFormats" /> <span
+			<input type="text" class="form-control"	uib-datepicker-popup="{{format}}" ng-model="date"
+				is-open="datePopup.opened" min-date="minDate"
+				ng-required="true"
+				close-text="Close"  /> <span
 				class="input-group-btn">
-				<button type="button" class="btn btn-default" ng-click="open1()">
+				<button type="button" class="btn btn-default" ng-click="openDatePicker()">
 					<i class="glyphicon glyphicon-calendar"></i>
 				</button>
 			</span>
 		</p>
 		<label for="time">Time</label>
-		<uib-timepicker ng-model="mytime" ng-change="changed()"
-			hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></uib-timepicker>
+		<uib-timepicker ng-model="time" hour-step="1" minute-step="1" show-meridian="false"></uib-timepicker>
 	</div>
-	<div class="form-group">
-		<label><input type="checkbox" ng-model="isRecurring"><span></span>Recurring</label>
-	</div>
-	<div class="form-group">
-		<label> <input type="checkbox" ng-show="isRecurring"><span></span>Monday
-		</label>
-	</div>
-	<button type="submit" class="btn btn-default" ng-click="createBoard()"
-		ng-disabled="createBoardForm.$invalid">Submit</button>
+	<button type="submit" class="btn btn-default" ng-click="createGame()"
+		ng-disabled="createGameForm.$invalid">Submit</button>
 </form>
