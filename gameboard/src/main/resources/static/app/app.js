@@ -20,16 +20,27 @@ config([ '$routeProvider', function($routeProvider) {
 	});
 } ]).
 
-controller('MainCtrl', [ '$scope', '$location', 'User', function($scope, $location, User) {
+controller('MainCtrl', [ '$scope', '$location', 'User', 'Gameboard', function($scope, $location, User, Gameboard) {
 			
 	/**
 	 * Start: Side navigation logic.
 	 */
+	$scope.showBoardMenu = false;
+	$scope.board = undefined;
 	$scope.currentPath = "/overview";
+	
+	$scope.boardDetailsPaths = ['/boarddetails']
 	
 	$scope.$on('$routeChangeSuccess', function (scope, next, current) {
 		if(next.$$route != null) {
 			$scope.currentPath = next.$$route.originalPath;
+			if($scope.boardDetailsPaths.includes($scope.currentPath)) {
+				$scope.board = Gameboard.get({id: next.params.boardId});
+				$scope.showBoardMenu = true;
+			}
+			else {
+				$scope.showBoardMenu = false;
+			}
 		}
     });
 	
@@ -39,5 +50,7 @@ controller('MainCtrl', [ '$scope', '$location', 'User', function($scope, $locati
 		}
 		return '';
 	}
+	
+	
 	
 }]);

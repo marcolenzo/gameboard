@@ -57,11 +57,11 @@
 		<div class="row">
 			<div class="col-sm-3 col-md-2 sidebar">
 				<ul class="nav nav-sidebar">
-					<li ng-class="isMenuItemActive('/overview')" href="#/overview"><a>Overview</a></li>
+					<li ng-class="isMenuItemActive('/overview')"><a href="#/overview">Overview</a></li>
 					<li ng-class="isMenuItemActive('/createboard')"><a href="#/createboard">Create new board</a></li>
 				</ul>
-				<ul class="nav nav-sidebar">
-					<li ng-class="isMenuItemActive('/boardetails')"><a ng-href="#/boarddetails?id={{board.id}}">{{board.name}}</a></li>
+				<ul ng-show="showBoardMenu" class="nav nav-sidebar">
+					<li ng-class="isMenuItemActive('/boarddetails')"><a ng-href="#/boarddetails?boardId={{board.id}}">{{board.name}}</a></li>
 					<li><a ng-href="#/boarddetails?id={{board.id}}">Leaderboards</a></li>
 					<li><a ng-href="#/boarddetails?id={{board.id}}">Schedule</a></li>
 				</ul>

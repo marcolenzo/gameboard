@@ -12,15 +12,11 @@ angular.module('myApp.boarddetails', [ 'ngRoute', 'ngTagsInput' ])
 .controller('BoardDetailsCtrl',	[ '$scope', '$location', 'User', 'Gameboard', function($scope, $location, User, Gameboard) {
 
 	var params = $location.search();
-	if(params.id == null) {
-		alert('Fuck up!');
-	}
 	
 	$scope.createGameHref = '#/creategame?boardId=' + params.id;
-	
 	$scope.user = User.get({username: 'me'});
 	
-	$scope.board = Gameboard.get({id: params.id});
+	$scope.board = Gameboard.get({id: params.boardId});
 	$scope.tags = new Array();
 	$scope.users = User.query({
 		nicknameOnly : 'true'
