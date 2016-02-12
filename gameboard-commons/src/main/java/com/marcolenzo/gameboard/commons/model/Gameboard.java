@@ -1,6 +1,6 @@
 package com.marcolenzo.gameboard.commons.model;
 
-import java.util.List;
+import java.util.Set;
 
 import javax.validation.constraints.Size;
 
@@ -27,9 +27,9 @@ public class Gameboard {
 	
 	private String type = "RESISTANCE";
 
-	private List<String> admins;
+	private Set<String> admins;
 
-	private List<String> users;
+	private Set<String> users;
 
 
 	/**
@@ -77,28 +77,28 @@ public class Gameboard {
 	/**
 	 * @return the admins
 	 */
-	public List<String> getAdmins() {
+	public Set<String> getAdmins() {
 		return admins;
 	}
 
 	/**
 	 * @param admins the admins to set
 	 */
-	public void setAdmins(List<String> admins) {
+	public void setAdmins(Set<String> admins) {
 		this.admins = admins;
 	}
 
 	/**
 	 * @return the users
 	 */
-	public List<String> getUsers() {
+	public Set<String> getUsers() {
 		return users;
 	}
 
 	/**
 	 * @param users the users to set
 	 */
-	public void setUsers(List<String> users) {
+	public void setUsers(Set<String> users) {
 		this.users = users;
 	}
 

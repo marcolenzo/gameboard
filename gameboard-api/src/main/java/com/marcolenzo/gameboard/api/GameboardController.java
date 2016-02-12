@@ -1,6 +1,7 @@
 package com.marcolenzo.gameboard.api;
 
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 import javax.validation.Valid;
@@ -14,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import com.marcolenzo.gameboard.api.exceptions.BadRequestException;
 import com.marcolenzo.gameboard.commons.model.Gameboard;
 import com.marcolenzo.gameboard.commons.model.User;
@@ -42,7 +43,7 @@ public class GameboardController {
 			gameboard.getUsers().add(currentUser.getNickname());
 		}
 		gameboard.setId(UUID.randomUUID().toString());
-		gameboard.setAdmins(Lists.newArrayList(currentUser.getNickname()));
+		gameboard.setAdmins(Sets.newHashSet(currentUser.getNickname()));
 
 		return repository.save(gameboard);
 	}
@@ -73,8 +74,8 @@ public class GameboardController {
 		gameboard.setName("My Board");
 		gameboard.setType("RESISTANCE");
 		
-		List<String> users = Lists.newArrayList("Marco", "Andy");
-		List<String> admins = Lists.newArrayList("Marco");
+		Set<String> users = Sets.newHashSet("Marco", "Andy");
+		Set<String> admins = Sets.newHashSet("Marco");
 		gameboard.setUsers(users);
 		gameboard.setAdmins(admins);
 		return gameboard;
