@@ -20,8 +20,8 @@ config([ '$routeProvider', function($routeProvider) {
 	});
 } ]).
 
-controller('MainCtrl', [ '$scope', '$rootScope', '$location', '$timeout', 'User', 'Gameboard', 
-                         function($scope, $rootScope, $location, $timeout, User, Gameboard) {
+controller('MainCtrl', [ '$scope', '$rootScope', '$location', '$timeout', 'User', 'Board', 
+                         function($scope, $rootScope, $location, $timeout, User, Board) {
 			
 	/**
 	 * Start: Side navigation logic and resource preloading.
@@ -48,7 +48,7 @@ controller('MainCtrl', [ '$scope', '$rootScope', '$location', '$timeout', 'User'
 		if(next.$$route != null) {
 			$scope.currentPath = next.$$route.originalPath;
 			if($scope.boardDetailsPaths.includes($scope.currentPath)) {
-                $scope.board = Gameboard.get({id: next.params.boardId});
+                $scope.board = Board.get({id: next.params.boardId});
                 $timeout(function(){
                     $rootScope.$broadcast('current-board', $scope.board);
                 });

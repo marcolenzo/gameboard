@@ -26,7 +26,7 @@ import com.marcolenzo.gameboard.commons.repositories.GameRepository;
 @RestController
 public class GameController {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(GameboardController.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(BoardController.class);
 
 	@Autowired
 	private GameRepository repository;

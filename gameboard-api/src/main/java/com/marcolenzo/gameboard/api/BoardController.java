@@ -17,9 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.google.common.collect.Sets;
 import com.marcolenzo.gameboard.api.exceptions.BadRequestException;
-import com.marcolenzo.gameboard.commons.model.Gameboard;
+import com.marcolenzo.gameboard.commons.model.Board;
 import com.marcolenzo.gameboard.commons.model.User;
-import com.marcolenzo.gameboard.commons.repositories.GameboardRepository;
+import com.marcolenzo.gameboard.commons.repositories.BoardRepository;
 import com.marcolenzo.gameboard.commons.repositories.UserRepository;
 
 /**
@@ -28,16 +28,16 @@ import com.marcolenzo.gameboard.commons.repositories.UserRepository;
  *
  */
 @RestController
-public class GameboardController {
+public class BoardController {
 
 	@Autowired
-	private GameboardRepository repository;
+	private BoardRepository repository;
 
 	@Autowired
 	private UserRepository userRepository;
 
-	@RequestMapping(value = "/api/gameboard", method = RequestMethod.POST)
-	public Gameboard createGameboard(@Valid @RequestBody Gameboard gameboard) {
+	@RequestMapping(value = "/api/board", method = RequestMethod.POST)
+	public Board createGameboard(@Valid @RequestBody Board gameboard) {
 		User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		if (!gameboard.getUsers().contains(currentUser.getId())) {
 			gameboard.getUsers().add(currentUser.getId());
@@ -48,8 +48,8 @@ public class GameboardController {
 		return repository.save(gameboard);
 	}
 
-	@RequestMapping(value = "/api/gameboard/{id}", method = RequestMethod.PUT)
-	public Gameboard createGameboard(@PathVariable String id, @Valid @RequestBody Gameboard gameboard)
+	@RequestMapping(value = "/api/board/{id}", method = RequestMethod.PUT)
+	public Board createGameboard(@PathVariable String id, @Valid @RequestBody Board gameboard)
 			throws BadRequestException {
 		if (!id.equals(gameboard.getId())) {
 			throw new BadRequestException("IDs cannot be updated.");
@@ -57,19 +57,19 @@ public class GameboardController {
 		return repository.save(gameboard);
 	}
 
-	@RequestMapping(value = "/api/gameboard/{id}", method = RequestMethod.GET)
-	public Gameboard getGameboardById(@PathVariable String id) {
+	@RequestMapping(value = "/api/board/{id}", method = RequestMethod.GET)
+	public Board getGameboardById(@PathVariable String id) {
 		return repository.findOne(id);
 	}
 
-	@RequestMapping(value = "/api/gameboard", method = RequestMethod.GET, params = { "user" })
-	public List<Gameboard> getGameboardByUser(@RequestParam(value = "user", required = true) String userId) {
+	@RequestMapping(value = "/api/board", method = RequestMethod.GET, params = { "user" })
+	public List<Board> getGameboardByUser(@RequestParam(value = "user", required = true) String userId) {
 		return repository.findByUsers(userId);
 	}
 
-	@RequestMapping(value = "/api/gameboard/test", method = RequestMethod.GET)
-	public Gameboard test() {
-		Gameboard gameboard = new Gameboard();
+	@RequestMapping(value = "/api/board/test", method = RequestMethod.GET)
+	public Board test() {
+		Board gameboard = new Board();
 		gameboard.setId(UUID.randomUUID().toString());
 		gameboard.setName("My Board");
 		gameboard.setType("RESISTANCE");

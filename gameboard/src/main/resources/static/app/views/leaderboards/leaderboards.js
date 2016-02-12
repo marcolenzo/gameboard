@@ -10,7 +10,7 @@ angular.module('myApp.leaderboards', [ 'ngRoute', 'ngTagsInput' ])
 } ])
 
 .controller('LeaderboardsCtrl',
-		[ '$scope', '$location', 'User', 'Gameboard', function($scope, $location, User, Gameboard) {
+		[ '$scope', '$location', 'User', 'Board', function($scope, $location, User, Board) {
 
 
 		} ]);

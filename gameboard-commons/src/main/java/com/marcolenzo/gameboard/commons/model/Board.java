@@ -15,7 +15,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
  *
  */
 @Document
-public class Gameboard {
+public class Board {
 
 	@Id
 	private String id;

@@ -9,8 +9,8 @@ angular.module('myApp.boarddetails', [ 'ngRoute', 'ngTagsInput' ])
 	});
 } ])
 
-.controller('BoardDetailsCtrl',	[ '$scope', '$location', '$route', '$rootScope', 'User', 'Gameboard', 'Game', 
-                               	  function($scope, $location, $route, $rootScope, User, Gameboard, Game) {
+.controller('BoardDetailsCtrl',	[ '$scope', '$location', '$route', '$rootScope', 'User', 'Board', 'Game', 
+                               	  function($scope, $location, $route, $rootScope, User, Board, Game) {
 
 	var params = $location.search();
 	
@@ -23,7 +23,7 @@ angular.module('myApp.boarddetails', [ 'ngRoute', 'ngTagsInput' ])
 		
 	$rootScope.user.$promise.then(function(user){
 		$scope.user = user;
-		$scope.board = Gameboard.get({id: params.boardId});
+		$scope.board = Board.get({id: params.boardId});
 		$scope.board.$promise.then(function (board) {
 			if(board.users.includes($scope.user.id)) {
 				$scope.isMember = true;
@@ -36,7 +36,7 @@ angular.module('myApp.boarddetails', [ 'ngRoute', 'ngTagsInput' ])
 	
 	$scope.joinBoard = function() {
 		$scope.board.users.push($scope.user.id);
-		Gameboard.update({ id: $scope.board.id }, $scope.board, function() {
+		Board.update({ id: $scope.board.id }, $scope.board, function() {
 			alert('Success!');
 			$route.reload();
 		}, function() {

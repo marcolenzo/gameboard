@@ -10,7 +10,7 @@ angular.module('myApp.createboard', [ 'ngRoute', 'ngTagsInput' ])
 } ])
 
 .controller('CreateboardCtrl',
-		[ '$scope', '$location', 'User', 'Gameboard', function($scope, $location, User, Gameboard) {
+		[ '$scope', '$location', 'User', 'Board', function($scope, $location, User, Board) {
 
 			var _selected;
 			var nickMap = {};
@@ -51,7 +51,7 @@ angular.module('myApp.createboard', [ 'ngRoute', 'ngTagsInput' ])
 
 				$scope.board.users = users;
 
-				Gameboard.save($scope.board, function() {
+				Board.save($scope.board, function() {
 					alert("Success");
 					$location.path('/dashboard');
 				}, function() {
