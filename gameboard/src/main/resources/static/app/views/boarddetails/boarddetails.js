@@ -16,25 +16,22 @@ angular.module('myApp.boarddetails', [ 'ngRoute', 'ngTagsInput' ])
 	
 	$scope.createGameHref = '#/creategame?boardId=' + params.id;
 	
-	$scope.user = $rootScope.user;
-	$scope.board = Gameboard.get({id: params.boardId});
-	$scope.isMember = false;
-	
-	$scope.board.$promise.then(function (board) {
-		if(board.users.includes($scope.user.id)) {
-			$scope.isMember = true;
-		}
-	});
-	
-	/**
-	 * Events
-	 */
-	$scope.$on('user-me', function(event, data) {
-		$scope.user = data;
-	});
-	
-	$scope.$on('current-board', function(event, data) {
-		$scope.board = data;
+	$scope.user = undefined;
+	$scope.board = undefined;
+	// assume true to avoid flickering.
+	$scope.isMember = true;
+		
+	$rootScope.user.$promise.then(function(user){
+		$scope.user = user;
+		$scope.board = Gameboard.get({id: params.boardId});
+		$scope.board.$promise.then(function (board) {
+			if(board.users.includes($scope.user.id)) {
+				$scope.isMember = true;
+			}
+			else {
+				$scope.isMember = false;
+			}
+		});
 	});
 	
 	$scope.joinBoard = function() {
@@ -48,15 +45,4 @@ angular.module('myApp.boarddetails', [ 'ngRoute', 'ngTagsInput' ])
 		});
 	}
 	
-	/*
-	 * Internal functions.
-	 */
-	function checkMembership() {
-		if($scope.user != undefined && $scope.user.$resolved && $scope.board != undefined && $scope.board.$resolved && $scope.board.users.includes($scope.user.id)) {
-			$scope.isMember = true;
-		}
-	}
-	
-	checkMembership();
-
 }]);
