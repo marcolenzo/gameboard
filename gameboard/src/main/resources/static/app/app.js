@@ -9,6 +9,7 @@ angular.module(
 		  'myApp.overview', 
 		  'myApp.createboard', 
 		  'myApp.creategame', 
+		  'myApp.gameresult',
 		  'myApp.boarddetails', 
 		  'myApp.version',
 		  'ui.bootstrap', 
@@ -32,7 +33,7 @@ controller('MainCtrl', [ '$scope', '$rootScope', '$location', '$timeout', 'User'
 	
 	$scope.currentPath = "/overview";
 	
-	$scope.boardDetailsPaths = ['/boarddetails', '/creategame']
+	$scope.boardDetailsPaths = ['/boarddetails', '/creategame', '/gameresult'];
 	
 	$scope.$on('$routeChangeSuccess', function (scope, next, current) {
 		// Load user details if still undefined
