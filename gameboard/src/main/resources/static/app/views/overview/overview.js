@@ -11,7 +11,7 @@ angular.module('myApp.overview', ['ngRoute'])
     $scope.gameboards = undefined;
 	
     $scope.user.$promise.then(function(data) {
-		$scope.gameboards = Gameboard.query({user : data.nickname});
+		$scope.gameboards = Gameboard.query({user : data.id});
 		
 		$scope.gameboards.$promise.then(function(boards) {
 			angular.forEach(boards, function(value, key) {

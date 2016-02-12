@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.google.common.collect.Lists;
 import com.marcolenzo.gameboard.commons.model.User;
 import com.marcolenzo.gameboard.commons.repositories.UserRepository;
 
@@ -42,14 +41,13 @@ public class UserController {
 		return null;
 	}
 
-	@RequestMapping(value = "/api/user", method = RequestMethod.GET, params = { "nicknameOnly" })
-	public List<String> getNicknames() {
+	@RequestMapping(value = "/api/user", method = RequestMethod.GET)
+	public List<User> getUsers() {
 		List<User> users = repository.findAll();
-		List<String> nicknames = Lists.newArrayList();
 		for (User user : users) {
-			nicknames.add(user.getNickname());
+			user.setPassword(null);
 		}
-		return nicknames;
+		return users;
 	}
 
 	@RequestMapping(value = "/api/user", method = RequestMethod.POST)

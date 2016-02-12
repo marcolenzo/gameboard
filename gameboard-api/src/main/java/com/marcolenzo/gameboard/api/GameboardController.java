@@ -39,11 +39,11 @@ public class GameboardController {
 	@RequestMapping(value = "/api/gameboard", method = RequestMethod.POST)
 	public Gameboard createGameboard(@Valid @RequestBody Gameboard gameboard) {
 		User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		if (!gameboard.getUsers().contains(currentUser.getNickname())) {
-			gameboard.getUsers().add(currentUser.getNickname());
+		if (!gameboard.getUsers().contains(currentUser.getId())) {
+			gameboard.getUsers().add(currentUser.getId());
 		}
 		gameboard.setId(UUID.randomUUID().toString());
-		gameboard.setAdmins(Sets.newHashSet(currentUser.getNickname()));
+		gameboard.setAdmins(Sets.newHashSet(currentUser.getId()));
 
 		return repository.save(gameboard);
 	}
