@@ -38,19 +38,16 @@ controller('MainCtrl', [ '$scope', '$rootScope', '$location', '$timeout', 'User'
 		// Load user details if still undefined
 		if($scope.user === undefined) {
 			$scope.user = User.get({username: 'me'});
-			$timeout(function(){
-				$rootScope.$broadcast('user-me', $scope.user)
-			});
+			$rootScope.user = $scope.user;
 		}
 		
+		$timeout(function(){
+			$rootScope.$broadcast('user-me', $scope.user)
+		});
 		
 		if(next.$$route != null) {
 			$scope.currentPath = next.$$route.originalPath;
 			if($scope.boardDetailsPaths.includes($scope.currentPath)) {
-				$scope.board = Gameboard.get({id: next.params.boardId});
-				$timeout(function(){
-					$rootScope.$broadcast('current-board', $scope.board);
-				});
 				$scope.showBoardMenu = true;
 			}
 			else {

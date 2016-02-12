@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import com.marcolenzo.gameboard.api.exceptions.BadRequestException;
 import com.marcolenzo.gameboard.commons.model.FieldError;
 import com.marcolenzo.gameboard.commons.model.ValidationError;
 
@@ -38,4 +39,12 @@ public class ExceptionControllerAdvice {
 		}
 		return validation;
 	}
+
+	@ExceptionHandler(BadRequestException.class)
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	@ResponseBody
+	public String badRequest(BadRequestException ex, Locale locale) {
+		return ex.getMessage();
+	}
+
 }

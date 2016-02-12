@@ -8,7 +8,9 @@ angular.module('myApp.services', ['ngRoute'])
 }])
 
 .service('Gameboard', [ '$resource', function(resource) {
-	return resource('/api/gameboard/:id/');
+	return resource('/api/gameboard/:id/', null, {
+		'update': { method: 'PUT' }
+	});
 	// Note resource ignores trailing slash... need to switch to $http
 }])
 

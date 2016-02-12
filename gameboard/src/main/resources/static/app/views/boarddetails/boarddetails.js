@@ -9,28 +9,22 @@ angular.module('myApp.boarddetails', [ 'ngRoute', 'ngTagsInput' ])
 	});
 } ])
 
-.controller('BoardDetailsCtrl',	[ '$scope', '$location', 'User', 'Gameboard', 'Game', 
-                               	  function($scope, $location, User, Gameboard, Game) {
+.controller('BoardDetailsCtrl',	[ '$scope', '$location', '$route', '$rootScope', 'User', 'Gameboard', 'Game', 
+                               	  function($scope, $location, $route, $rootScope, User, Gameboard, Game) {
 
 	var params = $location.search();
 	
 	$scope.createGameHref = '#/creategame?boardId=' + params.id;
 	
-	$scope.user = undefined;
-	$scope.board = undefined;
-	$scope.showNoGamesInfo = false;
-	$scope.games = Game.query({boardId: params.boardId});
+	$scope.user = $rootScope.user;
+	$scope.board = Gameboard.get({id: params.boardId});
+	$scope.isMember = false;
 	
-	$scope.games.$promise.then(function(users) {
-		if(users.length < 1) {
-			$scope.showNoGamesInfo = true;
-		}
-		else {
-			$scope.showNoGamesInfo = false;
+	$scope.board.$promise.then(function (board) {
+		if(board.users.includes($scope.user.id)) {
+			$scope.isMember = true;
 		}
 	});
-	
-	
 	
 	/**
 	 * Events
@@ -42,6 +36,27 @@ angular.module('myApp.boarddetails', [ 'ngRoute', 'ngTagsInput' ])
 	$scope.$on('current-board', function(event, data) {
 		$scope.board = data;
 	});
-
+	
+	$scope.joinBoard = function() {
+		$scope.board.users.push($scope.user.id);
+		Gameboard.update({ id: $scope.board.id }, $scope.board, function() {
+			alert('Success!');
+			$route.reload();
+		}, function() {
+			alert('Failed!');
+			$route.reload();
+		});
+	}
+	
+	/*
+	 * Internal functions.
+	 */
+	function checkMembership() {
+		if($scope.user != undefined && $scope.user.$resolved && $scope.board != undefined && $scope.board.$resolved && $scope.board.users.includes($scope.user.id)) {
+			$scope.isMember = true;
+		}
+	}
+	
+	checkMembership();
 
 }]);

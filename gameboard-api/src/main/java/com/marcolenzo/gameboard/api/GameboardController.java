@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.common.collect.Lists;
+import com.marcolenzo.gameboard.api.exceptions.BadRequestException;
 import com.marcolenzo.gameboard.commons.model.Gameboard;
 import com.marcolenzo.gameboard.commons.model.User;
 import com.marcolenzo.gameboard.commons.repositories.GameboardRepository;
@@ -43,6 +44,15 @@ public class GameboardController {
 		gameboard.setId(UUID.randomUUID().toString());
 		gameboard.setAdmins(Lists.newArrayList(currentUser.getNickname()));
 
+		return repository.save(gameboard);
+	}
+
+	@RequestMapping(value = "/api/gameboard/{id}", method = RequestMethod.PUT)
+	public Gameboard createGameboard(@PathVariable String id, @Valid @RequestBody Gameboard gameboard)
+			throws BadRequestException {
+		if (!id.equals(gameboard.getId())) {
+			throw new BadRequestException("IDs cannot be updated.");
+		}
 		return repository.save(gameboard);
 	}
 
