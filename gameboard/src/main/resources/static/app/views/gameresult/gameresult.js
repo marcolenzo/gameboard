@@ -10,7 +10,7 @@ angular.module('myApp.gameresult', [ 'ngRoute', 'ngTagsInput' ])
 } ])
 
 .controller('GameResultCtrl',
-		[ '$scope', '$location', 'Board', 'User', function($scope, $location, Board, User) {
+		[ '$scope', '$location', 'Board', 'User', 'Game', function($scope, $location, Board, User, Game) {
 			
 			var params = $location.search();
 			var nickMap = {}; 
@@ -21,6 +21,7 @@ angular.module('myApp.gameresult', [ 'ngRoute', 'ngTagsInput' ])
 			$scope.nicknames = new Array();
 			$scope.users = new Array();
 			$scope.game = {};
+			$scope.game.winner = "resistance";
 			
 			
 			$scope.board = Board.get({id: params.boardId});
@@ -92,6 +93,45 @@ angular.module('myApp.gameresult', [ 'ngRoute', 'ngTagsInput' ])
 				$scope.players.splice(index, 1);
 			}
 			
+			$scope.createGame = function() {
+				$scope.game.startTime = [$scope.game.date.getFullYear(), $scope.game.date.getMonth() + 1, 
+				                         $scope.game.date.getDate(), $scope.game.time.getHours(), 
+				                         $scope.game.time.getMinutes(), 0, 0];
+				$scope.game.boardId = $scope.board.id;
+				
+				// Set winner
+				if($scope.game.winner === "resistance") {
+					$scope.game.resistanceWin = true;
+				}
+				else {
+					$scope.game.resistanceWin = false;
+				}
+				
+				$scope.game.players = new Array();
+				$scope.game.spies = new Array();
+				
+				angular.forEach($scope.players, function(value, key) {
+					this.push(value.id);
+				}, $scope.game.players);
+				
+				angular.forEach($scope.players, function(value, key) {
+					if(value.isSpy) {
+						this.push(value.id);
+					}
+				}, $scope.game.spies);
+				
+				Game.save($scope.game, function() {
+					alert('Success');
+					$location.path('/boarddetails');
+				}, function() {
+					alert('Failed');
+				});
+				
+			}
+			
+			/*
+			 * Internal functions
+			 */
 			function compareNickname(a, b) {
 				  if (a.nickname < b.nickname)
 				    return -1;

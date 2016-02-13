@@ -1,7 +1,6 @@
 package com.marcolenzo.gameboard.api;
 
 import java.util.List;
-import java.util.UUID;
 
 import javax.validation.Valid;
 
@@ -15,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.marcolenzo.gameboard.commons.model.User;
+import com.marcolenzo.gameboard.commons.repositories.ResistanceGameRepository;
 import com.marcolenzo.gameboard.commons.repositories.UserRepository;
 
 /**
@@ -27,6 +27,9 @@ public class UserController {
 
 	@Autowired
 	private UserRepository repository;
+
+	@Autowired
+	private ResistanceGameRepository gameRepository;
 
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
@@ -52,7 +55,8 @@ public class UserController {
 
 	@RequestMapping(value = "/api/user", method = RequestMethod.POST)
 	public User createUser(@Valid @RequestBody User user) {
-		user.setId(UUID.randomUUID().toString());
+		// Do not accept preset IDs.
+		user.setId(null);
 		String encodedPassword = passwordEncoder.encode(user.getPassword());
 		user.setPassword(encodedPassword);
 		User savedUser = repository.save(user);

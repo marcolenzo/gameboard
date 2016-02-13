@@ -63,8 +63,8 @@
 	<div class="form-group">
 	<br/>
 			<label for="winner">Winner</label>
-			<label class="radio-inline"> <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">Resistance</label> 
-			<label class="radio-inline"> <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">Spy</label> 
+			<label class="radio-inline"> <input type="radio" ng-model="game.winner" name="inlineRadioOptions" id="inlineRadio1" value="resistance">Resistance</label> 
+			<label class="radio-inline"> <input type="radio" ng-model="game.winner" name="inlineRadioOptions" id="inlineRadio2" value="spies">Spies</label> 
 	</div>
 	<button type="submit" class="btn btn-default" ng-click="createGame()" ng-disabled="createGameForm.$invalid">Submit</button>
 </form>

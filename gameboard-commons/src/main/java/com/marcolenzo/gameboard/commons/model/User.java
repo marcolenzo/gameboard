@@ -1,6 +1,7 @@
 package com.marcolenzo.gameboard.commons.model;
 
 import java.util.Collection;
+import java.util.Map;
 
 import javax.validation.constraints.Size;
 
@@ -11,6 +12,8 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import com.google.common.collect.Maps;
 
 @Document
 public class User implements UserDetails {
@@ -33,6 +36,11 @@ public class User implements UserDetails {
 	@Size(min = 1, max = 64)
 	@Indexed(unique = true)
 	private String nickname;
+
+	/**
+	 * Map storing ELO ratings per board.
+	 */
+	private Map<String, Integer> eloRatings = Maps.newHashMap();
 
 	/**
 	 * @return the id
@@ -123,6 +131,20 @@ public class User implements UserDetails {
 	public boolean isEnabled() {
 		// TODO Auto-generated method stub
 		return true;
+	}
+
+	/**
+	 * @return the eloRatings
+	 */
+	public Map<String, Integer> getEloRatings() {
+		return eloRatings;
+	}
+
+	/**
+	 * @param eloRatings the eloRatings to set
+	 */
+	public void setEloRatings(Map<String, Integer> eloRatings) {
+		this.eloRatings = eloRatings;
 	}
 
 }

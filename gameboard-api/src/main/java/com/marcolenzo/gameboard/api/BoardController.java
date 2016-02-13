@@ -42,7 +42,7 @@ public class BoardController {
 		if (!gameboard.getUsers().contains(currentUser.getId())) {
 			gameboard.getUsers().add(currentUser.getId());
 		}
-		gameboard.setId(UUID.randomUUID().toString());
+		gameboard.setId(null);
 		gameboard.setAdmins(Sets.newHashSet(currentUser.getId()));
 
 		return repository.save(gameboard);
