@@ -20,7 +20,11 @@ angular.module('myApp.boarddetails', [ 'ngRoute', 'ngTagsInput' ])
 	$scope.board = undefined;
 	// assume true to avoid flickering.
 	$scope.isMember = true;
-		
+	$scope.users = User.query({boardId : params.boardId});
+	$scope.users.$promise.then(function(users) {
+		$scope.users.sort(compareElo);
+	});
+	
 	$rootScope.user.$promise.then(function(user){
 		$scope.user = user;
 		$scope.board = Board.get({id: params.boardId});
@@ -43,6 +47,18 @@ angular.module('myApp.boarddetails', [ 'ngRoute', 'ngTagsInput' ])
 			alert('Failed!');
 			$route.reload();
 		});
+	}
+	
+	/*
+	 * Internal functions
+	 */
+	function compareElo(a, b) {
+		  if (a.eloRatings[params.boardId] < b.eloRatings[params.boardId])
+		    return 1;
+		  else if (a.eloRatings[params.boardId] > b.eloRatings[params.boardId])
+		    return -1;
+		  else 
+		    return 0;
 	}
 	
 }]);

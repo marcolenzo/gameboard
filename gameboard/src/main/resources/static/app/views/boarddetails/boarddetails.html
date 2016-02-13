@@ -1,16 +1,38 @@
 <div ng-show="isMember" class="row">
-	<div class="col-xs-12 col-sm-12">
+	<div >
 		<h2>Board > {{board.name}}</h2>
 		<h4>Type: {{board.type}}</h4>
 	</div>
+	<h2 class="sub-header">Leaderboard</h2>
+	<div class="table-responsive">
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>Pos #</th>
+					<th>Player</th>
+					<th>ELO</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="x in users">
+					<td>{{$index + 1}}</td>
+					<td>{{x.nickname}}</a></td>
+					<td>{{x.eloRatings[board.id]}}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
 </div>
 
 <div ng-hide="isMember">
 	<br />
-    <div class="jumbotron">
-    	<h2>Welcome to {{board.name}}</h2>
-        <p>You did not join this board yet.</p>
-        <button class="btn btn-primary" ng-click="joinBoard()" class="alert-link">Join Now!</a>
-    </div>
+	<div class="jumbotron">
+		<h2>Welcome to {{board.name}}</h2>
+		<p>You did not join this board yet.</p>
+		<button class="btn btn-primary" ng-click="joinBoard()"
+			class="alert-link">
+			Join Now!</a>
+	</div>
 </div>
 

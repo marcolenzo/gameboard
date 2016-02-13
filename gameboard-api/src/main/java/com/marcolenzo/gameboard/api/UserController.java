@@ -11,9 +11,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.google.common.collect.Lists;
+import com.marcolenzo.gameboard.commons.model.Board;
 import com.marcolenzo.gameboard.commons.model.User;
+import com.marcolenzo.gameboard.commons.repositories.BoardRepository;
 import com.marcolenzo.gameboard.commons.repositories.ResistanceGameRepository;
 import com.marcolenzo.gameboard.commons.repositories.UserRepository;
 
@@ -27,6 +31,9 @@ public class UserController {
 
 	@Autowired
 	private UserRepository repository;
+
+	@Autowired
+	private BoardRepository boardRepository;
 
 	@Autowired
 	private ResistanceGameRepository gameRepository;
@@ -49,6 +56,18 @@ public class UserController {
 		List<User> users = repository.findAll();
 		for (User user : users) {
 			user.setPassword(null);
+		}
+		return users;
+	}
+
+	@RequestMapping(value = "/api/user", method = RequestMethod.GET, params = { "boardId" })
+	public List<User> getUsersByBoard(@RequestParam(value = "boardId") String boardId) {
+		Board board = boardRepository.findOne(boardId);
+		List<User> users = Lists.newArrayList();
+		for (String id : board.getUsers()) {
+			User user = repository.findOne(id);
+			user.setPassword(null);
+			users.add(user);
 		}
 		return users;
 	}

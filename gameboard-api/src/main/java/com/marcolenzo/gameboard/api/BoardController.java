@@ -45,7 +45,17 @@ public class BoardController {
 		gameboard.setId(null);
 		gameboard.setAdmins(Sets.newHashSet(currentUser.getId()));
 
-		return repository.save(gameboard);
+		Board board = repository.save(gameboard);
+
+		// TODO this should be async and it's own service layer
+		// Set elo rating per board.
+		for (String userId : gameboard.getUsers()) {
+			User user = userRepository.findOne(userId);
+			user.getEloRatings().put(board.getId(), 1500);
+			userRepository.save(user);
+		}
+
+		return board;
 	}
 
 	@RequestMapping(value = "/api/board/{id}", method = RequestMethod.PUT)
@@ -54,6 +64,16 @@ public class BoardController {
 		if (!id.equals(gameboard.getId())) {
 			throw new BadRequestException("IDs cannot be updated.");
 		}
+
+		// TODO should be done in its own place.
+		for (String userId : gameboard.getUsers()) {
+			User user = userRepository.findOne(userId);
+			if (user.getEloRatings().get(id) == null) {
+				user.getEloRatings().put(id, 1500);
+				userRepository.save(user);
+			}
+		}
+
 		return repository.save(gameboard);
 	}
 
@@ -73,7 +93,7 @@ public class BoardController {
 		gameboard.setId(UUID.randomUUID().toString());
 		gameboard.setName("My Board");
 		gameboard.setType("RESISTANCE");
-		
+
 		Set<String> users = Sets.newHashSet("Marco", "Andy");
 		Set<String> admins = Sets.newHashSet("Marco");
 		gameboard.setUsers(users);
