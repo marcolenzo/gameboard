@@ -9,6 +9,7 @@ angular.module(
 		  'myApp.overview', 
 		  'myApp.createboard', 
 		  'myApp.creategame', 
+		  'myApp.gameresult',
 		  'myApp.boarddetails', 
 		  'myApp.version',
 		  'ui.bootstrap', 
@@ -20,8 +21,8 @@ config([ '$routeProvider', function($routeProvider) {
 	});
 } ]).
 
-controller('MainCtrl', [ '$scope', '$rootScope', '$location', '$timeout', 'User', 'Gameboard', 
-                         function($scope, $rootScope, $location, $timeout, User, Gameboard) {
+controller('MainCtrl', [ '$scope', '$rootScope', '$location', '$timeout', 'User', 'Board', 
+                         function($scope, $rootScope, $location, $timeout, User, Board) {
 			
 	/**
 	 * Start: Side navigation logic and resource preloading.
@@ -32,25 +33,27 @@ controller('MainCtrl', [ '$scope', '$rootScope', '$location', '$timeout', 'User'
 	
 	$scope.currentPath = "/overview";
 	
-	$scope.boardDetailsPaths = ['/boarddetails', '/creategame']
+	$scope.boardDetailsPaths = ['/boarddetails', '/creategame', '/gameresult'];
 	
 	$scope.$on('$routeChangeSuccess', function (scope, next, current) {
 		// Load user details if still undefined
 		if($scope.user === undefined) {
 			$scope.user = User.get({username: 'me'});
-			$timeout(function(){
-				$rootScope.$broadcast('user-me', $scope.user)
-			});
+			$rootScope.user = $scope.user;
 		}
 		
+		$timeout(function(){
+			$rootScope.$broadcast('user-me', $scope.user)
+		});
 		
 		if(next.$$route != null) {
 			$scope.currentPath = next.$$route.originalPath;
 			if($scope.boardDetailsPaths.includes($scope.currentPath)) {
-				$scope.board = Gameboard.get({id: next.params.boardId});
-				$timeout(function(){
-					$rootScope.$broadcast('current-board', $scope.board);
-				});
+                $scope.board = Board.get({id: next.params.boardId});
+                $timeout(function(){
+                    $rootScope.$broadcast('current-board', $scope.board);
+                });
+
 				$scope.showBoardMenu = true;
 			}
 			else {

@@ -9,8 +9,8 @@ angular.module('myApp.boarddetails', [ 'ngRoute', 'ngTagsInput' ])
 	});
 } ])
 
-.controller('BoardDetailsCtrl',	[ '$scope', '$location', 'User', 'Gameboard', 'Game', 
-                               	  function($scope, $location, User, Gameboard, Game) {
+.controller('BoardDetailsCtrl',	[ '$scope', '$location', '$route', '$rootScope', 'User', 'Board', 'Game', 
+                               	  function($scope, $location, $route, $rootScope, User, Board, Game) {
 
 	var params = $location.search();
 	
@@ -18,30 +18,47 @@ angular.module('myApp.boarddetails', [ 'ngRoute', 'ngTagsInput' ])
 	
 	$scope.user = undefined;
 	$scope.board = undefined;
-	$scope.showNoGamesInfo = false;
-	$scope.games = Game.query({boardId: params.boardId});
-	
-	$scope.games.$promise.then(function(users) {
-		if(users.length < 1) {
-			$scope.showNoGamesInfo = true;
-		}
-		else {
-			$scope.showNoGamesInfo = false;
-		}
+	// assume true to avoid flickering.
+	$scope.isMember = true;
+	$scope.users = User.query({boardId : params.boardId});
+	$scope.users.$promise.then(function(users) {
+		$scope.users.sort(compareElo);
 	});
 	
+	$rootScope.user.$promise.then(function(user){
+		$scope.user = user;
+		$scope.board = Board.get({id: params.boardId});
+		$scope.board.$promise.then(function (board) {
+			if(board.users.includes($scope.user.id)) {
+				$scope.isMember = true;
+			}
+			else {
+				$scope.isMember = false;
+			}
+		});
+	});
 	
+	$scope.joinBoard = function() {
+		$scope.board.users.push($scope.user.id);
+		Board.update({ id: $scope.board.id }, $scope.board, function() {
+			alert('Success!');
+			$route.reload();
+		}, function() {
+			alert('Failed!');
+			$route.reload();
+		});
+	}
 	
-	/**
-	 * Events
+	/*
+	 * Internal functions
 	 */
-	$scope.$on('user-me', function(event, data) {
-		$scope.user = data;
-	});
+	function compareElo(a, b) {
+		  if (a.eloRatings[params.boardId] < b.eloRatings[params.boardId])
+		    return 1;
+		  else if (a.eloRatings[params.boardId] > b.eloRatings[params.boardId])
+		    return -1;
+		  else 
+		    return 0;
+	}
 	
-	$scope.$on('current-board', function(event, data) {
-		$scope.board = data;
-	});
-
-
 }]);

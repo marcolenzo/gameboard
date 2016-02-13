@@ -10,21 +10,31 @@ angular.module('myApp.createboard', [ 'ngRoute', 'ngTagsInput' ])
 } ])
 
 .controller('CreateboardCtrl',
-		[ '$scope', '$location', 'User', 'Gameboard', function($scope, $location, User, Gameboard) {
+		[ '$scope', '$location', 'User', 'Board', function($scope, $location, User, Board) {
 
 			var _selected;
+			var nickMap = {};
+			
+			
 
 			$scope.board = {};
 			$scope.board.type = "RESISTANCE";
 			$scope.board.name = "";
 			$scope.tags = undefined;
 			
-			$scope.users = User.query({
-				nicknameOnly : 'true'
+			$scope.users = User.query();
+			$scope.nicknames = new Array();
+			
+			$scope.users.$promise.then(function(users) {
+				angular.forEach(users, function(value, key) {
+					this.push(value.nickname);
+					nickMap[value.nickname] = value.id;
+				}, $scope.nicknames);
 			});
+			
 
 			$scope.getMatchingStates = function(query) {
-				return jQuery.grep($scope.users, function(n, i) {
+				return jQuery.grep($scope.nicknames, function(n, i) {
 					if (n.indexOf(query) > -1) {
 						return true;
 					}
@@ -35,12 +45,13 @@ angular.module('myApp.createboard', [ 'ngRoute', 'ngTagsInput' ])
 			$scope.createBoard = function() {
 				var users = new Array();
 				angular.forEach($scope.tags, function(value, key) {
-					this.push(value.text);
+					this.push(nickMap[value.text]);
 				}, users);
+				 
 
 				$scope.board.users = users;
 
-				Gameboard.save($scope.board, function() {
+				Board.save($scope.board, function() {
 					alert("Success");
 					$location.path('/dashboard');
 				}, function() {
