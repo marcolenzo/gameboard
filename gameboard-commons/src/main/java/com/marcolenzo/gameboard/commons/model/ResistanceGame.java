@@ -1,6 +1,7 @@
 package com.marcolenzo.gameboard.commons.model;
 
 import java.time.LocalDateTime;
+import java.util.Map;
 import java.util.Set;
 
 import javax.validation.constraints.NotNull;
@@ -9,6 +10,8 @@ import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import com.google.common.collect.Maps;
 
 @Document
 public class ResistanceGame {
@@ -37,6 +40,11 @@ public class ResistanceGame {
 	private Integer spiesElo;
 
 	private Boolean isRated = false;
+
+	/**
+	 * Elo variations index by user/player ID.
+	 */
+	private Map<String, Integer> eloVariations = Maps.newHashMap();
 
 	/**
 	 * @return the id
@@ -162,6 +170,20 @@ public class ResistanceGame {
 	 */
 	public void setSpiesElo(Integer spiesElo) {
 		this.spiesElo = spiesElo;
+	}
+
+	/**
+	 * @return the eloVariations
+	 */
+	public Map<String, Integer> getEloVariations() {
+		return eloVariations;
+	}
+
+	/**
+	 * @param eloVariations the eloVariations to set
+	 */
+	public void setEloVariations(Map<String, Integer> eloVariations) {
+		this.eloVariations = eloVariations;
 	}
 
 }

@@ -111,23 +111,30 @@ public class GameController {
 		spiesElo = (int) Math.pow(10, spiesElo / 400);
 
 		for (BoardPlayer user : resistance) {
-			ratePlayer(user, game.getBoardId(), game.getResistanceWin() ? 1 : 0, spiesElo, false);
+			int eloVariation = ratePlayer(user, game.getBoardId(), game.getResistanceWin() ? 1 : 0, spiesElo, false);
+			game.getEloVariations().put(user.getUserId(), eloVariation);
 		}
 
 		for (BoardPlayer user : spies) {
-			ratePlayer(user, game.getBoardId(), game.getResistanceWin() ? 0 : 1, resistanceElo, true);
+			int eloVariation = ratePlayer(user, game.getBoardId(), game.getResistanceWin() ? 0 : 1, resistanceElo, true);
+			game.getEloVariations().put(user.getUserId(), eloVariation);
 		}
 
 		boardRepository.save(board);
 		return repository.save(game);
 	}
 	
-	private void ratePlayer(BoardPlayer user, String boardId, int score, double opponentsElo, boolean isSpy) {
+	/**
+	 * 
+	 * @param user
+	 * @param boardId
+	 * @param score
+	 * @param opponentsElo
+	 * @param isSpy
+	 * @return ELO variation
+	 */
+	private Integer ratePlayer(BoardPlayer user, String boardId, int score, double opponentsElo, boolean isSpy) {
 		Integer elo = user.getElo();
-		// Check if this is the first time we rate this user;
-		if (elo == null) {
-			elo = 1500;
-		}
 		// Transform user's elo
 		double tranformedElo = (int) Math.pow(10, (double) elo / 400);
 		double expectedScore = tranformedElo / (tranformedElo + opponentsElo);
@@ -149,6 +156,8 @@ public class GameController {
 				user.setMatchesWon(user.getMatchesWon() + 1);
 			}
 		}
+
+		return finalElo - elo;
 
 	}
 
