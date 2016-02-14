@@ -1,0 +1,28 @@
+ <div class="row">
+	<div >
+		<h2>Board > {{board.name}}</h2>
+		<h4>Type: {{board.type}}</h4>
+	</div>
+	<h2 class="sub-header">Game History</h2>
+	<div class="table-responsive">
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>DateTime</th>
+					<th>Won By Resistance</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="x in games">
+					<td>{{x.id}}</td>
+					<td>{{x.time}}</td>
+					<td>{{x.resistanceWin}}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+</div>
+
+

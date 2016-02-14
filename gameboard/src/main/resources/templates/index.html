@@ -63,6 +63,7 @@
 				<ul ng-show="showBoardMenu" class="nav nav-sidebar">
 					<li ng-class="isMenuItemActive('/boarddetails')"><a ng-href="#/boarddetails?boardId={{board.id}}">{{board.name}}</a></li>
 					<li ng-class="isMenuItemActive('/gameresult')"><a ng-href="#/gameresult?boardId={{board.id}}">Log Game Result</a></li>
+					<li ng-class="isMenuItemActive('/gamehistory')"><a ng-href="#/gamehistory?boardId={{board.id}}">Games History</a></li>
 					<!-- <li ng-class="isMenuItemActive('/creategame')"><a ng-href="#/creategame?boardId={{board.id}}">Create new game</a></li> -->
 				</ul>
 			</div>
@@ -100,8 +101,8 @@
 	<script src="app/views/overview/overview.js"></script>
 	<script src="app/views/createboard/createboard.js"></script>
 	<script src="app/views/gameresult/gameresult.js"></script>
-	<script src="app/views/creategame/creategame.js"></script>
 	<script src="app/views/boarddetails/boarddetails.js"></script>
+	<script src="app/views/gamehistory/gamehistory.js"></script>
 	<script src="app/components/version/version.js"></script>
 	<script src="app/components/version/version-directive.js"></script>
 	<script src="app/components/version/interpolate-filter.js"></script>
