@@ -7,6 +7,7 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -36,6 +37,7 @@ public class Board {
 	private Set<BoardPlayer> players;
 	
 	@JsonIgnore
+	@Transient
 	private Map<String, BoardPlayer> playersMap;
 
 

@@ -58,9 +58,7 @@ public class GameController {
 	public ResistanceGame createGame(@Valid @RequestBody ResistanceGame game) {
 		LOGGER.info("Creating new game for board {}", game.getBoardId());
 		Board board = boardRepository.findOne(game.getBoardId());
-		game = rateGame(game, board);
-		boardRepository.save(board);
-		return repository.save(game);
+		return rateGame(game, board);
 	}
 
 	@RequestMapping(value = "/api/game/test", method = RequestMethod.GET)
@@ -120,8 +118,8 @@ public class GameController {
 			ratePlayer(user, game.getBoardId(), game.getResistanceWin() ? 0 : 1, resistanceElo, true);
 		}
 
-		return game;
-
+		boardRepository.save(board);
+		return repository.save(game);
 	}
 	
 	private void ratePlayer(BoardPlayer user, String boardId, int score, double opponentsElo, boolean isSpy) {
