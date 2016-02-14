@@ -34,9 +34,9 @@ angular.module('myApp.boarddetails', [ 'ngRoute', 'ngTagsInput' ])
 				value.wrp = value.matchesPlayedAsResistance == 0 ? 0 : value.matchesWonAsResistance / value.matchesPlayedAsResistance * 100;
 				value.wsp = value.matchesPlayedAsSpy == 0 ? 0 : value.matchesWonAsSpy / value.matchesPlayedAsSpy * 100;
 				
-				value.wp = parseFloat(Math.round(value.wp)).toFixed(2);
-				value.wrp = parseFloat(Math.round(value.wrp)).toFixed(2);
-				value.wsp = parseFloat(Math.round(value.wsp)).toFixed(2);
+				value.wp = (Math.round(value.wp * 100, -2) / 100).toFixed(2);
+				value.wrp = (Math.round(value.wrp * 100, -2) / 100).toFixed(2);
+				value.wsp = (Math.round(value.wsp * 100, -2) / 100).toFixed(2);
 			});
 			$scope.isMember = isMember;
 			$scope.board.players.sort(compareElo);
