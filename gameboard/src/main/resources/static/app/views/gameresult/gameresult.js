@@ -26,16 +26,14 @@ angular.module('myApp.gameresult', [ 'ngRoute', 'ngTagsInput' ])
 			
 			$scope.board = Board.get({id: params.boardId});
 			$scope.board.$promise.then(function(board) {
-				var allUsers = User.query();
-				allUsers.$promise.then(function(users) {
-					angular.forEach(users, function(value, key) {
-						if(board.users.includes(value.id)) {
-							this.push(value);
-							nickMap[value.nickname] = value;
-						}
-					}, $scope.users);
-					$scope.users.sort(compareNickname);
+				
+				// Populate nickname map
+				jQuery.each(board.players, function(index, value) {
+					nickMap[value.nickname] = value;
 				});
+				
+				// Sort by nickname
+				$scope.board.players.sort(compareNickname);
 			});
 			
 			
@@ -111,12 +109,12 @@ angular.module('myApp.gameresult', [ 'ngRoute', 'ngTagsInput' ])
 				$scope.game.spies = new Array();
 				
 				angular.forEach($scope.players, function(value, key) {
-					this.push(value.id);
+					this.push(value.userId);
 				}, $scope.game.players);
 				
 				angular.forEach($scope.players, function(value, key) {
 					if(value.isSpy) {
-						this.push(value.id);
+						this.push(value.userId);
 					}
 				}, $scope.game.spies);
 				

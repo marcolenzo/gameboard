@@ -1,5 +1,6 @@
 package com.marcolenzo.gameboard.commons.model;
 
+import java.util.Map;
 import java.util.Set;
 
 import javax.validation.constraints.Size;
@@ -8,6 +9,9 @@ import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.google.common.collect.Maps;
 
 /**
  * A Gameboard allows group of friends to organize their game sessions and keep track of their performance.
@@ -29,7 +33,10 @@ public class Board {
 
 	private Set<String> admins;
 
-	private Set<String> users;
+	private Set<BoardPlayer> players;
+	
+	@JsonIgnore
+	private Map<String, BoardPlayer> playersMap;
 
 
 	/**
@@ -89,17 +96,31 @@ public class Board {
 	}
 
 	/**
-	 * @return the users
+	 * @return the players
 	 */
-	public Set<String> getUsers() {
-		return users;
+	public Set<BoardPlayer> getPlayers() {
+		return players;
 	}
 
 	/**
-	 * @param users the users to set
+	 * @param players the players to set
 	 */
-	public void setUsers(Set<String> users) {
-		this.users = users;
+	public void setPlayers(Set<BoardPlayer> players) {
+		this.players = players;
 	}
+
+	/**
+	 * @return A players map indexed by user ID.
+	 */
+	public Map<String, BoardPlayer> getPlayersMap() {
+		if (playersMap == null) {
+			playersMap = Maps.newHashMap();
+			for (BoardPlayer player : getPlayers()) {
+				playersMap.put(player.getUserId(), player);
+			}
+		}
+		return playersMap;
+	}
+
 
 }

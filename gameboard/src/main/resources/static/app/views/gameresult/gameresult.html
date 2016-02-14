@@ -55,7 +55,7 @@
 			</table>
 		</div>
 		<div class="input-group">
-			<input type="text" ng-model="selectedPlayer" uib-typeahead="user.nickname for user in users | filter:$viewValue | limitTo:8" typeahead-editable="false" class="form-control"> 
+			<input type="text" ng-model="selectedPlayer" uib-typeahead="user.nickname for user in board.players | filter:$viewValue | limitTo:8" typeahead-editable="false" class="form-control"> 
 			<span class="input-group-addon"><input type="checkbox"	ng-model="selectedPlayerSpy" aria-label="Spy">Is Spy</span>
 			<span class="input-group-btn"><button ng-click="addPlayer()" class="btn btn-primary">Add Player</button></span>
 		</div>

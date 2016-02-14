@@ -25,9 +25,11 @@ public class ResistanceGame {
 	private Boolean resistanceWin;
 
 	@NotEmpty
+	@NotNull
 	private Set<String> players;
 	
 	@NotEmpty
+	@NotNull
 	private Set<String> spies;
 
 	private Integer resistanceElo;

@@ -20,21 +20,22 @@ angular.module('myApp.boarddetails', [ 'ngRoute', 'ngTagsInput' ])
 	$scope.board = undefined;
 	// assume true to avoid flickering.
 	$scope.isMember = true;
-	$scope.users = User.query({boardId : params.boardId});
-	$scope.users.$promise.then(function(users) {
-		$scope.users.sort(compareElo);
-	});
 	
 	$rootScope.user.$promise.then(function(user){
 		$scope.user = user;
 		$scope.board = Board.get({id: params.boardId});
 		$scope.board.$promise.then(function (board) {
-			if(board.users.includes($scope.user.id)) {
-				$scope.isMember = true;
-			}
-			else {
-				$scope.isMember = false;
-			}
+			var isMember = false;
+			jQuery.each(board.players, function(index, value) {
+				if(value.userId === $scope.user.id) {
+					isMember = true;
+				}
+				value.wp = value.matchesPlayed == 0 ? 0 : value.matchesWon / value.matchesPlayed * 100;
+				value.wrp = value.matchesPlayedAsResistance == 0 ? 0 : value.matchesWonAsResistance / value.matchesPlayedAsResistance * 100;
+				value.wsp = value.matchesPlayedAsSpy == 0 ? 0 : value.matchesWonAsSpy / value.matchesPlayedAsSpy * 100;
+			});
+			$scope.isMember = isMember;
+			$scope.board.players.sort(compareElo);
 		});
 	});
 	
@@ -53,9 +54,9 @@ angular.module('myApp.boarddetails', [ 'ngRoute', 'ngTagsInput' ])
 	 * Internal functions
 	 */
 	function compareElo(a, b) {
-		  if (a.eloRatings[params.boardId] < b.eloRatings[params.boardId])
+		  if (a.elo < b.elo)
 		    return 1;
-		  else if (a.eloRatings[params.boardId] > b.eloRatings[params.boardId])
+		  else if (a.elo > b.elo)
 		    return -1;
 		  else 
 		    return 0;

@@ -1,4 +1,4 @@
-<div ng-show="isMember" class="row">
+ <div ng-show="isMember" class="row">
 	<div >
 		<h2>Board > {{board.name}}</h2>
 		<h4>Type: {{board.type}}</h4>
@@ -10,14 +10,32 @@
 				<tr>
 					<th>Pos #</th>
 					<th>Player</th>
+					<th>GP</th>
+					<th>W</th>
+					<th>W %</th>
+					<th>GPR</th>
+					<th>WR</th>
+					<th>WR %</th>
+					<th>GPS</th>
+					<th>WS</th>
+					<th>WS %</th>
 					<th>ELO</th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr ng-repeat="x in users">
+				<tr ng-repeat="x in board.players">
 					<td>{{$index + 1}}</td>
 					<td>{{x.nickname}}</a></td>
-					<td>{{x.eloRatings[board.id]}}</td>
+					<td>{{x.matchesPlayed}}</td>
+					<td>{{x.matchesWon}}</td>
+					<td>{{x.wp}}</td>
+					<td>{{x.matchesPlayedAsResistance}}</td>
+					<td>{{x.matchesWonAsResistance}}</td>
+					<td>{{x.wrp}}</td>
+					<td>{{x.matchesPlayedAsSpy}}</td>
+					<td>{{x.matchesWonAsSpy}}</td>
+					<td>{{x.wsp}}</td>
+					<td>{{x.elo}}</td>
 				</tr>
 			</tbody>
 		</table>

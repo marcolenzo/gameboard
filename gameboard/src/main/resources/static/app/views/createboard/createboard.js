@@ -28,7 +28,7 @@ angular.module('myApp.createboard', [ 'ngRoute', 'ngTagsInput' ])
 			$scope.users.$promise.then(function(users) {
 				angular.forEach(users, function(value, key) {
 					this.push(value.nickname);
-					nickMap[value.nickname] = value.id;
+					nickMap[value.nickname] = value;
 				}, $scope.nicknames);
 			});
 			
@@ -43,13 +43,26 @@ angular.module('myApp.createboard', [ 'ngRoute', 'ngTagsInput' ])
 			}
 
 			$scope.createBoard = function() {
-				var users = new Array();
+				var players = new Array();
 				angular.forEach($scope.tags, function(value, key) {
-					this.push(nickMap[value.text]);
-				}, users);
+					var player = {};
+					var user = nickMap[value.text];
+					
+					player.userId = user.id;
+					player.nickname = user.nickname;
+					player.elo = 1500;
+					player.matchesPlayed = 0;
+					player.matchesWon = 0;
+					player.matchesPlayedAsResistance = 0;
+					player.matchesWonAsResistance = 0;
+					player.matchesPlayedAsSpy = 0;
+					player.matchesWonAsSpy = 0;
+					
+					this.push(player);
+				}, players);
 				 
 
-				$scope.board.users = users;
+				$scope.board.players = players;
 
 				Board.save($scope.board, function() {
 					alert("Success");

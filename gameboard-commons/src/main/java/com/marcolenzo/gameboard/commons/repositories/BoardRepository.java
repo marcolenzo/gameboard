@@ -8,6 +8,6 @@ import com.marcolenzo.gameboard.commons.model.Board;
 
 public interface BoardRepository extends MongoRepository<Board, String> {
 
-	List<Board> findByUsers(String userId);
+	List<Board> findByPlayersUserId(String userId);
 
 }
