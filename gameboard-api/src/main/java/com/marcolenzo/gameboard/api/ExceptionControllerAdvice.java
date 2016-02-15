@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.marcolenzo.gameboard.api.exceptions.BadRequestException;
+import com.marcolenzo.gameboard.api.exceptions.ForbiddenException;
 import com.marcolenzo.gameboard.commons.model.FieldError;
 import com.marcolenzo.gameboard.commons.model.ValidationError;
 
@@ -44,6 +45,14 @@ public class ExceptionControllerAdvice {
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ResponseBody
 	public String badRequest(BadRequestException ex, Locale locale) {
+		return ex.getMessage();
+	}
+
+
+	@ExceptionHandler(ForbiddenException.class)
+	@ResponseStatus(HttpStatus.FORBIDDEN)
+	@ResponseBody
+	public String forbidden(ForbiddenException ex, Locale locale) {
 		return ex.getMessage();
 	}
 

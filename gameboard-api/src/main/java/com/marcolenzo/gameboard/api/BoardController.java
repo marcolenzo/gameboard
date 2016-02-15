@@ -15,10 +15,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.google.common.collect.Sets;
 import com.marcolenzo.gameboard.api.exceptions.BadRequestException;
+import com.marcolenzo.gameboard.api.exceptions.ForbiddenException;
 import com.marcolenzo.gameboard.commons.model.Board;
 import com.marcolenzo.gameboard.commons.model.BoardPlayer;
+import com.marcolenzo.gameboard.commons.model.ResistanceGame;
 import com.marcolenzo.gameboard.commons.model.User;
 import com.marcolenzo.gameboard.commons.repositories.BoardRepository;
+import com.marcolenzo.gameboard.commons.repositories.ResistanceGameRepository;
 import com.marcolenzo.gameboard.commons.repositories.UserRepository;
 
 /**
@@ -34,6 +37,9 @@ public class BoardController {
 
 	@Autowired
 	private UserRepository userRepository;
+
+	@Autowired
+	private ResistanceGameRepository gameRepository;
 
 	@RequestMapping(value = "/api/board", method = RequestMethod.POST)
 	public Board createGameboard(@Valid @RequestBody Board gameboard) {
@@ -91,5 +97,37 @@ public class BoardController {
 	public List<Board> getGameboardByUser(@RequestParam(value = "user", required = true) String userId) {
 		return repository.findByPlayersUserId(userId);
 	}
+
+
+	@RequestMapping(value = "/api/board/{id}/reset", method = RequestMethod.POST)
+	public Board resetBoard(@PathVariable String id)
+			throws ForbiddenException {
+		User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+		Board board = repository.findOne(id);
+		if (!board.getAdmins().contains(currentUser.getId())) {
+			throw new ForbiddenException("You need to be a board admin to perform this action.");
+		}
+
+		// Delete games
+		List<ResistanceGame> games = gameRepository.findByBoardId(id);
+		for (ResistanceGame game : games) {
+			gameRepository.delete(game);
+		}
+
+		for (BoardPlayer player : board.getPlayers()) {
+			player.setElo(1500);
+			player.setMatchesPlayed(0);
+			player.setMatchesPlayedAsResistance(0);
+			player.setMatchesPlayedAsSpy(0);
+			player.setMatchesWon(0);
+			player.setMatchesWonAsResistance(0);
+			player.setMatchesWonAsSpy(0);
+		}
+
+		return repository.save(board);
+
+	}
+
 
 }
