@@ -44,7 +44,21 @@ angular.module('myApp.boarddetails', [ 'ngRoute', 'ngTagsInput' ])
 	});
 	
 	$scope.joinBoard = function() {
-		$scope.board.users.push($scope.user.id);
+		
+		var player = {};
+		
+		player.userId = $scope.user.id;
+		player.nickname = $scope.user.nickname;
+		player.elo = 1500;
+		player.matchesPlayed = 0;
+		player.matchesWon = 0;
+		player.matchesPlayedAsResistance = 0;
+		player.matchesWonAsResistance = 0;
+		player.matchesPlayedAsSpy = 0;
+		player.matchesWonAsSpy = 0;
+		
+		$scope.board.players.push(player);
+		
 		Board.update({ id: $scope.board.id }, $scope.board, function() {
 			alert('Success!');
 			$route.reload();
