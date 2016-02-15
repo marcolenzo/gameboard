@@ -8,6 +8,7 @@ angular.module(
 		  'myApp.services', 
 		  'myApp.overview', 
 		  'myApp.createboard', 
+		  'myApp.editboard', 
 		  'myApp.gameresult',
 		  'myApp.boarddetails', 
 		  'myApp.gamehistory', 
@@ -30,11 +31,11 @@ controller('MainCtrl', [ '$scope', '$rootScope', '$location', '$timeout', 'User'
 	$scope.showBoardMenu = false;
 	$scope.board = undefined;
 	$scope.user = undefined;
-	$scope.showLogResults = false;
+	$scope.isBoardAdmin = false;
 	
 	$scope.currentPath = "/overview";
 	
-	$scope.boardDetailsPaths = ['/boarddetails', '/gameresult', '/gamehistory'];
+	$scope.boardDetailsPaths = ['/boarddetails', '/gameresult', '/gamehistory', '/editboard'];
 	
 	$scope.$on('$routeChangeSuccess', function (scope, next, current) {
 		// Load user details if still undefined
@@ -57,10 +58,10 @@ controller('MainCtrl', [ '$scope', '$rootScope', '$location', '$timeout', 'User'
 
                 $scope.board.$promise.then(function(board) {
                 	if(board.admins.includes($scope.user.id)) {
-                		$scope.showLogResults = true;
+                		$scope.isBoardAdmin = true;
                 	}
                 	else {
-                		$scope.showLogResults = false;
+                		$scope.isBoardAdmin = false;
                 	}
                 });
 				$scope.showBoardMenu = true;
