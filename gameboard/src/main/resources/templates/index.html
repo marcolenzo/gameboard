@@ -62,7 +62,7 @@
 				</ul>
 				<ul ng-show="showBoardMenu" class="nav nav-sidebar">
 					<li ng-class="isMenuItemActive('/boarddetails')"><a ng-href="#/boarddetails?boardId={{board.id}}">{{board.name}}</a></li>
-					<li ng-class="isMenuItemActive('/gameresult')"><a ng-href="#/gameresult?boardId={{board.id}}">Log Game Result</a></li>
+					<li ng-show="showLogResults" ng-class="isMenuItemActive('/gameresult')"><a ng-href="#/gameresult?boardId={{board.id}}">Log Game Result</a></li>
 					<li ng-class="isMenuItemActive('/gamehistory')"><a ng-href="#/gamehistory?boardId={{board.id}}">Games History</a></li>
 					<!-- <li ng-class="isMenuItemActive('/creategame')"><a ng-href="#/creategame?boardId={{board.id}}">Create new game</a></li> -->
 				</ul>

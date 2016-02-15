@@ -30,6 +30,7 @@ controller('MainCtrl', [ '$scope', '$rootScope', '$location', '$timeout', 'User'
 	$scope.showBoardMenu = false;
 	$scope.board = undefined;
 	$scope.user = undefined;
+	$scope.showLogResults = false;
 	
 	$scope.currentPath = "/overview";
 	
@@ -54,6 +55,14 @@ controller('MainCtrl', [ '$scope', '$rootScope', '$location', '$timeout', 'User'
                     $rootScope.$broadcast('current-board', $scope.board);
                 });
 
+                $scope.board.$promise.then(function(board) {
+                	if(board.admins.includes($scope.user.id)) {
+                		$scope.showLogResults = true;
+                	}
+                	else {
+                		$scope.showLogResults = false;
+                	}
+                });
 				$scope.showBoardMenu = true;
 			}
 			else {
