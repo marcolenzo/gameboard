@@ -1,5 +1,7 @@
 package com.marcolenzo.gameboard.api;
 
+
+import java.util.Collections;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -16,6 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.google.common.collect.Sets;
 import com.marcolenzo.gameboard.api.exceptions.BadRequestException;
 import com.marcolenzo.gameboard.api.exceptions.ForbiddenException;
+import com.marcolenzo.gameboard.api.services.RatingServices;
+import com.marcolenzo.gameboard.commons.comparators.ResistanceGameComparator;
 import com.marcolenzo.gameboard.commons.model.Board;
 import com.marcolenzo.gameboard.commons.model.BoardPlayer;
 import com.marcolenzo.gameboard.commons.model.ResistanceGame;
@@ -40,6 +44,9 @@ public class BoardController {
 
 	@Autowired
 	private ResistanceGameRepository gameRepository;
+
+	@Autowired
+	private RatingServices ratingServices;
 
 	@RequestMapping(value = "/api/board", method = RequestMethod.POST)
 	public Board createGameboard(@Valid @RequestBody Board gameboard) {
@@ -109,12 +116,6 @@ public class BoardController {
 			throw new ForbiddenException("You need to be a board admin to perform this action.");
 		}
 
-		// Delete games
-		List<ResistanceGame> games = gameRepository.findByBoardId(id);
-		for (ResistanceGame game : games) {
-			gameRepository.delete(game);
-		}
-
 		for (BoardPlayer player : board.getPlayers()) {
 			player.setElo(1500);
 			player.setMatchesPlayed(0);
@@ -125,7 +126,17 @@ public class BoardController {
 			player.setMatchesWonAsSpy(0);
 		}
 
-		return repository.save(board);
+		// Intermediate save
+		board = repository.save(board);
+
+		List<ResistanceGame> games = gameRepository.findByBoardId(board.getId());
+		Collections.sort(games, new ResistanceGameComparator());
+
+		for (ResistanceGame game : games) {
+			ratingServices.rateGame(game, board);
+		}
+
+		return board;
 
 	}
 
