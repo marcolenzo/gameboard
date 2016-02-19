@@ -97,7 +97,6 @@ public class RatingServices {
 				gamePlayerStatistics.add(playerStatistics);
 			}
 		}
-		setPositions(gamePlayerStatistics);
 		game.setPlayerStats(gamePlayerStatistics);
 
 		return repository.save(game);
