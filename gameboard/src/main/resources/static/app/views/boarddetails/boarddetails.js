@@ -37,6 +37,13 @@ angular.module('myApp.boarddetails', [ 'ngRoute', 'ngTagsInput' ])
 				value.wp = (Math.round(value.wp * 100, -2) / 100).toFixed(2);
 				value.wrp = (Math.round(value.wrp * 100, -2) / 100).toFixed(2);
 				value.wsp = (Math.round(value.wsp * 100, -2) / 100).toFixed(2);
+				
+				if(value.positionVariation > 0) {
+					value.positionChangeMarker = '˄';
+				}
+				else if (value.positionVariation < 0){
+					value.positionChangeMarker = '˅';
+				}
 			});
 			$scope.isMember = isMember;
 		});

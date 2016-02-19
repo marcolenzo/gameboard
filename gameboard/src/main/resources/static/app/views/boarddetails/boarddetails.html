@@ -26,7 +26,7 @@
 			</thead>
 			<tbody>
 				<tr ng-repeat="x in board.players">
-					<td>{{x.position}}</td>
+					<td>{{x.position}} <span ng-style="{color: x.positionVariation > 0 ? 'green' : 'red'}"><b>{{x.positionChangeMarker}}</b></span></td>
 					<td>{{x.positionVariation}}</td>
 					<td>{{x.nickname}}</a></td>
 					<td>{{x.matchesPlayed}}</td>
