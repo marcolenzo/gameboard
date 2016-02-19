@@ -21,7 +21,7 @@ import com.marcolenzo.gameboard.api.exceptions.ForbiddenException;
 import com.marcolenzo.gameboard.api.services.RatingServices;
 import com.marcolenzo.gameboard.commons.comparators.ResistanceGameComparator;
 import com.marcolenzo.gameboard.commons.model.Board;
-import com.marcolenzo.gameboard.commons.model.BoardPlayer;
+import com.marcolenzo.gameboard.commons.model.PlayerStatistics;
 import com.marcolenzo.gameboard.commons.model.ResistanceGame;
 import com.marcolenzo.gameboard.commons.model.User;
 import com.marcolenzo.gameboard.commons.repositories.BoardRepository;
@@ -57,7 +57,7 @@ public class BoardController {
 
 		// Sanitize player set and make sure current user is present
 		boolean isCurrentUserPresent = false;
-		for (BoardPlayer player : gameboard.getPlayers()) {
+		for (PlayerStatistics player : gameboard.getPlayers()) {
 			if (player.getUserId().equals(currentUser.getId())) {
 				isCurrentUserPresent = true;
 			}
@@ -68,10 +68,11 @@ public class BoardController {
 			player.setMatchesWon(0);
 			player.setMatchesWonAsResistance(0);
 			player.setMatchesWonAsSpy(0);
+			player.setEloVariation(0);
 		}
 
 		if (!isCurrentUserPresent) {
-			BoardPlayer player = new BoardPlayer();
+			PlayerStatistics player = new PlayerStatistics();
 			player.setUserId(currentUser.getId());
 			player.setNickname(currentUser.getNickname());
 			gameboard.getPlayers().add(player);
@@ -116,7 +117,7 @@ public class BoardController {
 			throw new ForbiddenException("You need to be a board admin to perform this action.");
 		}
 
-		for (BoardPlayer player : board.getPlayers()) {
+		for (PlayerStatistics player : board.getPlayers()) {
 			player.setElo(1500);
 			player.setMatchesPlayed(0);
 			player.setMatchesPlayedAsResistance(0);

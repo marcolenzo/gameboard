@@ -15,6 +15,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.google.common.collect.Maps;
 
+/**
+ * Gameboard User.
+ * @author Marco Lenzo
+ *
+ */
 @Document
 public class User implements UserDetails {
 

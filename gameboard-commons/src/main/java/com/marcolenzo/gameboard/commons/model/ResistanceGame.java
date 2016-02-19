@@ -1,6 +1,7 @@
 package com.marcolenzo.gameboard.commons.model;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -11,8 +12,13 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import com.google.common.collect.Maps;
+import com.google.common.collect.Lists;
 
+/**
+ * Resistance Game data.
+ * @author Marco Lenzo
+ *
+ */
 @Document
 public class ResistanceGame {
 
@@ -41,10 +47,9 @@ public class ResistanceGame {
 
 	private Boolean isRated = false;
 
-	/**
-	 * Elo variations index by user/player ID.
-	 */
-	private Map<String, Integer> eloVariations = Maps.newHashMap();
+	private Map<String, Integer> eloVariations;
+
+	private List<PlayerStatistics> playerStats = Lists.newArrayList();
 
 	/**
 	 * @return the id
@@ -170,6 +175,20 @@ public class ResistanceGame {
 	 */
 	public void setSpiesElo(Integer spiesElo) {
 		this.spiesElo = spiesElo;
+	}
+
+	/**
+	 * @return the playerStats
+	 */
+	public List<PlayerStatistics> getPlayerStats() {
+		return playerStats;
+	}
+
+	/**
+	 * @param playerStats the playerStats to set
+	 */
+	public void setPlayerStats(List<PlayerStatistics> playerStats) {
+		this.playerStats = playerStats;
 	}
 
 	/**

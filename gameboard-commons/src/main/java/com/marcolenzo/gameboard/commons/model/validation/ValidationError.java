@@ -1,4 +1,4 @@
-package com.marcolenzo.gameboard.commons.model;
+package com.marcolenzo.gameboard.commons.model.validation;
 
 import java.util.List;
 

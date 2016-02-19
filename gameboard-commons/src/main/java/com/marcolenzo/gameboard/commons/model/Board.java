@@ -1,5 +1,6 @@
 package com.marcolenzo.gameboard.commons.model;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -34,11 +35,11 @@ public class Board {
 
 	private Set<String> admins;
 
-	private Set<BoardPlayer> players;
+	private List<PlayerStatistics> players;
 	
 	@JsonIgnore
 	@Transient
-	private Map<String, BoardPlayer> playersMap;
+	private Map<String, PlayerStatistics> playersMap;
 
 
 	/**
@@ -100,24 +101,24 @@ public class Board {
 	/**
 	 * @return the players
 	 */
-	public Set<BoardPlayer> getPlayers() {
+	public List<PlayerStatistics> getPlayers() {
 		return players;
 	}
 
 	/**
 	 * @param players the players to set
 	 */
-	public void setPlayers(Set<BoardPlayer> players) {
+	public void setPlayers(List<PlayerStatistics> players) {
 		this.players = players;
 	}
 
 	/**
 	 * @return A players map indexed by user ID.
 	 */
-	public Map<String, BoardPlayer> getPlayersMap() {
+	public Map<String, PlayerStatistics> getPlayersMap() {
 		if (playersMap == null) {
 			playersMap = Maps.newHashMap();
-			for (BoardPlayer player : getPlayers()) {
+			for (PlayerStatistics player : getPlayers()) {
 				playersMap.put(player.getUserId(), player);
 			}
 		}

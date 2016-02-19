@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.marcolenzo.gameboard.api.exceptions.BadRequestException;
 import com.marcolenzo.gameboard.api.exceptions.ForbiddenException;
-import com.marcolenzo.gameboard.commons.model.FieldError;
-import com.marcolenzo.gameboard.commons.model.ValidationError;
+import com.marcolenzo.gameboard.commons.model.validation.FieldError;
+import com.marcolenzo.gameboard.commons.model.validation.ValidationError;
 
 
 

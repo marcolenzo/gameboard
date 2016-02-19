@@ -37,9 +37,15 @@ angular.module('myApp.boarddetails', [ 'ngRoute', 'ngTagsInput' ])
 				value.wp = (Math.round(value.wp * 100, -2) / 100).toFixed(2);
 				value.wrp = (Math.round(value.wrp * 100, -2) / 100).toFixed(2);
 				value.wsp = (Math.round(value.wsp * 100, -2) / 100).toFixed(2);
+				
+				if(value.positionVariation > 0) {
+					value.positionChangeMarker = '˄';
+				}
+				else if (value.positionVariation < 0){
+					value.positionChangeMarker = '˅';
+				}
 			});
 			$scope.isMember = isMember;
-			$scope.board.players.sort(compareElo);
 		});
 	});
 	
@@ -66,18 +72,6 @@ angular.module('myApp.boarddetails', [ 'ngRoute', 'ngTagsInput' ])
 			alert('Failed!');
 			$route.reload();
 		});
-	}
-	
-	/*
-	 * Internal functions
-	 */
-	function compareElo(a, b) {
-		  if (a.elo < b.elo)
-		    return 1;
-		  else if (a.elo > b.elo)
-		    return -1;
-		  else 
-		    return 0;
 	}
 	
 }]);
