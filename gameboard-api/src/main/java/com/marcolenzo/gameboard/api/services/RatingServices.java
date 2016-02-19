@@ -151,6 +151,7 @@ public class RatingServices {
 		int rating = 0;
 		int rank = 1;
 		for (PlayerStatistics player : playerStat) {
+			int initialPos = player.getPosition();
 			if (player.getElo() == rating) {
 				player.setPosition(rank - 1);
 			}
@@ -159,6 +160,7 @@ public class RatingServices {
 				rank++;
 				rating = player.getElo();
 			}
+			player.setPositionVariation(initialPos - player.getPosition());
 		}
 	}
 

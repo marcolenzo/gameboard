@@ -44,6 +44,9 @@ public class PlayerStatistics {
 	@NotNull
 	private Integer position = 0;
 
+	@NotNull
+	private Integer positionVariation = 0;
+
 	/**
 	 * @return the userId
 	 */
@@ -196,6 +199,20 @@ public class PlayerStatistics {
 	 */
 	public void setPosition(Integer position) {
 		this.position = position;
+	}
+
+	/**
+	 * @return the positionVariation
+	 */
+	public Integer getPositionVariation() {
+		return positionVariation;
+	}
+
+	/**
+	 * @param positionVariation the positionVariation to set
+	 */
+	public void setPositionVariation(Integer positionVariation) {
+		this.positionVariation = positionVariation;
 	}
 
 }

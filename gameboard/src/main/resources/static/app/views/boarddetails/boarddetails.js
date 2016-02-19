@@ -39,7 +39,6 @@ angular.module('myApp.boarddetails', [ 'ngRoute', 'ngTagsInput' ])
 				value.wsp = (Math.round(value.wsp * 100, -2) / 100).toFixed(2);
 			});
 			$scope.isMember = isMember;
-			$scope.board.players.sort(compareElo);
 		});
 	});
 	
@@ -66,18 +65,6 @@ angular.module('myApp.boarddetails', [ 'ngRoute', 'ngTagsInput' ])
 			alert('Failed!');
 			$route.reload();
 		});
-	}
-	
-	/*
-	 * Internal functions
-	 */
-	function compareElo(a, b) {
-		  if (a.elo < b.elo)
-		    return 1;
-		  else if (a.elo > b.elo)
-		    return -1;
-		  else 
-		    return 0;
 	}
 	
 }]);
