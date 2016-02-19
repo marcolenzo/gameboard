@@ -4,7 +4,12 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
-public class BoardPlayer {
+/**
+ * Player Statistics used to generate leaderboards.
+ * @author Marco Lenzo
+ *
+ */
+public class PlayerStatistics {
 
 	@NotEmpty
 	private String userId;
@@ -32,6 +37,9 @@ public class BoardPlayer {
 
 	@NotNull
 	private Integer matchesWonAsSpy = 0;
+
+	@NotNull
+	private Integer eloVariation = 0;
 
 	/**
 	 * @return the userId
@@ -159,5 +167,18 @@ public class BoardPlayer {
 		this.matchesWonAsSpy = matchesWonAsSpy;
 	}
 
+	/**
+	 * @return the eloVariation
+	 */
+	public Integer getEloVariation() {
+		return eloVariation;
+	}
+
+	/**
+	 * @param eloVariation the eloVariation to set
+	 */
+	public void setEloVariation(Integer eloVariation) {
+		this.eloVariation = eloVariation;
+	}
 
 }

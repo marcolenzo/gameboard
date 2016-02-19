@@ -11,15 +11,15 @@ import org.springframework.stereotype.Component;
 
 import com.google.common.collect.Sets;
 import com.marcolenzo.gameboard.commons.model.Board;
-import com.marcolenzo.gameboard.commons.model.BoardPlayer;
+import com.marcolenzo.gameboard.commons.model.PlayerStatistics;
 import com.marcolenzo.gameboard.commons.model.ResistanceGame;
 import com.marcolenzo.gameboard.commons.repositories.BoardRepository;
 import com.marcolenzo.gameboard.commons.repositories.ResistanceGameRepository;
 
 
 /**
+ * Services used to rate players.
  * @author Marco Lenzo
- *
  */
 @Component
 public class RatingServices {
@@ -32,8 +32,11 @@ public class RatingServices {
 
 
 	public ResistanceGame rateGame(ResistanceGame game, Board board) {
-		Set<BoardPlayer> resistance = Sets.newHashSet();
-		Set<BoardPlayer> spies = Sets.newHashSet();
+
+		resetEloVariations(board);
+
+		Set<PlayerStatistics> resistance = Sets.newHashSet();
+		Set<PlayerStatistics> spies = Sets.newHashSet();
 		for (String userId : game.getPlayers()) {
 			if (game.getSpies().contains(userId)) {
 				spies.add(board.getPlayersMap().get(userId));
@@ -46,7 +49,7 @@ public class RatingServices {
 		// Compute average resistance ELO
 		double resistanceElo = 0;
 		int count = 0;
-		for (BoardPlayer user : resistance) {
+		for (PlayerStatistics user : resistance) {
 			resistanceElo += user.getElo();
 			count++;
 		}
@@ -55,7 +58,7 @@ public class RatingServices {
 		// Compute average spies ELO
 		double spiesElo = 0;
 		count = 0;
-		for (BoardPlayer user : spies) {
+		for (PlayerStatistics user : spies) {
 			spiesElo += user.getElo();
 			count++;
 		}
@@ -68,17 +71,19 @@ public class RatingServices {
 		resistanceElo = (int) Math.pow(10, resistanceElo / 400);
 		spiesElo = (int) Math.pow(10, spiesElo / 400);
 
-		for (BoardPlayer user : resistance) {
-			int eloVariation = ratePlayer(user, game.getBoardId(), game.getResistanceWin() ? 1 : 0, spiesElo, false);
-			game.getEloVariations().put(user.getUserId(), eloVariation);
+		for (PlayerStatistics user : resistance) {
+			ratePlayer(user, game.getBoardId(), game.getResistanceWin() ? 1 : 0, spiesElo, false);
 		}
 
-		for (BoardPlayer user : spies) {
-			int eloVariation = ratePlayer(user, game.getBoardId(), game.getResistanceWin() ? 0 : 1, resistanceElo, true);
-			game.getEloVariations().put(user.getUserId(), eloVariation);
+		for (PlayerStatistics user : spies) {
+			ratePlayer(user, game.getBoardId(), game.getResistanceWin() ? 0 : 1, resistanceElo, true);
 		}
 
-		boardRepository.save(board);
+		board = boardRepository.save(board);
+
+		// Save player statics in game as well to have leadboard history
+		game.setPlayerStats(board.getPlayers());
+
 		return repository.save(game);
 	}
 
@@ -90,9 +95,9 @@ public class RatingServices {
 	 * @param score
 	 * @param opponentsElo
 	 * @param isSpy
-	 * @return ELO variation
 	 */
-	private Integer ratePlayer(BoardPlayer user, String boardId, int score, double opponentsElo, boolean isSpy) {
+	private void ratePlayer(PlayerStatistics user, String boardId, int score, double opponentsElo,
+			boolean isSpy) {
 		Integer elo = user.getElo();
 		// Transform user's elo
 		double tranformedElo = (int) Math.pow(10, (double) elo / 400);
@@ -116,8 +121,13 @@ public class RatingServices {
 			}
 		}
 
-		return finalElo - elo;
+		user.setEloVariation(finalElo - elo);
+	}
 
+	private void resetEloVariations(Board board) {
+		for (PlayerStatistics stat : board.getPlayers()) {
+			stat.setEloVariation(0);
+		}
 	}
 
 

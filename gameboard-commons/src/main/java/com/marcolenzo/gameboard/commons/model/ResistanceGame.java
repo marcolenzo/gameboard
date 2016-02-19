@@ -11,8 +11,11 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import com.google.common.collect.Maps;
-
+/**
+ * Resistance Game data.
+ * @author Marco Lenzo
+ *
+ */
 @Document
 public class ResistanceGame {
 
@@ -41,10 +44,9 @@ public class ResistanceGame {
 
 	private Boolean isRated = false;
 
-	/**
-	 * Elo variations index by user/player ID.
-	 */
-	private Map<String, Integer> eloVariations = Maps.newHashMap();
+	private Map<String, Integer> eloVariations;
+
+	private Set<PlayerStatistics> playerStats;
 
 	/**
 	 * @return the id
@@ -170,6 +172,20 @@ public class ResistanceGame {
 	 */
 	public void setSpiesElo(Integer spiesElo) {
 		this.spiesElo = spiesElo;
+	}
+
+	/**
+	 * @return the playerStats
+	 */
+	public Set<PlayerStatistics> getPlayerStats() {
+		return playerStats;
+	}
+
+	/**
+	 * @param playerStats the playerStats to set
+	 */
+	public void setPlayerStats(Set<PlayerStatistics> playerStats) {
+		this.playerStats = playerStats;
 	}
 
 	/**
