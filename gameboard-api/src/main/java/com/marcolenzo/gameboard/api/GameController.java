@@ -1,6 +1,7 @@
 package com.marcolenzo.gameboard.api;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.google.common.collect.Sets;
 import com.marcolenzo.gameboard.api.services.RatingServices;
+import com.marcolenzo.gameboard.commons.comparators.ResistanceGameComparator;
 import com.marcolenzo.gameboard.commons.model.Board;
 import com.marcolenzo.gameboard.commons.model.ResistanceGame;
 import com.marcolenzo.gameboard.commons.repositories.BoardRepository;
@@ -48,7 +50,9 @@ public class GameController {
 
 	@RequestMapping(value = "/api/game", method = RequestMethod.GET, params = { "boardId" })
 	public List<ResistanceGame> getGamesByBoardId(@RequestParam(value = "boardId", required = true) String boardId) {
-		return repository.findByBoardId(boardId);
+		List<ResistanceGame> games = repository.findByBoardId(boardId);
+		Collections.sort(games, Collections.reverseOrder(new ResistanceGameComparator()));
+		return games;
 	}
 
 	@RequestMapping(value = "/api/game/{id}", method = RequestMethod.GET)
