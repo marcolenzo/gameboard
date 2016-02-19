@@ -41,6 +41,9 @@ public class PlayerStatistics {
 	@NotNull
 	private Integer eloVariation = 0;
 
+	@NotNull
+	private Integer position = 0;
+
 	/**
 	 * @return the userId
 	 */
@@ -179,6 +182,20 @@ public class PlayerStatistics {
 	 */
 	public void setEloVariation(Integer eloVariation) {
 		this.eloVariation = eloVariation;
+	}
+
+	/**
+	 * @return the position
+	 */
+	public Integer getPosition() {
+		return position;
+	}
+
+	/**
+	 * @param position the position to set
+	 */
+	public void setPosition(Integer position) {
+		this.position = position;
 	}
 
 }

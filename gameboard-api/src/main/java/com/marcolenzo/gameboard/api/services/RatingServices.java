@@ -4,12 +4,16 @@
 package com.marcolenzo.gameboard.api.services;
 
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
+import com.marcolenzo.gameboard.commons.comparators.PlayerStatisticsComparator;
 import com.marcolenzo.gameboard.commons.model.Board;
 import com.marcolenzo.gameboard.commons.model.PlayerStatistics;
 import com.marcolenzo.gameboard.commons.model.ResistanceGame;
@@ -78,11 +82,23 @@ public class RatingServices {
 		for (PlayerStatistics user : spies) {
 			ratePlayer(user, game.getBoardId(), game.getResistanceWin() ? 0 : 1, resistanceElo, true);
 		}
+		
+		Collections.sort(board.getPlayers(), new PlayerStatisticsComparator());
+
+		// Set positions game
+		setPositions(board.getPlayers());
 
 		board = boardRepository.save(board);
 
-		// Save player statics in game as well to have leadboard history
-		game.setPlayerStats(board.getPlayers());
+		// Save player statics in game as well to have leaderboard history
+		List<PlayerStatistics> gamePlayerStatistics = Lists.newArrayList();
+		for(PlayerStatistics playerStatistics: board.getPlayers()) {
+			if(playerStatistics.getMatchesPlayed() > 0) {
+				gamePlayerStatistics.add(playerStatistics);
+			}
+		}
+		setPositions(gamePlayerStatistics);
+		game.setPlayerStats(gamePlayerStatistics);
 
 		return repository.save(game);
 	}
@@ -127,6 +143,22 @@ public class RatingServices {
 	private void resetEloVariations(Board board) {
 		for (PlayerStatistics stat : board.getPlayers()) {
 			stat.setEloVariation(0);
+		}
+	}
+
+	private void setPositions(List<PlayerStatistics> playerStat) {
+		// Set positions and store in game
+		int rating = 0;
+		int rank = 1;
+		for (PlayerStatistics player : playerStat) {
+			if (player.getElo() == rating) {
+				player.setPosition(rank - 1);
+			}
+			else {
+				player.setPosition(rank);
+				rank++;
+				rating = player.getElo();
+			}
 		}
 	}
 

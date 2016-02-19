@@ -1,6 +1,7 @@
 package com.marcolenzo.gameboard.commons.model;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -10,6 +11,8 @@ import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import com.google.common.collect.Lists;
 
 /**
  * Resistance Game data.
@@ -46,7 +49,7 @@ public class ResistanceGame {
 
 	private Map<String, Integer> eloVariations;
 
-	private Set<PlayerStatistics> playerStats;
+	private List<PlayerStatistics> playerStats = Lists.newArrayList();
 
 	/**
 	 * @return the id
@@ -177,14 +180,14 @@ public class ResistanceGame {
 	/**
 	 * @return the playerStats
 	 */
-	public Set<PlayerStatistics> getPlayerStats() {
+	public List<PlayerStatistics> getPlayerStats() {
 		return playerStats;
 	}
 
 	/**
 	 * @param playerStats the playerStats to set
 	 */
-	public void setPlayerStats(Set<PlayerStatistics> playerStats) {
+	public void setPlayerStats(List<PlayerStatistics> playerStats) {
 		this.playerStats = playerStats;
 	}
 
