@@ -11,7 +11,8 @@ angular.module(
 		  'myApp.editboard', 
 		  'myApp.gameresult',
 		  'myApp.boarddetails', 
-		  'myApp.gamehistory', 
+		  'myApp.gamehistory',
+		  'myApp.gamedetails',
 		  'myApp.version',
 		  'ui.bootstrap', 
 		  'ngTagsInput' ]).
@@ -35,7 +36,7 @@ controller('MainCtrl', [ '$scope', '$rootScope', '$location', '$timeout', 'User'
 	
 	$scope.currentPath = "/overview";
 	
-	$scope.boardDetailsPaths = ['/boarddetails', '/gameresult', '/gamehistory', '/editboard'];
+	$scope.boardDetailsPaths = ['/boarddetails', '/gameresult', '/gamehistory', '/editboard', '/gamedetails'];
 	
 	$scope.$on('$routeChangeSuccess', function (scope, next, current) {
 		// Load user details if still undefined
