@@ -33,9 +33,11 @@ public class User implements UserDetails {
 	@Indexed(unique = true)
 	private String email;
 	
-	@NotEmpty
 	@Size(min = 8, max = 128)
 	private String password;
+
+	@Size(min = 8, max = 128)
+	private String previousPassword;
 
 	@NotEmpty
 	@Size(min = 1, max = 64)
@@ -150,6 +152,20 @@ public class User implements UserDetails {
 	 */
 	public void setEloRatings(Map<String, Integer> eloRatings) {
 		this.eloRatings = eloRatings;
+	}
+
+	/**
+	 * @return the previousPassword
+	 */
+	public String getPreviousPassword() {
+		return previousPassword;
+	}
+
+	/**
+	 * @param previousPassword the previousPassword to set
+	 */
+	public void setPreviousPassword(String previousPassword) {
+		this.previousPassword = previousPassword;
 	}
 
 }

@@ -3,7 +3,9 @@
 angular.module('myApp.services', ['ngRoute'])
 
 .service('User', [ '$resource', function(resource) {
-	return resource('/api/user/:username/');
+	return resource('/api/user/:username/', null, {
+		'update': { method: 'PUT' }
+	});
 	// Note resource ignores trailing slash... need to switch to $http
 }])
 
@@ -15,6 +17,8 @@ angular.module('myApp.services', ['ngRoute'])
 }])
 
 .service('Game', [ '$resource', function(resource) {
-	return resource('/api/game/:id/');
+	return resource('/api/game/:id/', null, {
+		'update': { method: 'PUT' }
+	});
 	// Note resource ignores trailing slash... need to switch to $http
 }]);

@@ -13,6 +13,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.google.common.base.Strings;
+import com.marcolenzo.gameboard.api.exceptions.BadRequestException;
+import com.marcolenzo.gameboard.api.exceptions.ForbiddenException;
+import com.marcolenzo.gameboard.commons.model.Board;
+import com.marcolenzo.gameboard.commons.model.PlayerStatistics;
+import com.marcolenzo.gameboard.commons.model.ResistanceGame;
 import com.marcolenzo.gameboard.commons.model.User;
 import com.marcolenzo.gameboard.commons.repositories.BoardRepository;
 import com.marcolenzo.gameboard.commons.repositories.ResistanceGameRepository;
@@ -42,6 +48,7 @@ public class UserController {
 	public User getUser(@PathVariable String id) {
 		if (id.equals("me")) {
 			User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			user = repository.findOne(user.getId());
 			user.setPassword(null);
 			return user;
 		}
@@ -65,6 +72,56 @@ public class UserController {
 		user.setPassword(encodedPassword);
 		User savedUser = repository.save(user);
 		return savedUser;
+	}
+
+	@RequestMapping(value = "/api/user/{id}", method = RequestMethod.PUT)
+	public User updateUser(@PathVariable String id, @Valid @RequestBody User user) throws BadRequestException,
+			ForbiddenException {
+
+		if (!id.equals(user.getId())) {
+			throw new BadRequestException("IDs cannot be updated.");
+		}
+
+		User currentUser = repository.findOne(id);
+		
+		// Changing email and changing password requires previous password check
+		if(!currentUser.getEmail().equals(user.getEmail()) || !Strings.isNullOrEmpty(user.getPassword())) {
+			if (!passwordEncoder.matches(user.getPreviousPassword(), currentUser.getPassword())) {
+				throw new ForbiddenException("Invalid credentials");
+			}
+
+			// TODO implement change
+		}
+		
+		if (!currentUser.getNickname().equals(user.getNickname())) {
+			currentUser.setNickname(user.getNickname());
+			currentUser = repository.save(currentUser);
+
+			// Update username in boards and games
+			// TODO improve this by dropping nickname in board and game collections
+			List<Board> boards = boardRepository.findByPlayersUserId(id);
+			for (Board board : boards) {
+				for (PlayerStatistics stats : board.getPlayers()) {
+					if (stats.getUserId().equals(id)) {
+						stats.setNickname(user.getNickname());
+					}
+				}
+				boardRepository.save(board);
+				List<ResistanceGame> games = gameRepository.findByBoardId(board.getId());
+				for (ResistanceGame game : games) {
+					for (PlayerStatistics player : game.getPlayerStats()) {
+						if (player.getUserId().equals(id)) {
+							player.setNickname(user.getNickname());
+						}
+					}
+					gameRepository.save(game);
+				}
+			}
+		}
+
+		currentUser.setPassword(null);
+		return currentUser;
+
 	}
 
 }

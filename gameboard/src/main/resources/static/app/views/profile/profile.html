@@ -1,0 +1,64 @@
+<div>
+	<h2>{{user.nickname}}</h2><button ng-click="editNickname()" class="btn btn-xs">Change Nickname</button>
+	<h4>Email: {{user.email}}</h4><button ng-click="editEmail()" class="btn btn-xs">Change Email</button>
+	<button ng-click="editPassword()" class="btn btn-xs">Change Password</button>
+</div>
+<!-- Modals -->
+<script type="text/ng-template" id="changeNickname.html">
+        <div class="modal-header">
+            <h3 class="modal-title">Change Nickname</h3>
+        </div>
+        <div class="modal-body">
+			<input type="text" ng-model="nickname" id="inputNickname" class="form-control" placeholder="Nickname" pattern=".{1,128}" required title="Nickname should be 1 to 128 characters">
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
+            <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+        </div>
+</script>
+
+<br/>
+
+<div class="table-responsive">
+		<h2>Your Board Stats</h2>
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th><span uib-tooltip="Board Name">Board</span></th>
+					<th><span uib-tooltip="Current Position">#</span></th>
+					<th><span uib-tooltip="Position Delta">&Delta;</span></th>
+					<th><span uib-tooltip="Player Nickname">Player</span></th>
+					<th><span uib-tooltip="Games played">GP</span></th>
+					<th><span uib-tooltip="Games won">W</span></th>
+					<th><span uib-tooltip="% of games won">W %</span></th>
+					<th><span uib-tooltip="Games played as resistance">GPR</span></th>
+					<th><span uib-tooltip="Games won as resistance">WR</span></th>
+					<th><span uib-tooltip="% of games won as resistance">WR %</span></th>
+					<th><span uib-tooltip="Games played as spy">GPS</span></th>
+					<th><span uib-tooltip="Games won as spy">WS</span></th>
+					<th><span uib-tooltip="% of games won as spy">WS %</span></th>
+					<th><span uib-tooltip="ELO Rating Delta">ELO &Delta;</span></th>
+					<th><span uib-tooltip="Current ELO Rating">ELO</span></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="x in boardStats">
+					<td>{{x.boardName}}</td>
+					<td>{{x.position}} <span ng-style="{color: x.positionVariation > 0 ? 'green' : 'red'}"><b>{{x.positionChangeMarker}}</b></span></td>
+					<td>{{x.positionVariation}}</td>
+					<td>{{x.nickname}}</a></td>
+					<td>{{x.matchesPlayed}}</td>
+					<td>{{x.matchesWon}}</td>
+					<td>{{x.wp}}</td>
+					<td>{{x.matchesPlayedAsResistance}}</td>
+					<td>{{x.matchesWonAsResistance}}</td>
+					<td>{{x.wrp}}</td>
+					<td>{{x.matchesPlayedAsSpy}}</td>
+					<td>{{x.matchesWonAsSpy}}</td>
+					<td>{{x.wsp}}</td>
+					<td>{{x.eloVariation}}</td>
+					<td>{{x.elo}}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>

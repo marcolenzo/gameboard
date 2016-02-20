@@ -13,8 +13,9 @@ angular.module(
 		  'myApp.boarddetails', 
 		  'myApp.gamehistory',
 		  'myApp.gamedetails',
+		  'myApp.profile',
 		  'myApp.version',
-		  'ui.bootstrap', 
+		  'ui.bootstrap',
 		  'ngTagsInput' ]).
 
 config([ '$routeProvider', function($routeProvider) {
