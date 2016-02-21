@@ -13,10 +13,12 @@ angular.module(
 		  'myApp.boarddetails', 
 		  'myApp.gamehistory',
 		  'myApp.gamedetails',
+		  'myApp.boardstats',
 		  'myApp.profile',
 		  'myApp.version',
 		  'ui.bootstrap',
-		  'ngTagsInput' ]).
+		  'ngTagsInput',
+		  'chart.js' ]).
 
 config([ '$routeProvider', function($routeProvider) {
 	$routeProvider.otherwise({
@@ -37,7 +39,7 @@ controller('MainCtrl', [ '$scope', '$rootScope', '$location', '$timeout', 'User'
 	
 	$scope.currentPath = "/overview";
 	
-	$scope.boardDetailsPaths = ['/boarddetails', '/gameresult', '/gamehistory', '/editboard', '/gamedetails'];
+	$scope.boardDetailsPaths = ['/boarddetails', '/gameresult', '/gamehistory', '/editboard', '/gamedetails', '/boardstats'];
 	
 	$scope.$on('$routeChangeSuccess', function (scope, next, current) {
 		// Load user details if still undefined

@@ -64,6 +64,7 @@
 					<li ng-show="isBoardAdmin" ng-class="isMenuItemActive('/editboard')"><a ng-href="#/editboard?boardId={{board.id}}">Edit {{board.name}}</a></li>
 					<li ng-show="isBoardAdmin" ng-class="isMenuItemActive('/gameresult')"><a ng-href="#/gameresult?boardId={{board.id}}">Log Game Result</a></li>
 					<li ng-class="isMenuItemActive('/gamehistory')"><a ng-href="#/gamehistory?boardId={{board.id}}">Games History</a></li>
+					<li ng-class="isMenuItemActive('/boardstats')"><a ng-href="#/boardstats?boardId={{board.id}}">Stats for Geeks</a></li>
 					<!-- <li ng-class="isMenuItemActive('/creategame')"><a ng-href="#/creategame?boardId={{board.id}}">Create new game</a></li> -->
 				</ul>
 			</div>
@@ -90,6 +91,8 @@
 
 	<script src="js/vendor/ui-bootstrap-tpls-1.1.2.min.js"></script>
 	<script src="js/vendor/ng-tags-input.min.js"></script>
+	<script src="js/vendor/chart.min.js"></script>
+	<script src="js/vendor/angular-chart.js"></script>
 
 	<script src="app/app.js"></script>
 	<script src="app/app-services.js"></script>
@@ -100,6 +103,7 @@
 	<script src="app/views/editboard/editboard.js"></script>
 	<script src="app/views/gamehistory/gamehistory.js"></script>
 	<script src="app/views/gamedetails/gamedetails.js"></script>
+	<script src="app/views/boardstats/boardstats.js"></script>
 	<script src="app/views/profile/profile.js"></script>
 	<script src="app/components/version/version.js"></script>
 	<script src="app/components/version/version-directive.js"></script>

@@ -35,6 +35,8 @@ public class Board {
 
 	private Set<String> admins;
 
+	private BoardStatistics boardStatistics;
+
 	private List<PlayerStatistics> players;
 	
 	@JsonIgnore
@@ -125,5 +127,18 @@ public class Board {
 		return playersMap;
 	}
 
+	/**
+	 * @return the boardStatistics
+	 */
+	public BoardStatistics getBoardStatistics() {
+		return boardStatistics;
+	}
+
+	/**
+	 * @param boardStatistics the boardStatistics to set
+	 */
+	public void setBoardStatistics(BoardStatistics boardStatistics) {
+		this.boardStatistics = boardStatistics;
+	}
 
 }

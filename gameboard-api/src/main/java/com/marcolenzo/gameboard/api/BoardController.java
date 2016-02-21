@@ -21,6 +21,7 @@ import com.marcolenzo.gameboard.api.exceptions.ForbiddenException;
 import com.marcolenzo.gameboard.api.services.RatingServices;
 import com.marcolenzo.gameboard.commons.comparators.ResistanceGameComparator;
 import com.marcolenzo.gameboard.commons.model.Board;
+import com.marcolenzo.gameboard.commons.model.BoardStatistics;
 import com.marcolenzo.gameboard.commons.model.PlayerStatistics;
 import com.marcolenzo.gameboard.commons.model.ResistanceGame;
 import com.marcolenzo.gameboard.commons.model.User;
@@ -126,6 +127,8 @@ public class BoardController {
 			player.setMatchesWonAsResistance(0);
 			player.setMatchesWonAsSpy(0);
 		}
+
+		board.setBoardStatistics(new BoardStatistics());
 
 		// Intermediate save
 		board = repository.save(board);
