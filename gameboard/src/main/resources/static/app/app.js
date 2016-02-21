@@ -74,6 +74,10 @@ controller('MainCtrl', [ '$scope', '$rootScope', '$location', '$timeout', 'User'
 		}
     });
 	
+	$scope.$on('user-updated', function(event, user) {
+		$scope.user = user;
+	});
+	
 	$scope.isMenuItemActive = function(path) {
 		if(path === $scope.currentPath) {
 			return 'active';

@@ -8,7 +8,7 @@ angular.module('myApp.profile', [ 'ngRoute', 'ui.bootstrap' ])
 		});
 	}])
 	
-	.controller('ProfileCtrl', ['$scope', 'User', 'Board', '$uibModal', function($scope, User, Board, $uibModal) {
+	.controller('ProfileCtrl', ['$scope', '$rootScope','User', 'Board', '$uibModal', function($scope, $rootScope, User, Board, $uibModal) {
 		
 		$scope.boardStats = new Array();
 		$scope.user =  User.get({username: 'me'});
@@ -17,12 +17,6 @@ angular.module('myApp.profile', [ 'ngRoute', 'ui.bootstrap' ])
 			init();
 		});
 			
-		
-		$scope.$on('user-updated', function(data) {
-			$scope.user = data.targetScope.user;
-			init();
-		});
-		
 		function init() {
 			$scope.boardStats = new Array();
 			$scope.boards = Board.query({user : $scope.user.id});
@@ -66,10 +60,10 @@ angular.module('myApp.profile', [ 'ngRoute', 'ui.bootstrap' ])
 			}
 		 });
 
-		 modalInstance.result.then(function(selectedItem) {
-			 $scope.selected = selectedItem;
+		 modalInstance.result.then(function(user) {
+			 $scope.user = user;
+			 init();
 		 }, function() {
-			 //modal dismissed
 			console.log('Modal dismissed');
 		});
 	};
@@ -80,9 +74,9 @@ angular.module('myApp.profile').controller('ChangeNicknameController', [ '$scope
 
 	$scope.ok = function() {
 		user.nickname = $scope.nickname;
-		User.update({ username : user.id }, user, function() {
+		User.update({ username : user.id }, user, function(user) {
 			$rootScope.$broadcast('user-updated', user);
-			$uibModalInstance.close();
+			$uibModalInstance.close(user);
 		}, function() {
 			alert("Fail");
 		});
