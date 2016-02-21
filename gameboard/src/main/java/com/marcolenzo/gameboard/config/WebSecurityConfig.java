@@ -20,7 +20,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Bean
 	public SavedRequestAwareAuthenticationSuccessHandler successHandler() {
 		SavedRequestAwareAuthenticationSuccessHandler successHandler = new SavedRequestAwareAuthenticationSuccessHandler();
-		successHandler.setDefaultTargetUrl("/dashboard");
+		successHandler.setDefaultTargetUrl("/index");
 		return successHandler;
 	}
 
@@ -42,7 +42,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 						"/resources/**", "/app/**", "/css/**", "/fonts/**", "/images/**", "/js/**").permitAll()
 		.anyRequest().authenticated()
 		.and().formLogin().loginPage("/login").loginProcessingUrl("/login").successHandler(successHandler()).permitAll()
-		.and().logout().permitAll().and().csrf().disable();
+		.and().logout().permitAll().and().rememberMe().and().csrf().disable();
 		// @formatter:on
 	}
 
