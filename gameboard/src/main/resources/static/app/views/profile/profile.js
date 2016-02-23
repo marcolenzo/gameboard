@@ -8,16 +8,21 @@ angular.module('myApp.profile', [ 'ngRoute', 'ui.bootstrap' ])
 		});
 	}])
 	
-	.controller('ProfileCtrl', ['$scope', '$rootScope','User', 'Board', '$uibModal', function($scope, $rootScope, User, Board, $uibModal) {
+	.controller('ProfileCtrl', ['$scope', '$rootScope','User', 'Board', '$uibModal', 'Upload', '$location',
+	                            function($scope, $rootScope, User, Board, $uibModal, Upload, $location) {
 		
+		$scope.fileChosen = false;
 		$scope.boardStats = new Array();
 		$scope.user =  User.get({username: 'me'});
+		$scope.avatarSrc = undefined;
 		
 		$scope.user.$promise.then(function() {
+			
 			init();
 		});
 			
 		function init() {
+			$scope.avatarSrc = '/avatar/' + $scope.user.id;
 			$scope.boardStats = new Array();
 			$scope.boards = Board.query({user : $scope.user.id});
 			$scope.boards.$promise.then(function() {
@@ -45,6 +50,27 @@ angular.module('myApp.profile', [ 'ngRoute', 'ui.bootstrap' ])
 					});
 				});
 			});
+		}
+		
+		$scope.chooseFile = function() {
+			$('#file').trigger('click');
+		}
+		
+		$scope.uploadAvatar = function(file) {
+		    file.upload = Upload.upload({
+		      url: '/avatar',
+		      data: {file: file},
+		    });
+		    
+		    file.upload.then(function (response) {
+		    	if(response.status === 200) {
+		    		alert('Success');
+		    		$scope.avatarSrc = '/avatar/' + $scope.user.id + "?" + new Date().getTime();
+		    		$location.path('/profile');
+		    	}
+		    });
+		    
+		       
 		}
 		
 		$scope.editNickname = function() {

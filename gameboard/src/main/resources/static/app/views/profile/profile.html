@@ -6,16 +6,14 @@
 	</div>
 	<div class="col-xs-12">
 		<br/>
-		<img ng-src="/avatar/{{user.id}}"  alt="Avatar" height="100px">
+		<img ng-src="{{avatarSrc}}" class="img-circle" alt="Avatar" height="100px">
 	</div>
 	<div class="col-xs-12">
-		<br/>
-		<form name="avatarForm" method="POST" enctype="multipart/form-data" action="/avatar">
-			<div class="form-group">
-				<label for="file">Choose your Avatar</label> 
-				<input type="file" name="file">
-			</div>
-			<button type="submit" class="btn btn-default" value="Upload">Upload</button>
+		<form name="avatarForm">
+			<input id="file" type="file" ngf-select ng-model="picFile" name="file" accept="image/*" ngf-max-size="1MB" style="opacity: 0" required>
+<!-- 			<input id="file" type="file"  name="file"> -->
+			<button class="btn btn-xs" value="Choose" ng-click="chooseFile()">Choose file</button>
+			<button ng-show="picFile" class="btn btn-xs" value="Upload" ng-click="uploadAvatar(picFile)">Upload</button>
 		</form>
 	</div>
 </div>

@@ -18,6 +18,7 @@ angular.module(
 		  'myApp.version',
 		  'ui.bootstrap',
 		  'ngTagsInput',
+		  'ngFileUpload',
 		  'chart.js' ]).
 
 config([ '$routeProvider', function($routeProvider) {

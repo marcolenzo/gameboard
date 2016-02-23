@@ -28,7 +28,7 @@ public class AvatarController {
 	private UserAvatarRepository repo;
 
 	@RequestMapping(value = "/avatar", method = RequestMethod.POST)
-	public @ResponseBody String createAvatar(@RequestParam("file") MultipartFile file, Authentication authentication)
+	public @ResponseBody void createAvatar(@RequestParam("file") MultipartFile file, Authentication authentication)
 			throws FileUploadException {
 
 		User currentUser = (User) authentication.getPrincipal();
@@ -40,14 +40,12 @@ public class AvatarController {
 
 				UserAvatar avatar = new UserAvatar();
 				avatar.setContentType(file.getContentType());
-				avatar.setContentLength(file.getSize());
 				avatar.setFilename(file.getName());
 				avatar.setAvatar(croppedImage);
+				avatar.setContentLength(croppedImage.length);
 				avatar.setUserId(currentUser.getId());
 
 				avatar = repo.save(avatar);
-
-				return avatar.getUserId();
 
 			}
 			catch (Exception e) {
