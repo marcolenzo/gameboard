@@ -4,7 +4,10 @@ import java.io.IOException;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,6 +29,9 @@ public class AvatarController {
 
 	@Autowired
 	private UserAvatarRepository repo;
+
+	@Autowired
+	private ResourceLoader resourceLoader;
 
 	@RequestMapping(value = "/avatar", method = RequestMethod.POST)
 	public @ResponseBody void createAvatar(@RequestParam("file") MultipartFile file, Authentication authentication)
@@ -64,12 +70,17 @@ public class AvatarController {
 		UserAvatar avatar = repo.findOne(userId);
 
 		if (avatar == null) {
-			throw new NotFoundException("Avatar not found.");
+			Resource defaultAvatar = resourceLoader.getResource("classpath:/static/images/spy.jpeg");
+			response.setContentType("image/jpeg");
+			byte[] b = IOUtils.toByteArray(defaultAvatar.getInputStream());
+			response.setContentLengthLong(b.length);
+			response.getOutputStream().write(b);
 		}
-		
-		response.setContentType(avatar.getContentType());
-		response.setContentLengthLong(avatar.getContentLength());
-		response.getOutputStream().write(avatar.getAvatar());
+		else {
+			response.setContentType("image/jpeg");
+			response.setContentLengthLong(avatar.getContentLength());
+			response.getOutputStream().write(avatar.getAvatar());
+		}
 
 	}
 
