@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.marcolenzo.gameboard.api.exceptions.BadRequestException;
+import com.marcolenzo.gameboard.api.exceptions.FileUploadException;
 import com.marcolenzo.gameboard.api.exceptions.ForbiddenException;
+import com.marcolenzo.gameboard.api.exceptions.NotFoundException;
 import com.marcolenzo.gameboard.commons.model.validation.FieldError;
 import com.marcolenzo.gameboard.commons.model.validation.ValidationError;
 
@@ -53,6 +55,20 @@ public class ExceptionControllerAdvice {
 	@ResponseStatus(HttpStatus.FORBIDDEN)
 	@ResponseBody
 	public String forbidden(ForbiddenException ex, Locale locale) {
+		return ex.getMessage();
+	}
+
+	@ExceptionHandler(FileUploadException.class)
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	@ResponseBody
+	public String fileUpload(FileUploadException ex, Locale locale) {
+		return ex.getMessage();
+	}
+
+	@ExceptionHandler(NotFoundException.class)
+	@ResponseStatus(HttpStatus.NOT_FOUND)
+	@ResponseBody
+	public String notFound(NotFoundException ex, Locale locale) {
 		return ex.getMessage();
 	}
 

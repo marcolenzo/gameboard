@@ -1,21 +1,25 @@
-<div>
-	<h2>{{user.nickname}}</h2><button ng-click="editNickname()" class="btn btn-xs">Change Nickname</button>
-	<h4>Email: {{user.email}}</h4><button ng-click="editEmail()" class="btn btn-xs">Change Email</button>
-	<button ng-click="editPassword()" class="btn btn-xs">Change Password</button>
+<div class="row">
+	<div class="col-xs-12">
+		<h2>{{user.nickname}}</h2><button ng-click="editNickname()" class="btn btn-xs">Change Nickname</button>
+		<h4>Email: {{user.email}}</h4><button ng-click="editEmail()" class="btn btn-xs">Change Email</button>
+		<button ng-click="editPassword()" class="btn btn-xs">Change Password</button>
+	</div>
+	<div class="col-xs-12">
+		<br/>
+		<img ng-src="/avatar/{{user.id}}"  alt="Avatar" height="100px">
+	</div>
+	<div class="col-xs-12">
+		<br/>
+		<form name="avatarForm" method="POST" enctype="multipart/form-data" action="/avatar">
+			<div class="form-group">
+				<label for="file">Choose your Avatar</label> 
+				<input type="file" name="file">
+			</div>
+			<button type="submit" class="btn btn-default" value="Upload">Upload</button>
+		</form>
+	</div>
 </div>
-<!-- Modals -->
-<script type="text/ng-template" id="changeNickname.html">
-        <div class="modal-header">
-            <h3 class="modal-title">Change Nickname</h3>
-        </div>
-        <div class="modal-body">
-			<input type="text" ng-model="nickname" id="inputNickname" class="form-control" placeholder="Nickname" pattern=".{1,128}" required title="Nickname should be 1 to 128 characters">
-        </div>
-        <div class="modal-footer">
-            <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
-            <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
-        </div>
-</script>
+
 
 <br/>
 
@@ -62,3 +66,18 @@
 			</tbody>
 		</table>
 	</div>
+	
+	
+	<!-- Modals -->
+<script type="text/ng-template" id="changeNickname.html">
+        <div class="modal-header">
+            <h3 class="modal-title">Change Nickname</h3>
+        </div>
+        <div class="modal-body">
+			<input type="text" ng-model="nickname" id="inputNickname" class="form-control" placeholder="Nickname" pattern=".{1,128}" required title="Nickname should be 1 to 128 characters">
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
+            <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+        </div>
+</script>
