@@ -11,13 +11,24 @@ angular.module('myApp.profile', [ 'ngRoute', 'ui.bootstrap' ])
 	.controller('ProfileCtrl', ['$scope', '$rootScope','User', 'Board', '$uibModal', 'Upload', '$location',
 	                            function($scope, $rootScope, User, Board, $uibModal, Upload, $location) {
 		
+		var params = $location.search();
+		
+		$scope.avatarSrc = undefined;
 		$scope.fileChosen = false;
 		$scope.boardStats = new Array();
-		$scope.user =  User.get({username: 'me'});
-		$scope.avatarSrc = undefined;
+		$scope.edit = false;
+		
+		if(params.userId != undefined) {
+			$scope.user = User.get({username: params.userId})
+		}
+		else {
+			$scope.edit = true;
+			$scope.user =  User.get({username: 'me'});
+		}
+		
+		
 		
 		$scope.user.$promise.then(function() {
-			
 			init();
 		});
 			

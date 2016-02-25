@@ -57,7 +57,11 @@ public class UserController {
 			user.setPassword(null);
 			return user;
 		}
-		return null;
+		else {
+			User user = repository.findOne(id);
+			user.setPassword(null);
+			return user;
+		}
 	}
 
 	@RequestMapping(value = "/api/user", method = RequestMethod.GET)

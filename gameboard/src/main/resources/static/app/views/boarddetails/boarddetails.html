@@ -28,7 +28,7 @@
 				<tr ng-repeat="x in board.players">
 					<td>{{x.position}} <span ng-style="{color: x.positionVariation > 0 ? 'green' : 'red'}"><b>{{x.positionChangeMarker}}</b></span></td>
 					<td>{{x.positionVariation}}</td>
-					<td><img ng-src="/avatar/{{x.userId}}" class="img-circle" alt="Avatar" height="25px"> {{x.nickname}}</td>
+					<td><img ng-src="/avatar/{{x.userId}}" class="img-circle" alt="Avatar" height="25px"> <a ng-href="#/profile?userId={{x.userId}}">{{x.nickname}}</a></td>
 					<td>{{x.matchesPlayed}}</td>
 					<td>{{x.matchesWon}}</td>
 					<td>{{x.wp}}</td>
