@@ -160,7 +160,15 @@ public class RatingServices {
 				rank++;
 				rating = player.getElo();
 			}
-			player.setPositionVariation(initialPos - player.getPosition());
+
+			// Set position variation.
+			if (initialPos == 0) {
+				player.setPositionVariation(0);
+			}
+			else {
+				player.setPositionVariation(initialPos - player.getPosition());
+			}
+
 		}
 	}
 
