@@ -118,12 +118,19 @@ angular.module('myApp.gameresult', [ 'ngRoute', 'ngTagsInput' ])
 					}
 				}, $scope.game.spies);
 				
-				Game.save($scope.game, function() {
-					alert('Success');
-					$location.path('/boarddetails');
-				}, function() {
-					alert('Failed');
-				});
+				if(!validateGame()) {
+					alert('Game is not valid.');
+				}
+				else {
+					Game.save($scope.game, function() {
+						alert('Success');
+						$location.path('/boarddetails');
+					}, function() {
+						alert('Failed');
+					});
+				}
+				
+				
 				
 			}
 			
@@ -137,6 +144,33 @@ angular.module('myApp.gameresult', [ 'ngRoute', 'ngTagsInput' ])
 				    return 1;
 				  else 
 				    return 0;
+			}
+			
+			function validateGame() {
+				var n = $scope.game.players.length;
+				var s = $scope.game.spies.length;
+				switch(n) {
+					case 5: 
+					case 6:	
+						if(s == 2) {
+							return true;
+						}
+						break;
+					case 7: 
+					case 8:
+					case 9:
+						if(s == 3) {
+							return true;
+						}
+						break;
+					case 10:
+						if(s == 4) {
+							return true;
+						}
+						break;
+					default:
+						return false;
+				}
 			}
 			
 		} ]);
