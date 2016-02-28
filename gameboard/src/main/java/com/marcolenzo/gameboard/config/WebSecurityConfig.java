@@ -12,14 +12,20 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.RememberMeServices;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenBasedRememberMeServices;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
+import com.marcolenzo.gameboard.commons.security.MongoPersistentTokenRepository;
 import com.marcolenzo.gameboard.commons.security.MongoUserDetailsService;
 
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
+	private static final String KEY = "c445dfa348f851909c96806770036ac83710228be5137dd35b416d5f010b9f57";
 
 	@Bean
 	public SavedRequestAwareAuthenticationSuccessHandler successHandler() {
@@ -38,6 +44,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		return new BCryptPasswordEncoder();
 	}
 
+	@Bean
+	public PersistentTokenRepository persistentTokenRepository() {
+		return new MongoPersistentTokenRepository();
+	}
+
+	@Bean
+	public RememberMeServices rememberMeServices() {
+		return new PersistentTokenBasedRememberMeServices(KEY,
+				userDetailsService(), persistentTokenRepository());
+	}
+
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		// @formatter:off
@@ -46,8 +63,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 						"/resources/**", "/app/**", "/css/**", "/fonts/**", "/images/**", "/js/**").permitAll()
 		.anyRequest().authenticated()
 		.and().formLogin().loginPage("/login").loginProcessingUrl("/login").successHandler(successHandler()).permitAll()
-		.and().logout().permitAll().and().rememberMe().and().csrf().disable();
-		
+		.and().logout().permitAll()
+		.and().rememberMe().rememberMeServices(rememberMeServices()).key(KEY)
+		.and().csrf().disable();
 		// @formatter:on
 	}
 
