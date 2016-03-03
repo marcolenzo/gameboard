@@ -12,7 +12,7 @@
 		<label for="users">Users</label>
 		<tags-input ng-model="tags" add-on-paste="true" add-on-blur="false"
 			allow-leftover-text="false" required> <auto-complete
-			source="getMatchingStates($query)"></auto-complete> </tags-input>
+			source="getMatchingStates($query)" load-on-down-arrow="true"></auto-complete> </tags-input>
 	</div>
 	<button type="submit" class="btn btn-default" ng-click="createBoard()"
 		ng-disabled="createBoardForm.$invalid">Submit</button>
