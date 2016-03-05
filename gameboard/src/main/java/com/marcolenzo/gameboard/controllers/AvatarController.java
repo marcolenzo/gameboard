@@ -52,6 +52,8 @@ public class AvatarController {
 		
 		UserAvatar avatar = avatarServices.getAvatarByUserId(userId);
 
+		response.setHeader("Cache-Control", "max-age=604800");
+
 		if (avatar == null) {
 			Resource defaultAvatar = resourceLoader.getResource("classpath:/static/images/spy.jpeg");
 			response.setContentType("image/jpeg");

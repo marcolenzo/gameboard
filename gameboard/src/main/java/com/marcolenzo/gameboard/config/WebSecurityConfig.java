@@ -64,8 +64,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		// @formatter:off
 		http.authorizeRequests()
-		.antMatchers("/signup-success.html", "/signup-failed.html", "/signup", "/api/user/", 
-						"/resources/**", "/app/**", "/css/**", "/fonts/**", "/images/**", "/js/**").permitAll()
+		.antMatchers("/signup-success.html", "/signup-failed.html", "/signup", "/api/user/", "/resources/**", "/app/**").permitAll()
 		.anyRequest().authenticated()
 		.and().formLogin().loginPage("/login").loginProcessingUrl("/login").successHandler(successHandler()).permitAll()
 		.and().logout().permitAll()
@@ -81,7 +80,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-		web.ignoring().antMatchers(HttpMethod.GET, "/avatar/**");
+		web.ignoring().antMatchers(HttpMethod.GET, "/avatar/**", "/fonts/**", "/images/**", "/js/**", "/css/**");
 		super.configure(web);
 	}
 
