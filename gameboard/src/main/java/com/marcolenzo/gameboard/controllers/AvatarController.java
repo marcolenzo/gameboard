@@ -21,53 +21,31 @@ import com.marcolenzo.gameboard.exceptions.FileUploadException;
 import com.marcolenzo.gameboard.exceptions.NotFoundException;
 import com.marcolenzo.gameboard.model.User;
 import com.marcolenzo.gameboard.model.UserAvatar;
-import com.marcolenzo.gameboard.repositories.UserAvatarRepository;
-import com.marcolenzo.gameboard.utils.ImageCropper;
+import com.marcolenzo.gameboard.services.AvatarServicesTests;
 
 @Controller
 public class AvatarController {
 
 	@Autowired
-	private UserAvatarRepository repo;
+	private ResourceLoader resourceLoader;
 
 	@Autowired
-	private ResourceLoader resourceLoader;
+	private AvatarServicesTests avatarServices;
 
 	@RequestMapping(value = "/avatar", method = RequestMethod.POST)
 	public @ResponseBody void createAvatar(@RequestParam("file") MultipartFile file, Authentication authentication)
 			throws FileUploadException {
 
 		User currentUser = (User) authentication.getPrincipal();
+		avatarServices.updateUserAvatar(currentUser, file);
 
-		if (!file.isEmpty()) {
-			try {
-				// Crop Image
-				byte[] croppedImage = ImageCropper.cropImage(file.getBytes());
-
-				UserAvatar avatar = new UserAvatar();
-				avatar.setContentType(file.getContentType());
-				avatar.setFilename(file.getName());
-				avatar.setAvatar(croppedImage);
-				avatar.setContentLength(croppedImage.length);
-				avatar.setUserId(currentUser.getId());
-
-				avatar = repo.save(avatar);
-
-			}
-			catch (Exception e) {
-				throw new FileUploadException("Avatar not accepted.");
-			}
-		}
-		else {
-			throw new FileUploadException("Avatar not accepted.");
-		}
 	}
 
 	@RequestMapping(value = "/avatar/{userId}", method = RequestMethod.GET)
 	public void getAvatar(@PathVariable String userId, HttpServletResponse response) throws NotFoundException,
 			IOException {
 		
-		UserAvatar avatar = repo.findOne(userId);
+		UserAvatar avatar = avatarServices.getAvatarByUserId(userId);
 
 		if (avatar == null) {
 			Resource defaultAvatar = resourceLoader.getResource("classpath:/static/images/spy.jpeg");
