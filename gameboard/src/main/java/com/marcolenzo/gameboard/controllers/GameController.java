@@ -27,7 +27,7 @@ import com.marcolenzo.gameboard.model.validators.ResistanceGameValidator;
 import com.marcolenzo.gameboard.repositories.BoardRepository;
 import com.marcolenzo.gameboard.repositories.ResistanceGameRepository;
 import com.marcolenzo.gameboard.repositories.UserRepository;
-import com.marcolenzo.gameboard.services.RatingServices;
+import com.marcolenzo.gameboard.services.BoardServices;
 
 /**
  * Sample REST Controller.
@@ -49,7 +49,7 @@ public class GameController {
 	private BoardRepository boardRepository;
 
 	@Autowired
-	private RatingServices ratingServices;
+	private BoardServices boardServices;
 
 	@Autowired
 	private ResistanceGameValidator gameValidator;
@@ -75,7 +75,7 @@ public class GameController {
 			throw new BadRequestException(result.getGlobalError().getCode());
 		}
 		Board board = boardRepository.findOne(game.getBoardId());
-		return ratingServices.rateGame(game, board);
+		return boardServices.rateGame(game, board);
 	}
 
 	@RequestMapping(value = "/api/game/test", method = RequestMethod.GET)

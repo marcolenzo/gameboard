@@ -10,32 +10,151 @@ import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
+import com.marcolenzo.gameboard.exceptions.BadRequestException;
+import com.marcolenzo.gameboard.exceptions.ForbiddenException;
 import com.marcolenzo.gameboard.model.Board;
 import com.marcolenzo.gameboard.model.BoardStatistics;
 import com.marcolenzo.gameboard.model.PlayerStatistics;
 import com.marcolenzo.gameboard.model.ResistanceGame;
+import com.marcolenzo.gameboard.model.User;
 import com.marcolenzo.gameboard.model.comparators.PlayerStatisticsComparator;
+import com.marcolenzo.gameboard.model.comparators.ResistanceGameComparator;
 import com.marcolenzo.gameboard.repositories.BoardRepository;
 import com.marcolenzo.gameboard.repositories.ResistanceGameRepository;
 
 /**
- * Services used to rate players.
+ * Services for the management of boards.
  * @author Marco Lenzo
  */
 @Component
-public class RatingServices {
+public class BoardServices {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(RatingServices.class);
-
-	@Autowired
-	private BoardRepository boardRepository;
+	private static final Logger LOGGER = LoggerFactory.getLogger(BoardServices.class);
 
 	@Autowired
-	private ResistanceGameRepository repository;
+	protected BoardRepository boardRepository;
+
+	@Autowired
+	protected ResistanceGameRepository gameRepository;
+
+	/**
+	 * Creates a board.
+	 * @param board
+	 * @return
+	 */
+	public Board createBoard(Board board) {
+
+		User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+		// Do not accept externally defined IDs.
+		board.setId(null);
+
+		// Sanitize player set and make sure current user is present
+		boolean isCurrentUserPresent = false;
+		for (PlayerStatistics player : board.getPlayers()) {
+			if (player.getUserId().equals(currentUser.getId())) {
+				isCurrentUserPresent = true;
+			}
+			player.resetStatistics();
+		}
+
+		if (!isCurrentUserPresent) {
+			PlayerStatistics player = new PlayerStatistics();
+			player.setUserId(currentUser.getId());
+			player.setNickname(currentUser.getNickname());
+			board.getPlayers().add(player);
+		}
+
+		board.setAdmins(Sets.newHashSet(currentUser.getId()));
+
+		return boardRepository.save(board);
+	}
+
+	/**
+	 * Updates a board.
+	 * @param updatedBoard
+	 * @return
+	 * @throws BadRequestException
+	 * @throws ForbiddenException
+	 */
+	public Board updateBoard(Board updatedBoard, String id) throws BadRequestException, ForbiddenException {
+		User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+		if (!id.equals(updatedBoard.getId())) {
+			throw new BadRequestException("IDs cannot be updated.");
+		}
+
+		Board board = boardRepository.findOne(updatedBoard.getId());
+		if (!board.getAdmins().contains(currentUser.getId())) {
+			throw new ForbiddenException("Only board admins can perform this action");
+		}
+
+		// Make sure a owner is never removed from admins
+		for (String owner : board.getOwners()) {
+			updatedBoard.getAdmins().add(owner);
+		}
+
+		// Override owners. Do not allow modifications
+		updatedBoard.setOwners(board.getOwners());
+
+		return boardRepository.save(updatedBoard);
+	}
+
+	/**
+	 * Get board by ID.
+	 * @param id
+	 * @return
+	 */
+	public Board getBoard(String id) {
+		return boardRepository.findOne(id);
+	}
+
+	/**
+	 * Get boards where player with specified ID is present.
+	 * @param playerId
+	 * @return
+	 */
+	public List<Board> getBoardsByPlayerId(String playerId) {
+		return boardRepository.findByPlayersUserId(playerId);
+	}
+
+	/**
+	 * Reset board statistics.
+	 * @param id
+	 * @return
+	 * @throws ForbiddenException
+	 */
+	public Board resetBoard(String id) throws ForbiddenException {
+		User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+		Board board = boardRepository.findOne(id);
+		if (!board.getAdmins().contains(currentUser.getId())) {
+			throw new ForbiddenException("You need to be a board admin to perform this action.");
+		}
+
+		for (PlayerStatistics player : board.getPlayers()) {
+			player.resetStatistics();
+		}
+
+		board.setBoardStatistics(new BoardStatistics());
+
+		// Intermediate save
+		board = boardRepository.save(board);
+
+		List<ResistanceGame> games = gameRepository.findByBoardId(board.getId());
+		Collections.sort(games, new ResistanceGameComparator());
+
+		for (ResistanceGame game : games) {
+			this.rateGame(game, board);
+		}
+
+		return board;
+	}
 
 	public ResistanceGame rateGame(ResistanceGame game, Board board) {
 
@@ -102,7 +221,7 @@ public class RatingServices {
 		}
 		game.setPlayerStats(gamePlayerStatistics);
 
-		return repository.save(game);
+		return gameRepository.save(game);
 	}
 
 	/**

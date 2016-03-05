@@ -21,8 +21,13 @@ import com.marcolenzo.gameboard.exceptions.FileUploadException;
 import com.marcolenzo.gameboard.exceptions.NotFoundException;
 import com.marcolenzo.gameboard.model.User;
 import com.marcolenzo.gameboard.model.UserAvatar;
-import com.marcolenzo.gameboard.services.AvatarServicesTests;
+import com.marcolenzo.gameboard.services.AvatarServices;
 
+/**
+ * Controller managing request dealing with user avatars management.
+ * @author Marco Lenzo
+ *
+ */
 @Controller
 public class AvatarController {
 
@@ -30,7 +35,7 @@ public class AvatarController {
 	private ResourceLoader resourceLoader;
 
 	@Autowired
-	private AvatarServicesTests avatarServices;
+	private AvatarServices avatarServices;
 
 	@RequestMapping(value = "/avatar", method = RequestMethod.POST)
 	public @ResponseBody void createAvatar(@RequestParam("file") MultipartFile file, Authentication authentication)

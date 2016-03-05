@@ -48,6 +48,22 @@ public class PlayerStatistics {
 	private Integer positionVariation = 0;
 
 	/**
+	 * Resets statistics.
+	 */
+	public void resetStatistics() {
+		this.elo = 1500;
+		this.matchesPlayed = 0;
+		this.matchesPlayedAsResistance = 0;
+		this.matchesPlayedAsSpy = 0;
+		this.matchesWon = 0;
+		this.matchesWonAsResistance = 0;
+		this.matchesWonAsSpy = 0;
+		this.eloVariation = 0;
+		this.position = 0;
+		this.positionVariation = 0;
+	}
+
+	/**
 	 * @return the userId
 	 */
 	public String getUserId() {
