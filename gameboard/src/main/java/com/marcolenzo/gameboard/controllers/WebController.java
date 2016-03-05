@@ -1,10 +1,10 @@
-package com.marcolenzo.gameboard.web;
+package com.marcolenzo.gameboard.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
- * Main Controller.
+ * Main MVC Controller.
  * @author Marco Lenzo <lenzo.marco@gmail.com>
  *
  */

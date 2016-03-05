@@ -20,6 +20,11 @@ import org.springframework.security.web.authentication.rememberme.PersistentToke
 import com.marcolenzo.gameboard.commons.security.MongoPersistentTokenRepository;
 import com.marcolenzo.gameboard.commons.security.MongoUserDetailsService;
 
+/**
+ * Spring Security configuration.
+ * @author Marco Lenzo
+ *
+ */
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
