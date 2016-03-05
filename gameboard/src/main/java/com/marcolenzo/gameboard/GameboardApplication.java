@@ -5,6 +5,7 @@ import java.net.UnknownHostException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
@@ -23,7 +24,9 @@ public class GameboardApplication {
 	private String mongoHost;
 
 	public static void main(String[] args) {
-		SpringApplication.run(GameboardApplication.class, args);
+		ConfigurableApplicationContext ctx = SpringApplication.run(GameboardApplication.class, args);
+		OwnerMigration migration = ctx.getBean(OwnerMigration.class);
+		migration.run();
 	}
 
 	public @Bean Mongo mongo() throws UnknownHostException {
@@ -33,4 +36,5 @@ public class GameboardApplication {
 	public @Bean MongoTemplate mongoTemplate() throws Exception {
 		return new MongoTemplate(mongo(), "gameboard");
 	}
+
 }

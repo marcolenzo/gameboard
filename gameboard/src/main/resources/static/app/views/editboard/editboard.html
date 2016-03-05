@@ -9,15 +9,31 @@
 			id="type" placeholder="Type" ng-model="board.type" disabled>
 	</div>
 	<div class="form-group">
-		<label for="currentUsers">Current Players</label>
-		<input type="text" class="form-control"	id="currentUsers" ng-model="currentPlayers" disabled>
+		<label for="players">Player List</label>
+		<div class="table-responsive">
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Admin</th>
+						<th>Owner<th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="x in board.players">
+						<td>{{x.nickname}}</td>
+						<td><input type="checkbox" ng-model="x.isAdmin" aria-label="Admin"></td>
+						<td><input type="checkbox" ng-model="x.isOwner" ng-disabled="isNotOwner" aria-label="Owner"></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="input-group">
+			<input type="text" ng-model="selectedPlayer" uib-typeahead="nickname for nickname in nicknames | filter:$viewValue | limitTo:8" typeahead-editable="false" class="form-control"> 
+			<span class="input-group-addon"><input type="checkbox" ng-model="selectedPlayerAdmin" aria-label="Admin">Is Admin</span>
+			<span class="input-group-addon"><input type="checkbox"	ng-model="selectedPlayerOwner" ng-disabled="isNotOwner" aria-label="Owner">Is Owner</span>
+			<span class="input-group-btn"><button ng-click="addPlayer()" class="btn btn-primary">Add Player</button></span>
+		</div>
 	</div>
-	<div class="form-group">
-		<label for="users">Add Players</label>
-		<tags-input ng-model="tags" add-on-paste="true" add-on-blur="false"
-			allow-leftover-text="false"> <auto-complete
-			source="getMatchingStates($query)" load-on-down-arrow="true"></auto-complete> </tags-input>
-	</div>
-	<button type="submit" class="btn btn-default" ng-click="updateBoard()"
-		ng-disabled="createBoardForm.$invalid">Submit</button>
+	<button type="submit" class="btn btn-default" ng-click="updateBoard()" ng-disabled="createBoardForm.$invalid">Submit</button>
 </form>

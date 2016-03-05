@@ -86,13 +86,25 @@ public class BoardController {
 
 	@RequestMapping(value = "/api/board/{id}", method = RequestMethod.PUT)
 	public Board updateGameboard(@PathVariable String id, @Valid @RequestBody Board gameboard)
-			throws BadRequestException {
-
+			throws BadRequestException, ForbiddenException {
+		User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		
 		if (!id.equals(gameboard.getId())) {
 			throw new BadRequestException("IDs cannot be updated.");
 		}
 
-		// TODO sanitize records for newly added users.
+		Board board = repository.findOne(gameboard.getId());
+		if (!board.getAdmins().contains(currentUser.getId())) {
+			throw new ForbiddenException("Only board admins can perform this action");
+		}
+
+		// Make sure a owner is never removed from admins
+		for (String owner : board.getOwners()) {
+			gameboard.getAdmins().add(owner);
+		}
+
+		// Override owners. Do not allow modifications
+		gameboard.setOwners(board.getOwners());
 
 		return repository.save(gameboard);
 	}

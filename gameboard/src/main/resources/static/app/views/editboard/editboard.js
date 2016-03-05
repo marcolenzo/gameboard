@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('myApp.editboard', [ 'ngRoute', 'ngTagsInput' ])
+angular.module('myApp.editboard', [ 'ngRoute' ])
 
 .config([ '$routeProvider', function($routeProvider) {
 	$routeProvider.when('/editboard', {
@@ -15,52 +15,48 @@ angular.module('myApp.editboard', [ 'ngRoute', 'ngTagsInput' ])
 			var params = $location.search();
 			var nickMap = {};
 			
-			$scope.currentPlayers = '';
 			$scope.currentPlayersNicks = new Array();
-			$scope.tags = undefined;
 			$scope.users = undefined;
+			$scope.selectedPlayer = "";
+			$scope.selectedPlayerAdmin = false;
+			$scope.selectedPlayerOwner = false;
 			$scope.nicknames = new Array();
+			$scope.isNotOwner = true;
 			
 			$scope.board = Board.get({id: params.boardId});
 			$scope.board.$promise.then(function (board) {
+				
+				if(board.owners.includes($scope.user.id)) {
+					$scope.isNotOwner = false;
+				}
+				
 				 jQuery.each(board.players, function(index, value) {
 					 $scope.currentPlayersNicks.push(value.nickname);
-					 $scope.currentPlayers += value.nickname;
-					 if(index < $scope.board.players.length - 1) {
-						 $scope.currentPlayers += ', ';
+					 
+					 if($scope.board.admins.includes(value.userId)) {
+						 value.isAdmin = true;
+					 }
+					 if($scope.board.owners.includes(value.userId)) {
+						 value.isOwner = true;
 					 }
 					 
-					 $scope.users = User.query();
-					 
-					 $scope.users.$promise.then(function(users) {
-							angular.forEach($scope.users, function(value, key) {
-								if(!$scope.currentPlayersNicks.includes(value.nickname) && !$scope.nicknames.includes(value.nickname)) {
-									this.push(value.nickname);
-									nickMap[value.nickname] = value;
-								}
-							}, $scope.nicknames);
-						});
 				 });
-				 
+
+				 $scope.users = User.query();
+				 $scope.users.$promise.then(function(users) {
+					angular.forEach($scope.users, function(value, key) {
+						if(!$scope.currentPlayersNicks.includes(value.nickname) && !$scope.nicknames.includes(value.nickname)) {
+							this.push(value.nickname);
+							nickMap[value.nickname] = value;
+						}
+					}, $scope.nicknames);
+				});
 			});
 			
-			
-			
-			
-
-			$scope.getMatchingStates = function(query) {
-				return jQuery.grep($scope.nicknames, function(n, i) {
-					if (n.indexOf(query) > -1) {
-						return true;
-					}
-					return false;
-				});
-			}
-
-			$scope.updateBoard = function() {
-				angular.forEach($scope.tags, function(value, key) {
+			$scope.addPlayer =  function() {
+				if($scope.selectedPlayer !== "") {
 					var player = {};
-					var user = nickMap[value.text];
+					var user = nickMap[$scope.selectedPlayer];
 					
 					player.userId = user.id;
 					player.nickname = user.nickname;
@@ -72,15 +68,37 @@ angular.module('myApp.editboard', [ 'ngRoute', 'ngTagsInput' ])
 					player.matchesPlayedAsSpy = 0;
 					player.matchesWonAsSpy = 0;
 					
-					this.push(player);
-				}, $scope.board.players);
-				 
+					if($scope.selectedPlayerAdmin) {
+						player.isAdmin = true;
+					}
+					if($scope.selectedPlayerOwner) {
+						player.isOwner = true;
+					}
+					
+					$scope.board.players.push(player);
+				}
+			}
+
+			$scope.updateBoard = function() {
+				$scope.board.admins = new Array();
+				$scope.board.owners = new Array();
+				jQuery.each($scope.board.players, function(index, value) {
+					if(value.isAdmin) {
+						$scope.board.admins.push(value.userId);
+					}
+					if(value.isOwner) {
+						$scope.board.owners.push(value.userId);
+					}
+				});
+				
 				Board.update({ id: $scope.board.id }, $scope.board, function() {
 					alert("Success");
-					$location.path('/dashboard');
+					$location.path('/boarddetails');
 				}, function() {
 					alert("Fail");
 				});
 			}
+			
+			
 
 		} ]);

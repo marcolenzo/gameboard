@@ -35,6 +35,8 @@ public class Board {
 
 	private Set<String> admins;
 
+	private Set<String> owners;
+
 	private BoardStatistics boardStatistics;
 
 	private List<PlayerStatistics> players;
@@ -139,6 +141,27 @@ public class Board {
 	 */
 	public void setBoardStatistics(BoardStatistics boardStatistics) {
 		this.boardStatistics = boardStatistics;
+	}
+
+	/**
+	 * @return the owners
+	 */
+	public Set<String> getOwners() {
+		return owners;
+	}
+
+	/**
+	 * @param owners the owners to set
+	 */
+	public void setOwners(Set<String> owners) {
+		this.owners = owners;
+	}
+
+	/**
+	 * @param playersMap the playersMap to set
+	 */
+	public void setPlayersMap(Map<String, PlayerStatistics> playersMap) {
+		this.playersMap = playersMap;
 	}
 
 }
