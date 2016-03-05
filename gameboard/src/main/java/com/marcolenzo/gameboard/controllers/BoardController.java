@@ -16,9 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.marcolenzo.gameboard.exceptions.BadRequestException;
 import com.marcolenzo.gameboard.exceptions.ForbiddenException;
 import com.marcolenzo.gameboard.model.Board;
-import com.marcolenzo.gameboard.repositories.BoardRepository;
-import com.marcolenzo.gameboard.repositories.ResistanceGameRepository;
-import com.marcolenzo.gameboard.repositories.UserRepository;
 import com.marcolenzo.gameboard.services.BoardServices;
 
 /**
@@ -31,15 +28,6 @@ public class BoardController {
 
 	@Autowired
 	private BoardServices boardServices;
-
-	@Autowired
-	private BoardRepository repository;
-
-	@Autowired
-	private UserRepository userRepository;
-
-	@Autowired
-	private ResistanceGameRepository gameRepository;
 
 	@RequestMapping(value = "/api/board", method = RequestMethod.POST)
 	public Board createGameboard(@Valid @RequestBody Board board) {
@@ -54,7 +42,7 @@ public class BoardController {
 
 	@RequestMapping(value = "/api/board/{id}", method = RequestMethod.GET)
 	public Board getGameboardById(@PathVariable String id) {
-		return boardServices.getBoard(id);
+		return boardServices.getBoardById(id);
 	}
 
 	@RequestMapping(value = "/api/board", method = RequestMethod.GET, params = { "user" })

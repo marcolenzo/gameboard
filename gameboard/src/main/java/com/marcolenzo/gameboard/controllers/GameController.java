@@ -1,9 +1,6 @@
 package com.marcolenzo.gameboard.controllers;
 
-import java.time.LocalDateTime;
-import java.util.Collections;
 import java.util.List;
-import java.util.UUID;
 
 import javax.validation.Valid;
 
@@ -18,16 +15,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.google.common.collect.Sets;
 import com.marcolenzo.gameboard.exceptions.BadRequestException;
-import com.marcolenzo.gameboard.model.Board;
 import com.marcolenzo.gameboard.model.ResistanceGame;
-import com.marcolenzo.gameboard.model.comparators.ResistanceGameComparator;
 import com.marcolenzo.gameboard.model.validators.ResistanceGameValidator;
-import com.marcolenzo.gameboard.repositories.BoardRepository;
-import com.marcolenzo.gameboard.repositories.ResistanceGameRepository;
-import com.marcolenzo.gameboard.repositories.UserRepository;
-import com.marcolenzo.gameboard.services.BoardServices;
+import com.marcolenzo.gameboard.services.GameServices;
 
 /**
  * Sample REST Controller.
@@ -40,30 +31,19 @@ public class GameController {
 	private static final Logger LOGGER = LoggerFactory.getLogger(BoardController.class);
 
 	@Autowired
-	private ResistanceGameRepository repository;
-
-	@Autowired
-	private UserRepository userRepository;
-
-	@Autowired
-	private BoardRepository boardRepository;
-
-	@Autowired
-	private BoardServices boardServices;
+	private GameServices gameServices;
 
 	@Autowired
 	private ResistanceGameValidator gameValidator;
 
 	@RequestMapping(value = "/api/game", method = RequestMethod.GET, params = { "boardId" })
 	public List<ResistanceGame> getGamesByBoardId(@RequestParam(value = "boardId", required = true) String boardId) {
-		List<ResistanceGame> games = repository.findByBoardId(boardId);
-		Collections.sort(games, Collections.reverseOrder(new ResistanceGameComparator()));
-		return games;
+		return gameServices.getGamesByBoardId(boardId);
 	}
 
 	@RequestMapping(value = "/api/game/{id}", method = RequestMethod.GET)
 	public ResistanceGame getGame(@PathVariable String id) {
-		return repository.findOne(id);
+		return gameServices.getGameById(id);
 	}
 
 	@RequestMapping(value = "/api/game", method = RequestMethod.POST)
@@ -74,22 +54,8 @@ public class GameController {
 		if (result.hasErrors()) {
 			throw new BadRequestException(result.getGlobalError().getCode());
 		}
-		Board board = boardRepository.findOne(game.getBoardId());
-		return boardServices.rateGame(game, board);
+		return gameServices.createAndRateGame(game);
 	}
-
-	@RequestMapping(value = "/api/game/test", method = RequestMethod.GET)
-	public ResistanceGame getGameTest() {
-		ResistanceGame game = new ResistanceGame();
-		game.setId(UUID.randomUUID().toString());
-		game.setBoardId(UUID.randomUUID().toString());
-		game.setStartTime(LocalDateTime.now());
-		game.setPlayers(Sets.newHashSet("123", "abc", "xxx", "yyy", "zzz"));
-		game.setSpies(Sets.newHashSet("123", "abc"));
-		game.setResistanceWin(true);
-		return game;
-	}
-
 
 
 }

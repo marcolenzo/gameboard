@@ -110,7 +110,7 @@ public class BoardServices {
 	 * @param id
 	 * @return
 	 */
-	public Board getBoard(String id) {
+	public Board getBoardById(String id) {
 		return boardRepository.findOne(id);
 	}
 
