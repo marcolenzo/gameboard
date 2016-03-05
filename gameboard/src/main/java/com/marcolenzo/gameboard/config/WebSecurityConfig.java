@@ -17,9 +17,14 @@ import org.springframework.security.web.authentication.SavedRequestAwareAuthenti
 import org.springframework.security.web.authentication.rememberme.PersistentTokenBasedRememberMeServices;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
-import com.marcolenzo.gameboard.commons.security.MongoPersistentTokenRepository;
-import com.marcolenzo.gameboard.commons.security.MongoUserDetailsService;
+import com.marcolenzo.gameboard.repositories.MongoPersistentTokenRepository;
+import com.marcolenzo.gameboard.security.MongoUserDetailsService;
 
+/**
+ * Spring Security configuration.
+ * @author Marco Lenzo
+ *
+ */
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
