@@ -16,8 +16,8 @@ import com.marcolenzo.gameboard.exceptions.BadRequestException;
 import com.marcolenzo.gameboard.exceptions.FileUploadException;
 import com.marcolenzo.gameboard.exceptions.ForbiddenException;
 import com.marcolenzo.gameboard.exceptions.NotFoundException;
-import com.marcolenzo.gameboard.resources.errors.FieldError;
-import com.marcolenzo.gameboard.resources.errors.ValidationError;
+import com.marcolenzo.gameboard.model.FieldError;
+import com.marcolenzo.gameboard.model.ValidationError;
 
 
 

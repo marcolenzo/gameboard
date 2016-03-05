@@ -1,4 +1,4 @@
-package com.marcolenzo.gameboard.resources.errors;
+package com.marcolenzo.gameboard.model;
 
 public class FieldError {
 

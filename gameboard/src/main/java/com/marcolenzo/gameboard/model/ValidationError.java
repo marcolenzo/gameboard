@@ -1,4 +1,4 @@
-package com.marcolenzo.gameboard.resources.errors;
+package com.marcolenzo.gameboard.model;
 
 import java.util.List;
 
