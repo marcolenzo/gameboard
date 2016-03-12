@@ -61,13 +61,18 @@
 					<li ng-class="isMenuItemActive('/overview')"><a href="#/overview">Overview</a></li>
 					<li ng-class="isMenuItemActive('/createboard')"><a href="#/createboard">Create new board</a></li>
 				</ul>
-				<ul ng-show="showBoardMenu" class="nav nav-sidebar">
-					<li ng-class="isMenuItemActive('/boarddetails')"><a ng-href="#/boarddetails?boardId={{board.id}}">{{board.name}}</a></li>
-					<li ng-show="isBoardAdmin" ng-class="isMenuItemActive('/editboard')"><a ng-href="#/editboard?boardId={{board.id}}">Edit Board</a></li>
-					<li ng-show="isBoardAdmin" ng-class="isMenuItemActive('/gameresult')"><a ng-href="#/gameresult?boardId={{board.id}}">Log Game Result</a></li>
-					<li ng-class="isMenuItemActive('/gamehistory')"><a ng-href="#/gamehistory?boardId={{board.id}}">Games History</a></li>
-					<li ng-class="isMenuItemActive('/boardstats')"><a ng-href="#/boardstats?boardId={{board.id}}">Stats for Geeks</a></li>
-					<!-- <li ng-class="isMenuItemActive('/creategame')"><a ng-href="#/creategame?boardId={{board.id}}">Create new game</a></li> -->
+				<ul ng-show="showBoardMenu" data-target="#boardOptions" class="nav nav-sidebar">
+					<li ng-class="isMenuItemActive('/boarddetails')">
+						<a class="collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false" ng-href="#/boarddetails?boardId={{board.id}}">{{board.name}} <span class="caret"></span></a>
+					</li>
+					<div class="well collapse" id="bs-example-navbar-collapse-1">
+					<ul class="nav">
+						<li ng-show="isBoardAdmin" ng-class="isMenuItemActive('/editboard')"><a ng-href="#/editboard?boardId={{board.id}}">Edit Board</a></li>
+						<li ng-show="isBoardAdmin" ng-class="isMenuItemActive('/gameresult')"><a ng-href="#/gameresult?boardId={{board.id}}">Log Game Result</a></li>
+						<li ng-class="isMenuItemActive('/gamehistory')"><a ng-href="#/gamehistory?boardId={{board.id}}">Games History</a></li>
+						<li ng-class="isMenuItemActive('/boardstats')"><a ng-href="#/boardstats?boardId={{board.id}}">Stats for Geeks</a></li>
+					</ul>
+					</div>
 				</ul>
 			</div>
 			
