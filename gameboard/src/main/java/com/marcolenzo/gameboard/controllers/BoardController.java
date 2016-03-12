@@ -56,6 +56,11 @@ public class BoardController {
 			throws ForbiddenException {
 		return boardServices.resetBoard(id);
 	}
-
-
+	
+	@RequestMapping(value = "/api/board/{id}/join", method = RequestMethod.POST)
+	public Board joinBoard(@PathVariable String id)
+			throws BadRequestException {
+		return boardServices.joinBoard(id);
+	}
+	
 }

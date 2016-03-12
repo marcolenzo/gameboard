@@ -11,7 +11,8 @@ angular.module('myApp.services', ['ngRoute'])
 
 .service('Board', [ '$resource', function(resource) {
 	return resource('/api/board/:id/', null, {
-		'update': { method: 'PUT' }
+		'update': { method: 'PUT' },
+		'join': { method: 'POST', url: '/api/board/:id/join' }
 	});
 	// Note resource ignores trailing slash... need to switch to $http
 }])

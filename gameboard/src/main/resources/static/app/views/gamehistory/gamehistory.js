@@ -9,9 +9,21 @@ angular.module('myApp.gamehistory', [ 'ngRoute', 'ngTagsInput' ])
 	});
 } ])
 
-.controller('GameHistoryCtrl',	[ '$scope', '$location', 'Board', 'Game', function($scope, $location, Board, Game) {
+.controller('GameHistoryCtrl',	[ '$scope', '$location', '$rootScope', '$route', 'Board', 'Game', function($scope, $location, $rootScope, $route, Board, Game) {
 
 	var params = $location.search();
+	
+	$scope.isAdmin = false;
+	$scope.board = Board.get({id: params.boardId});
+	$rootScope.user.$promise.then(function(user){
+		$scope.user = user;
+		$scope.board.$promise.then(function(board) {
+			if(board.admins.includes($scope.user.id)) {
+				$scope.isAdmin = true;
+			}
+		});
+	});
+	
 	
 	$scope.games = Game.query({boardId: params.boardId});
 	$scope.games.$promise.then(function(games) {
@@ -42,5 +54,17 @@ angular.module('myApp.gamehistory', [ 'ngRoute', 'ngTagsInput' ])
 			
 		});
 	});
+	
+	$scope.deleteGame = function(index) {
+		var game = $scope.games[index];
+		Game.delete({id: game.id}, function() {
+			$scope.games.splice(index, 1);
+			alert('Success!');
+			$route.reload();
+		}, function() {
+			alert('Failed!');
+			$route.reload();
+		});
+	}
 	
 }]);

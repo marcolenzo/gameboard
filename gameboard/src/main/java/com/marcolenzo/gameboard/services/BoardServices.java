@@ -74,6 +74,37 @@ public class BoardServices {
 
 		return boardRepository.save(board);
 	}
+	
+	/**
+	 * Let current user join the board.
+	 * @param boardId
+	 * @return
+	 * @throws BadRequestException
+	 */
+	public Board joinBoard(String boardId) throws BadRequestException {
+		User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		Board board = boardRepository.findOne(boardId);
+		if(board == null) {
+			throw new BadRequestException("Invalid board ID");
+		}
+		
+		// Verify if player has already joined the board
+		for(PlayerStatistics player: board.getPlayers()) {
+			if(player.getUserId().equals(currentUser.getId())) {
+				return board;
+			}
+		}
+		
+		PlayerStatistics player = new PlayerStatistics();
+		player.setUserId(currentUser.getId());
+		player.setNickname(currentUser.getNickname());
+		
+		board.getPlayers().add(player);
+		
+		board = boardRepository.save(board);
+		
+		return board;
+	}
 
 	/**
 	 * Updates a board.
@@ -341,6 +372,15 @@ public class BoardServices {
 			LOGGER.warn("Unexpected number of players");
 		}
 		return stats;
+	}
+	
+	//TODO Export this as a custom spring security expression
+	public void isCurrentUserAdminCheck(String boardId) throws ForbiddenException {
+		User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		Board board = boardRepository.findOne(boardId);
+		if (!board.getAdmins().contains(currentUser.getId())) {
+			throw new ForbiddenException("You need to be a board admin to perform this action.");
+		}
 	}
 
 }

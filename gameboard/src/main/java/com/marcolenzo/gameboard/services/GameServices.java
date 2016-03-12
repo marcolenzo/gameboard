@@ -4,10 +4,13 @@ import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
+import com.marcolenzo.gameboard.exceptions.ForbiddenException;
 import com.marcolenzo.gameboard.model.Board;
 import com.marcolenzo.gameboard.model.ResistanceGame;
+import com.marcolenzo.gameboard.model.User;
 import com.marcolenzo.gameboard.model.comparators.ResistanceGameComparator;
 import com.marcolenzo.gameboard.model.validators.ResistanceGameValidator;
 import com.marcolenzo.gameboard.repositories.ResistanceGameRepository;
@@ -31,6 +34,13 @@ public class GameServices {
 
 	public ResistanceGame getGameById(String id) {
 		return repository.findOne(id);
+	}
+	
+	public void deleteGame(String id) throws ForbiddenException {
+		ResistanceGame game = repository.findOne(id);
+		boardServices.isCurrentUserAdminCheck(game.getBoardId());
+		repository.delete(id);
+		boardServices.resetBoard(game.getBoardId());
 	}
 
 	public List<ResistanceGame> getGamesByBoardId(String boardId) {
