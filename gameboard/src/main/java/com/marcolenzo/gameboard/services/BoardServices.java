@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
+import com.marcolenzo.gameboard.annotations.ActionLoggable;
 import com.marcolenzo.gameboard.exceptions.BadRequestException;
 import com.marcolenzo.gameboard.exceptions.ForbiddenException;
 import com.marcolenzo.gameboard.model.Board;
@@ -113,6 +114,7 @@ public class BoardServices {
 	 * @throws BadRequestException
 	 * @throws ForbiddenException
 	 */
+	@ActionLoggable
 	public Board updateBoard(Board updatedBoard, String id) throws BadRequestException, ForbiddenException {
 		User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
@@ -160,6 +162,7 @@ public class BoardServices {
 	 * @return
 	 * @throws ForbiddenException
 	 */
+	@ActionLoggable
 	public Board resetBoard(String id) throws ForbiddenException {
 		User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 

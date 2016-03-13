@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.marcolenzo.gameboard.annotations.ActionLoggable;
 import com.marcolenzo.gameboard.exceptions.BadRequestException;
 import com.marcolenzo.gameboard.exceptions.ForbiddenException;
 import com.marcolenzo.gameboard.model.Board;
@@ -30,13 +29,11 @@ public class BoardController {
 	@Autowired
 	private BoardServices boardServices;
 
-	@ActionLoggable
 	@RequestMapping(value = "/api/board", method = RequestMethod.POST)
 	public Board createGameboard(@Valid @RequestBody Board board) {
 		return boardServices.createBoard(board);
 	}
 
-	@ActionLoggable
 	@RequestMapping(value = "/api/board/{id}", method = RequestMethod.PUT)
 	public Board updateGameboard(@PathVariable String id, @Valid @RequestBody Board gameboard)
 			throws BadRequestException, ForbiddenException {
@@ -53,14 +50,12 @@ public class BoardController {
 		return boardServices.getBoardsByPlayerId(userId);
 	}
 
-	@ActionLoggable
 	@RequestMapping(value = "/api/board/{id}/reset", method = RequestMethod.POST)
 	public Board resetBoard(@PathVariable String id)
 			throws ForbiddenException {
 		return boardServices.resetBoard(id);
 	}
 	
-	@ActionLoggable
 	@RequestMapping(value = "/api/board/{id}/join", method = RequestMethod.POST)
 	public Board joinBoard(@PathVariable String id)
 			throws BadRequestException {

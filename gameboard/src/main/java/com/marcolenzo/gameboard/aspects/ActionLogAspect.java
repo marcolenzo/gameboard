@@ -28,6 +28,9 @@ public class ActionLogAspect {
 	@Autowired
 	private ActionRepository repository;
 
+	@Autowired
+	private ObjectMapper mapper;
+
 	@Around("execution(@com.marcolenzo.gameboard.annotations.ActionLoggable * *(..))")
 	public Object around(ProceedingJoinPoint point) throws Throwable {
 		long start = System.currentTimeMillis();
@@ -41,10 +44,11 @@ public class ActionLogAspect {
 		// Parse args
 		List<String> jsonStrings = Lists.newArrayList();
 		for (Object obj : point.getArgs()) {
-			ObjectMapper mapper = new ObjectMapper();
+
 			jsonStrings.add(mapper.writeValueAsString(obj));
 		}
 		action.setArgs(jsonStrings);
+		action.setResult(mapper.writeValueAsString(result));
 
 		action.setUserId(currentUser.getId());
 		action.setDatetime(LocalDateTime.now());

@@ -16,6 +16,8 @@ public class Action {
 
 	private List<String> args;
 
+	private String result;
+
 	private String userId;
 
 	private LocalDateTime datetime;
@@ -58,6 +60,14 @@ public class Action {
 
 	public void setDatetime(LocalDateTime datetime) {
 		this.datetime = datetime;
+	}
+
+	public String getResult() {
+		return result;
+	}
+
+	public void setResult(String result) {
+		this.result = result;
 	}
 
 }

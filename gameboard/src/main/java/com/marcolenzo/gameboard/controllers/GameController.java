@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.marcolenzo.gameboard.annotations.ActionLoggable;
 import com.marcolenzo.gameboard.exceptions.BadRequestException;
 import com.marcolenzo.gameboard.exceptions.ForbiddenException;
 import com.marcolenzo.gameboard.model.ResistanceGame;
@@ -48,13 +47,11 @@ public class GameController {
 		return gameServices.getGameById(id);
 	}
 	
-	@ActionLoggable
 	@RequestMapping(value = "/api/game/{id}", method = RequestMethod.DELETE)
 	public void deleteGame(@PathVariable String id) throws ForbiddenException {
 		gameServices.deleteGame(id);
 	}
 
-	@ActionLoggable
 	@RequestMapping(value = "/api/game", method = RequestMethod.POST)
 	public ResistanceGame createGame(@Valid @RequestBody ResistanceGame game, BindingResult result)
 			throws BadRequestException {
