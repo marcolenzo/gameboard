@@ -162,7 +162,6 @@ public class BoardServices {
 	 * @return
 	 * @throws ForbiddenException
 	 */
-	@ActionLoggable
 	public Board resetBoard(String id) throws ForbiddenException {
 		User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 

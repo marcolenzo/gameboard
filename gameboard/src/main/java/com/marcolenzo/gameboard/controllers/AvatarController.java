@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.marcolenzo.gameboard.annotations.ActionLoggable;
 import com.marcolenzo.gameboard.exceptions.FileUploadException;
 import com.marcolenzo.gameboard.exceptions.NotFoundException;
 import com.marcolenzo.gameboard.model.User;
@@ -30,7 +29,6 @@ import com.marcolenzo.gameboard.services.AvatarServices;
  *
  */
 @Controller
-@ActionLoggable
 public class AvatarController {
 
 	@Autowired
