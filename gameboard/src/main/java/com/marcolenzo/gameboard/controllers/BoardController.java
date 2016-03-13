@@ -50,7 +50,6 @@ public class BoardController {
 		return boardServices.getBoardsByPlayerId(userId);
 	}
 
-
 	@RequestMapping(value = "/api/board/{id}/reset", method = RequestMethod.POST)
 	public Board resetBoard(@PathVariable String id)
 			throws ForbiddenException {
