@@ -15,6 +15,7 @@ angular.module(
 		  'myApp.gamedetails',
 		  'myApp.boardstats',
 		  'myApp.profile',
+		  'myApp.actionlog',
 		  'myApp.version',
 		  'ui.bootstrap',
 		  'ngTagsInput',

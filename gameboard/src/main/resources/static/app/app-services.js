@@ -14,12 +14,16 @@ angular.module('myApp.services', ['ngRoute'])
 		'update': { method: 'PUT' },
 		'join': { method: 'POST', url: '/api/board/:id/join' }
 	});
-	// Note resource ignores trailing slash... need to switch to $http
+}])
+
+.service('Action', [ '$resource', function(resource) {
+	return resource('/api/action/:id/', null, {
+		'update': { method: 'PUT' }
+	});
 }])
 
 .service('Game', [ '$resource', function(resource) {
 	return resource('/api/game/:id/', null, {
 		'update': { method: 'PUT' }
 	});
-	// Note resource ignores trailing slash... need to switch to $http
 }]);
