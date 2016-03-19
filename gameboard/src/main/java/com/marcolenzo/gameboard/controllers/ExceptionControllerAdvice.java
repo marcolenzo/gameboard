@@ -17,6 +17,7 @@ import com.marcolenzo.gameboard.exceptions.FileUploadException;
 import com.marcolenzo.gameboard.exceptions.ForbiddenException;
 import com.marcolenzo.gameboard.exceptions.NotFoundException;
 import com.marcolenzo.gameboard.model.FieldError;
+import com.marcolenzo.gameboard.model.GenericError;
 import com.marcolenzo.gameboard.model.ValidationError;
 
 
@@ -46,30 +47,30 @@ public class ExceptionControllerAdvice {
 	@ExceptionHandler(BadRequestException.class)
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ResponseBody
-	public String badRequest(BadRequestException ex, Locale locale) {
-		return ex.getMessage();
+	public GenericError badRequest(BadRequestException ex, Locale locale) {
+		return new GenericError(ex.getMessage());
 	}
 
 
 	@ExceptionHandler(ForbiddenException.class)
 	@ResponseStatus(HttpStatus.FORBIDDEN)
 	@ResponseBody
-	public String forbidden(ForbiddenException ex, Locale locale) {
-		return ex.getMessage();
+	public GenericError forbidden(ForbiddenException ex, Locale locale) {
+		return new GenericError(ex.getMessage());
 	}
 
 	@ExceptionHandler(FileUploadException.class)
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ResponseBody
-	public String fileUpload(FileUploadException ex, Locale locale) {
-		return ex.getMessage();
+	public GenericError fileUpload(FileUploadException ex, Locale locale) {
+		return new GenericError(ex.getMessage());
 	}
 
 	@ExceptionHandler(NotFoundException.class)
 	@ResponseStatus(HttpStatus.NOT_FOUND)
 	@ResponseBody
-	public String notFound(NotFoundException ex, Locale locale) {
-		return ex.getMessage();
+	public GenericError notFound(NotFoundException ex, Locale locale) {
+		return new GenericError(ex.getMessage());
 	}
 
 }
