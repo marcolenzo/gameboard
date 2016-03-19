@@ -10,8 +10,8 @@
 			<p>Mother Russia wants to know who was the most valuable player in this match. Cast your vote now!</p>
 		</div>
 	</div>
-	<h2 class="sub-header">Game Details</h2>
 	<br/>
+	<h2 class="sub-header">Game Details</h2>
 	<h4>DateTime {{game.time}}</h4>
 	<h4>Winner {{game.winner}}</h4>
 	<div class="table-responsive">
@@ -21,6 +21,7 @@
 						<th>Pos</th>
 						<th>Name</th>
 						<th>Spy</th>
+						<th>Vote</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -28,6 +29,7 @@
 						<td>{{$index + 1}}</td>
 						<td>{{x.nickname}}</td>
 						<td>{{x.team}}</td>
+						<td><button ng-show="isMvpEligible($index)" ng-click="vote($index)" class="btn btn-xs">Vote Me!</button></td>
 					</tr>
 				</tbody>
 			</table>

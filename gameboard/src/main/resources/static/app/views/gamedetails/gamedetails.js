@@ -19,6 +19,21 @@ angular.module('myApp.gamedetails', [ 'ngRoute' ])
 	$scope.game = Game.get({id: params.gameId});
 	$scope.allowVoting = false;
 	
+	$scope.isMvpEligible = function(index) {
+		var checked = $scope.game.players[index];
+		if($scope.game.resistanceWin && !$scope.game.spies.includes(checked)) {
+			return true;
+		}
+		else if(!$scope.game.resistanceWin && $scope.game.spies.includes(checked)) {
+			return true;
+		}
+		return false;
+	}
+	
+	$scope.vote = function(index) {
+		Game.vote({id: params.gameId}, $scope.game.players[index]);
+	}
+	
 	$scope.game.$promise.then(function(){
 		
 		$scope.game.time = $scope.game.startTime[2] + '/' + $scope.game.startTime[1] + '/' + 
@@ -52,6 +67,17 @@ angular.module('myApp.gamedetails', [ 'ngRoute' ])
 			voteUntilDate = new Date($scope.game.voteUntil[0], $scope.game.voteUntil[1], $scope.game.voteUntil[2], $scope.game.voteUntil[3], $scope.game.voteUntil[4], $scope.game.voteUntil[6], 0);
 			if(voteUntilDate > currentDate) {
 				$scope.allowVoting = true;
+				$scope.election = new Array();
+				if($scope.game.resistanceWin) {
+					jQuery.each($scope.game.players, function(index, value){
+						if(!$scope.game.spies.includes(value)) {
+							$scope.election.push(value);
+						}
+					});
+				}
+				else {
+					$scope.election = $scope.game.spies;
+				}
 			}
 		}
 		

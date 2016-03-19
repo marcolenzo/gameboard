@@ -24,6 +24,7 @@ angular.module('myApp.services', ['ngRoute'])
 
 .service('Game', [ '$resource', function(resource) {
 	return resource('/api/game/:id/', null, {
-		'update': { method: 'PUT' }
+		'update': { method: 'PUT' },
+		'vote': { method: 'POST', url: '/api/game/:id/vote' }
 	});
 }]);
