@@ -55,6 +55,11 @@ public class ResistanceGame {
 	private LocalDateTime voteUntil;
 
 	/**
+	 * The key of this map represent who casted the vote while the value is the player to whom the vote was attributed.
+	 */
+	private Map<String, String> votes = Maps.newHashMap();
+
+	/**
 	 * @return the id
 	 */
 	public String getId() {
@@ -221,6 +226,20 @@ public class ResistanceGame {
 	 */
 	public void setVoteUntil(LocalDateTime voteUntil) {
 		this.voteUntil = voteUntil;
+	}
+
+	/**
+	 * @return the votes
+	 */
+	public Map<String, String> getVotes() {
+		return votes;
+	}
+
+	/**
+	 * @param votes the votes to set
+	 */
+	public void setVotes(Map<String, String> votes) {
+		this.votes = votes;
 	}
 
 }

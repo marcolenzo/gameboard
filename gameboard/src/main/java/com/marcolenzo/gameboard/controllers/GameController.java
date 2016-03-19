@@ -63,5 +63,11 @@ public class GameController {
 		return gameServices.createAndRateGame(game);
 	}
 
+	@RequestMapping(value = "/api/game/{id}/vote", method = RequestMethod.POST)
+	public ResistanceGame castVote(@PathVariable String id, @RequestBody String playerId) throws BadRequestException,
+			ForbiddenException {
+		return gameServices.castVote(id, playerId);
+	}
+
 
 }
