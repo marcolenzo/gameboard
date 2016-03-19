@@ -13,8 +13,11 @@ angular.module('myApp.gamedetails', [ 'ngRoute' ])
 
 	var n = 1;
 	var params = $location.search();
+	var currentDate = new Date();
+	var voteUntilDate = undefined;
 	
 	$scope.game = Game.get({id: params.gameId});
+	$scope.allowVoting = false;
 	
 	$scope.game.$promise.then(function(){
 		
@@ -28,7 +31,6 @@ angular.module('myApp.gamedetails', [ 'ngRoute' ])
 		jQuery.each($scope.game.playerStats, function(index, player) {
 			playersMap[player.userId] = player;
 		});
-		
 		
 		jQuery.each($scope.game.players, function(index, userId) {
 			var playerStats = playersMap[userId];
@@ -44,6 +46,15 @@ angular.module('myApp.gamedetails', [ 'ngRoute' ])
 		});
 		
 		$scope.game.winner = $scope.game.resistanceWin ? 'RESISTANCE' : 'SPIES';
+		
+		// MVP Election
+		if($scope.game.voteUntil != null) {
+			voteUntilDate = new Date($scope.game.voteUntil[0], $scope.game.voteUntil[1], $scope.game.voteUntil[2], $scope.game.voteUntil[3], $scope.game.voteUntil[4], $scope.game.voteUntil[6], 0);
+			if(voteUntilDate > currentDate) {
+				$scope.allowVoting = true;
+			}
+		}
+		
 	});
 	
 	

@@ -13,6 +13,7 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 
 /**
  * Resistance Game data.
@@ -45,11 +46,13 @@ public class ResistanceGame {
 
 	private Integer spiesElo;
 
-	private Boolean isRated = false;
-
-	private Map<String, Integer> eloVariations;
+	private Map<String, Integer> eloVariations = Maps.newHashMap();
 
 	private List<PlayerStatistics> playerStats = Lists.newArrayList();
+
+	private String mvp;
+
+	private LocalDateTime voteUntil;
 
 	/**
 	 * @return the id
@@ -135,19 +138,6 @@ public class ResistanceGame {
 		this.spies = spies;
 	}
 
-	/**
-	 * @return the isRated
-	 */
-	public Boolean getIsRated() {
-		return isRated;
-	}
-
-	/**
-	 * @param isRated the isRated to set
-	 */
-	public void setIsRated(Boolean isRated) {
-		this.isRated = isRated;
-	}
 
 	/**
 	 * @return the resistanceElo
@@ -203,6 +193,34 @@ public class ResistanceGame {
 	 */
 	public void setEloVariations(Map<String, Integer> eloVariations) {
 		this.eloVariations = eloVariations;
+	}
+
+	/**
+	 * @return the mvp
+	 */
+	public String getMvp() {
+		return mvp;
+	}
+
+	/**
+	 * @param mvp the mvp to set
+	 */
+	public void setMvp(String mvp) {
+		this.mvp = mvp;
+	}
+
+	/**
+	 * @return the voteUntil
+	 */
+	public LocalDateTime getVoteUntil() {
+		return voteUntil;
+	}
+
+	/**
+	 * @param voteUntil the voteUntil to set
+	 */
+	public void setVoteUntil(LocalDateTime voteUntil) {
+		this.voteUntil = voteUntil;
 	}
 
 }

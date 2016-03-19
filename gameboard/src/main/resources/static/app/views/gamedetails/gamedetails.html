@@ -3,6 +3,13 @@
 		<h2>Board > {{board.name}}</h2>
 		<h4>Type: {{board.type}}</h4>
 	</div>
+	<div ng-show="allowVoting">
+		<br />
+		<div class="jumbotron">
+			<h2>Attention Comrade!</h2>
+			<p>Mother Russia wants to know who was the most valuable player in this match. Cast your vote now!</p>
+		</div>
+	</div>
 	<h2 class="sub-header">Game Details</h2>
 	<br/>
 	<h4>DateTime {{game.time}}</h4>

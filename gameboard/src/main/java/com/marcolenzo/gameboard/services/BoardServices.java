@@ -3,6 +3,7 @@
  */
 package com.marcolenzo.gameboard.services;
 
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -253,6 +254,8 @@ public class BoardServices {
 			}
 		}
 		game.setPlayerStats(gamePlayerStatistics);
+
+		game.setVoteUntil(LocalDateTime.now().plusHours(2));
 
 		return gameRepository.save(game);
 	}
