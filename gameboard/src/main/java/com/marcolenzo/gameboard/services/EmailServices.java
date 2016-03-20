@@ -10,8 +10,11 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.thymeleaf.context.Context;
+import org.thymeleaf.spring4.SpringTemplateEngine;
 
 /**
  * Services for the management of emails.
@@ -32,6 +35,9 @@ public class EmailServices {
 	
 	@Value("${mail.smtp.password}")
 	private String password;
+
+	@Autowired
+	private SpringTemplateEngine templateEngine;
 
 	public void sendMail(String to, String from, String subject, String text) {
 
@@ -59,6 +65,13 @@ public class EmailServices {
 			mex.printStackTrace();
 		}
 
+	}
+
+	public void sendWelcomeEmail(String to, String from) {
+		final Context ctx = new Context();
+		ctx.setVariable("name", "Marco");
+		final String htmlContent = this.templateEngine.process("signup-success", ctx);
+		sendMail(to, from, "Welcome!", htmlContent);
 	}
 
 }

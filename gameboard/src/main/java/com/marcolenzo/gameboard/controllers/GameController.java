@@ -19,6 +19,7 @@ import com.marcolenzo.gameboard.exceptions.BadRequestException;
 import com.marcolenzo.gameboard.exceptions.ForbiddenException;
 import com.marcolenzo.gameboard.model.ResistanceGame;
 import com.marcolenzo.gameboard.model.validators.ResistanceGameValidator;
+import com.marcolenzo.gameboard.services.EmailServices;
 import com.marcolenzo.gameboard.services.GameServices;
 
 /**
@@ -33,6 +34,9 @@ public class GameController {
 
 	@Autowired
 	private GameServices gameServices;
+
+	@Autowired
+	private EmailServices emailServices;
 
 	@Autowired
 	private ResistanceGameValidator gameValidator;
@@ -67,6 +71,11 @@ public class GameController {
 	public ResistanceGame castVote(@PathVariable String id, @RequestBody String playerId) throws BadRequestException,
 			ForbiddenException {
 		return gameServices.castVote(id, playerId);
+	}
+
+	@RequestMapping(value = "/api/emailTest", method = RequestMethod.GET)
+	public void emailTest() {
+		emailServices.sendWelcomeEmail("lenzo.marco@gmail.com", "lenzo.marco@gmail.com");
 	}
 
 
