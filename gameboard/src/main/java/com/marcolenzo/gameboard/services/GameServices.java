@@ -1,9 +1,13 @@
 package com.marcolenzo.gameboard.services;
 
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
@@ -25,6 +29,8 @@ import com.marcolenzo.gameboard.repositories.ResistanceGameRepository;
 @Component
 public class GameServices {
 
+	private static final Logger LOGGER = LoggerFactory.getLogger(GameServices.class);
+
 	@Autowired
 	private ResistanceGameRepository repository;
 
@@ -37,7 +43,7 @@ public class GameServices {
 	public ResistanceGame getGameById(String id) {
 		return repository.findOne(id);
 	}
-	
+
 	@ActionLoggable
 	public ResistanceGame deleteGame(String id) throws ForbiddenException {
 		ResistanceGame game = repository.findOne(id);
@@ -70,25 +76,73 @@ public class GameServices {
 		if (game.getVotes().keySet().contains(currentUser.getId())) {
 			throw new ForbiddenException("You are allowed to vote once.");
 		}
-		
+
 		// You cannot vote yourself
-		if(currentUser.getId().equals(playerId)) {
+		if (currentUser.getId().equals(playerId)) {
 			throw new ForbiddenException("Don't be a wanker. You cannot vote yourself.");
 		}
-	
+
 		// Vote can be given only to winning team
 		if (game.getResistanceWin() && game.getPlayers().contains(playerId) && !game.getSpies().contains(playerId)) {
 			game.getVotes().put(currentUser.getId(), playerId);
+			if (game.getVotesCount().get(playerId) == null) {
+				game.getVotesCount().put(playerId, 1);
+			} else {
+				game.getVotesCount().put(playerId, game.getVotesCount().get(playerId) + 1);
+			}
 		}
 		// could have been an OR with the first IF.
 		else if (!game.getResistanceWin() && game.getSpies().contains(playerId)) {
 			game.getVotes().put(currentUser.getId(), playerId);
-		}
-		else {
+			if (game.getVotesCount().get(playerId) == null) {
+				game.getVotesCount().put(playerId, 1);
+			} else {
+				game.getVotesCount().put(playerId, game.getVotesCount().get(playerId) + 1);
+			}
+		} else {
 			throw new BadRequestException("Who are you voting for?");
 		}
 
 		return repository.save(game);
+	}
+
+	@Scheduled(cron = "0 0/5 * * * ?")
+	public void assignMvpTitle() {
+		LOGGER.info("MVP Scheduled Job --- START ...");
+		List<ResistanceGame> games = repository.findByMvpRatedIsFalse();
+
+		for (ResistanceGame game : games) {
+			LOGGER.info("MVP Scheduled Job --- Analyzing game {}", game.getId());
+			if (game.getVoteUntil().isBefore(LocalDateTime.now())) {
+				String mvp = "";
+				int v = 0;
+
+				// If we have votes.
+				if (game.getVotesCount() != null && !game.getVotesCount().isEmpty()) {
+					for (String player : game.getVotesCount().keySet()) {
+						int n = game.getVotesCount().get(player);
+						if (n > v) {
+							mvp = player;
+							v = n;
+						} else if (n == v) {
+							LOGGER.info("MVP Scheduled Job --- MVP Tie!");
+							// No clear MVP do not assign title
+							mvp = "";
+							v = 0;
+							break;
+						}
+					}
+				}
+				LOGGER.info("MVP Scheduled Job --- Setting {} as MVP for game {}", mvp, game.getId());
+				game.setMvp(mvp);
+				game.setMvpRated(true);
+				repository.save(game);
+			} else {
+				LOGGER.info("MVP Scheduled Job --- Election still open for game {}", game.getId());
+			}
+		}
+
+		LOGGER.info("MVP Scheduled Job --- END.");
 	}
 
 }

@@ -31,12 +31,23 @@ angular.module('myApp.gamedetails', [ 'ngRoute' ])
 	$scope.isMvpEligible = function(index) {
 		if($scope.allowVoting) {
 			var checked = $scope.game.players[index];
-			if($scope.game.resistanceWin && !$scope.game.spies.includes(checked)) {
+			if(checked === $scope.user.id) {
+				return false;
+			}
+			else if($scope.game.resistanceWin && !$scope.game.spies.includes(checked)) {
 				return true;
 			}
 			else if(!$scope.game.resistanceWin && $scope.game.spies.includes(checked)) {
 				return true;
 			}
+		}
+		return false;
+	}
+	
+	$scope.isMvp = function(index) {
+		var checked = $scope.game.players[index];
+		if(checked === $scope.game.mvp) {
+			return true;
 		}
 		return false;
 	}

@@ -50,14 +50,21 @@ public class ResistanceGame {
 
 	private List<PlayerStatistics> playerStats = Lists.newArrayList();
 
+	private boolean mvpRated = false;
+
 	private String mvp;
 
 	private LocalDateTime voteUntil;
 
 	/**
-	 * The key of this map represent who casted the vote while the value is the player to whom the vote was attributed.
+	 * The key of this map represents who casted the vote while the value is the player to whom the vote was attributed.
 	 */
 	private Map<String, String> votes = Maps.newHashMap();
+
+	/**
+	 * The key of this map represents the voted players and the value the number of votes he received.
+	 */
+	private Map<String, Integer> votesCount = Maps.newHashMap();
 
 	/**
 	 * @return the id
@@ -240,6 +247,22 @@ public class ResistanceGame {
 	 */
 	public void setVotes(Map<String, String> votes) {
 		this.votes = votes;
+	}
+
+	public Map<String, Integer> getVotesCount() {
+		return votesCount;
+	}
+
+	public void setVotesCount(Map<String, Integer> votesCount) {
+		this.votesCount = votesCount;
+	}
+
+	public boolean isMvpRated() {
+		return mvpRated;
+	}
+
+	public void setMvpRated(boolean mvpRated) {
+		this.mvpRated = mvpRated;
 	}
 
 }

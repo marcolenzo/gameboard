@@ -11,4 +11,6 @@ public interface ResistanceGameRepository extends MongoRepository<ResistanceGame
 
 	List<ResistanceGame> findByBoardId(String boardId);
 
+	List<ResistanceGame> findByMvpRatedIsFalse();
+
 }
