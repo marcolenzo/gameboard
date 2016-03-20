@@ -3,8 +3,15 @@
 		<h2>Board > {{board.name}}</h2>
 		<h4>Type: {{board.type}}</h4>
 	</div>
-	<h2 class="sub-header">Game Details</h2>
+	<div ng-show="allowVoting">
+		<br />
+		<div class="jumbotron">
+			<h2>Attention Comrade!</h2>
+			<p>Mother Russia wants to know who was the most valuable player in this match. Cast your vote now!</p>
+		</div>
+	</div>
 	<br/>
+	<h2 class="sub-header">Game Details</h2>
 	<h4>DateTime {{game.time}}</h4>
 	<h4>Winner {{game.winner}}</h4>
 	<div class="table-responsive">
@@ -12,15 +19,19 @@
 				<thead>
 					<tr>
 						<th>Pos</th>
+						<th>MVP</th>
 						<th>Name</th>
 						<th>Spy</th>
+						<th>Vote</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr ng-repeat="x in game.playersDetails">
 						<td>{{$index + 1}}</td>
-						<td>{{x.nickname}}</td>
+						<td><img ng-show="isMvp($index)" ng-src="images/star-icon.png" class="img-circle" alt="MVP" height="25px"></td>
+						<td><img ng-src="/avatar/{{x.userId}}" class="img-circle" alt="Avatar" height="25px"> <a ng-href="#/profile?userId={{x.userId}}">{{x.nickname}}</a></td>
 						<td>{{x.team}}</td>
+						<td><button ng-show="isMvpEligible($index)" ng-click="vote($index)" class="btn btn-xs">Vote Me!</button></td>
 					</tr>
 				</tbody>
 			</table>
