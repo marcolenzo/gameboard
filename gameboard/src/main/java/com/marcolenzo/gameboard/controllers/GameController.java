@@ -19,7 +19,6 @@ import com.marcolenzo.gameboard.exceptions.BadRequestException;
 import com.marcolenzo.gameboard.exceptions.ForbiddenException;
 import com.marcolenzo.gameboard.model.ResistanceGame;
 import com.marcolenzo.gameboard.model.validators.ResistanceGameValidator;
-import com.marcolenzo.gameboard.services.EmailServices;
 import com.marcolenzo.gameboard.services.GameServices;
 
 /**
@@ -30,13 +29,10 @@ import com.marcolenzo.gameboard.services.GameServices;
 @RestController
 public class GameController {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(BoardController.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(GameController.class);
 
 	@Autowired
 	private GameServices gameServices;
-
-	@Autowired
-	private EmailServices emailServices;
 
 	@Autowired
 	private ResistanceGameValidator gameValidator;
@@ -72,11 +68,5 @@ public class GameController {
 			ForbiddenException {
 		return gameServices.castVote(id, playerId);
 	}
-
-	@RequestMapping(value = "/api/emailTest", method = RequestMethod.GET)
-	public void emailTest() {
-		emailServices.sendWelcomeEmail("lenzo.marco@gmail.com", "lenzo.marco@gmail.com");
-	}
-
 
 }
