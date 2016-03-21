@@ -95,7 +95,7 @@ public class EmailServices {
 			for (User user : users) {
 				final Context ctx = new Context();
 				final String htmlContent = this.templateEngine.process(job.getTemplate(), ctx);
-				sendMail(user.getEmail(), "lenzo.marco@gmail.com", job.getSubject(), htmlContent);
+				sendMail(user.getEmail(), "gameboard.info@gmail.com", job.getSubject(), htmlContent);
 			}
 			job.setDone(true);
 			notificationJobRepository.save(job);
@@ -103,11 +103,11 @@ public class EmailServices {
 		}
 	}
 
-	public void sendWelcomeEmail(String to, String from) {
-		final Context ctx = new Context();
-		ctx.setVariable("name", "Marco");
-		final String htmlContent = this.templateEngine.process("signup", ctx);
-		sendMail(to, from, "Welcome!", htmlContent);
-	}
+	// public void sendWelcomeEmail(String to, String from) {
+	// final Context ctx = new Context();
+	// ctx.setVariable("name", "Marco");
+	// final String htmlContent = this.templateEngine.process("signup", ctx);
+	// sendMail(to, from, "Welcome!", htmlContent);
+	// }
 
 }
