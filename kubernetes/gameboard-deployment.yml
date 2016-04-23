@@ -1,0 +1,29 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: gameboard
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: gameboard
+      annotations:
+        build: '1'
+    spec:
+      containers:
+      - name: gameboard
+        image: marcolenzo/gameboard
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 20333
+        volumeMounts:
+        - mountPath: /configs
+          name: configs
+      volumes:
+      - name: configs
+        configMap:
+          name: gameboard
+          items:
+          - key: application.properties
+            path: application.properties
