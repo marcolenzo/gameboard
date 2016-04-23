@@ -3,9 +3,9 @@ jdk:
   - oraclejdk8
 services:
   - mongodb
-  - docker
+#  - docker
 
-after_success:
-  - docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
-  - docker build -t marcolenzo/gameboard .
-  - docker push marcolenzo/gameboard
+#after_success:
+#  - docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+#  - docker build -t marcolenzo/gameboard .
+# - docker push marcolenzo/gameboard
