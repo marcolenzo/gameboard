@@ -113,7 +113,7 @@ public class GameServices {
 
 		for (ResistanceGame game : games) {
 			LOGGER.info("MVP Scheduled Job --- Analyzing game {}", game.getId());
-			if (game.getVoteUntil().isBefore(LocalDateTime.now())) {
+			if (game.getVoteUntil() != null && game.getVoteUntil().isBefore(LocalDateTime.now())) {
 				String mvp = "";
 				int v = 0;
 
