@@ -84,6 +84,8 @@ angular.module('myApp.gamedetails', [ 'ngRoute' ])
 				playerStats.team = 'RESISTANCE';
 			}
 			
+			playerStats.initialElo = playerStats.elo - playerStats.eloVariation;
+			
 			$scope.game.playersDetails.push(playerStats);
 		});
 		

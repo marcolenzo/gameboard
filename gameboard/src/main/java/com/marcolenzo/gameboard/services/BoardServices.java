@@ -28,6 +28,7 @@ import com.marcolenzo.gameboard.model.comparators.PlayerStatisticsComparator;
 import com.marcolenzo.gameboard.model.comparators.ResistanceGameComparator;
 import com.marcolenzo.gameboard.repositories.BoardRepository;
 import com.marcolenzo.gameboard.repositories.ResistanceGameRepository;
+import com.marcolenzo.gameboard.utils.EloUtils;
 
 /**
  * Services for the management of boards.
@@ -231,11 +232,14 @@ public class BoardServices {
 		spiesElo = (int) Math.pow(10, spiesElo / 400);
 
 		for (PlayerStatistics user : resistance) {
-			ratePlayer(user, game.getBoardId(), game.getResistanceWin() ? 1 : 0, spiesElo, false);
+			ratePlayer(user, board.getBoardStatistics(), game.getPlayers().size(),
+					game.getResistanceWin() ? 1 : 0, spiesElo,
+					false);
 		}
 
 		for (PlayerStatistics user : spies) {
-			ratePlayer(user, game.getBoardId(), game.getResistanceWin() ? 0 : 1, resistanceElo, true);
+			ratePlayer(user, board.getBoardStatistics(), game.getPlayers().size(), game.getResistanceWin() ? 0 : 1,
+					resistanceElo, true);
 		}
 
 		Collections.sort(board.getPlayers(), new PlayerStatisticsComparator());
@@ -262,37 +266,35 @@ public class BoardServices {
 
 	/**
 	 * 
-	 * @param user
+	 * @param playerStats
 	 * @param boardId
 	 * @param score
 	 * @param opponentsElo
 	 * @param isSpy
 	 */
-	private void ratePlayer(PlayerStatistics user, String boardId, int score, double opponentsElo, boolean isSpy) {
-		Integer elo = user.getElo();
-		// Transform user's elo
-		double tranformedElo = (int) Math.pow(10, (double) elo / 400);
-		double expectedScore = tranformedElo / (tranformedElo + opponentsElo);
-		Integer finalElo = (int) (elo + (32 * (score - expectedScore)));
+	private void ratePlayer(PlayerStatistics playerStats, BoardStatistics boardStats, int numberOfPlayers, int score,
+			double opponentsElo, boolean isSpy) {
 
-		user.setElo(finalElo);
-		user.setMatchesPlayed(user.getMatchesPlayed() + 1);
+		Integer finalElo = EloUtils.computeFairElo(playerStats.getElo(), score, opponentsElo, boardStats,
+				numberOfPlayers, !isSpy);
+		playerStats.setEloVariation(finalElo - playerStats.getElo());
+		playerStats.setElo(finalElo);
+		playerStats.setMatchesPlayed(playerStats.getMatchesPlayed() + 1);
+
 		if (isSpy) {
-			user.setMatchesPlayedAsSpy(user.getMatchesPlayedAsSpy() + 1);
+			playerStats.setMatchesPlayedAsSpy(playerStats.getMatchesPlayedAsSpy() + 1);
 			if (score == 1) {
-				user.setMatchesWonAsSpy(user.getMatchesWonAsSpy() + 1);
-				user.setMatchesWon(user.getMatchesWon() + 1);
+				playerStats.setMatchesWonAsSpy(playerStats.getMatchesWonAsSpy() + 1);
+				playerStats.setMatchesWon(playerStats.getMatchesWon() + 1);
 			}
 		}
 		else {
-			user.setMatchesPlayedAsResistance(user.getMatchesPlayedAsResistance() + 1);
+			playerStats.setMatchesPlayedAsResistance(playerStats.getMatchesPlayedAsResistance() + 1);
 			if (score == 1) {
-				user.setMatchesWonAsResistance(user.getMatchesWonAsResistance() + 1);
-				user.setMatchesWon(user.getMatchesWon() + 1);
+				playerStats.setMatchesWonAsResistance(playerStats.getMatchesWonAsResistance() + 1);
+				playerStats.setMatchesWon(playerStats.getMatchesWon() + 1);
 			}
 		}
-
-		user.setEloVariation(finalElo - elo);
 	}
 
 	private void resetEloVariations(Board board) {
