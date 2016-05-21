@@ -1,3 +1,4 @@
+group: edge
 language: java
 jdk:
   - oraclejdk8
