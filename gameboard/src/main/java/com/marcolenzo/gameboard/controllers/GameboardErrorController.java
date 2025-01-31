@@ -1,6 +1,5 @@
 package com.marcolenzo.gameboard.controllers;
 
-import org.springframework.boot.autoconfigure.web.ErrorController;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -10,15 +9,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
  *
  */
 @Controller
-public class GameboardErrorController implements ErrorController {
+public class GameboardErrorController {
 
 	@RequestMapping(value = "/error")
 	public String error() {
-		return "index";
-	}
-
-	@Override
-	public String getErrorPath() {
 		return "index";
 	}
 
