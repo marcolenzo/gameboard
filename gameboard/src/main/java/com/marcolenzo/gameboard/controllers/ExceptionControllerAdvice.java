@@ -20,14 +20,22 @@ import com.marcolenzo.gameboard.model.FieldError;
 import com.marcolenzo.gameboard.model.GenericError;
 import com.marcolenzo.gameboard.model.ValidationError;
 
-
-
+/**
+ * Controller advice to handle exceptions globally across the application.
+ */
 @ControllerAdvice
 public class ExceptionControllerAdvice {
 
 	@Autowired
 	private MessageSource messageSource;
 
+	/**
+	 * Handles MethodArgumentNotValidException and returns a ValidationError response.
+	 *
+	 * @param ex the MethodArgumentNotValidException
+	 * @param locale the locale for error messages
+	 * @return the ValidationError response
+	 */
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ResponseBody
@@ -44,6 +52,13 @@ public class ExceptionControllerAdvice {
 		return validation;
 	}
 
+	/**
+	 * Handles BadRequestException and returns a GenericError response.
+	 *
+	 * @param ex the BadRequestException
+	 * @param locale the locale for error messages
+	 * @return the GenericError response
+	 */
 	@ExceptionHandler(BadRequestException.class)
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ResponseBody
@@ -51,7 +66,13 @@ public class ExceptionControllerAdvice {
 		return new GenericError(ex.getMessage());
 	}
 
-
+	/**
+	 * Handles ForbiddenException and returns a GenericError response.
+	 *
+	 * @param ex the ForbiddenException
+	 * @param locale the locale for error messages
+	 * @return the GenericError response
+	 */
 	@ExceptionHandler(ForbiddenException.class)
 	@ResponseStatus(HttpStatus.FORBIDDEN)
 	@ResponseBody
@@ -59,6 +80,13 @@ public class ExceptionControllerAdvice {
 		return new GenericError(ex.getMessage());
 	}
 
+	/**
+	 * Handles FileUploadException and returns a GenericError response.
+	 *
+	 * @param ex the FileUploadException
+	 * @param locale the locale for error messages
+	 * @return the GenericError response
+	 */
 	@ExceptionHandler(FileUploadException.class)
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ResponseBody
@@ -66,6 +94,13 @@ public class ExceptionControllerAdvice {
 		return new GenericError(ex.getMessage());
 	}
 
+	/**
+	 * Handles NotFoundException and returns a GenericError response.
+	 *
+	 * @param ex the NotFoundException
+	 * @param locale the locale for error messages
+	 * @return the GenericError response
+	 */
 	@ExceptionHandler(NotFoundException.class)
 	@ResponseStatus(HttpStatus.NOT_FOUND)
 	@ResponseBody
