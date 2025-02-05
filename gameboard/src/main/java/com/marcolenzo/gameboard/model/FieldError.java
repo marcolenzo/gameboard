@@ -1,5 +1,9 @@
 package com.marcolenzo.gameboard.model;
 
+/**
+ * Represents a field error in the gameboard application.
+ * This class is used to store details of field validation errors.
+ */
 public class FieldError {
 
 	private String field;
@@ -7,28 +11,36 @@ public class FieldError {
 	private String error;
 
 	/**
-	 * @return the field
+	 * Gets the field name associated with the error.
+	 *
+	 * @return the field name
 	 */
 	public String getField() {
 		return field;
 	}
 
 	/**
-	 * @param field the field to set
+	 * Sets the field name associated with the error.
+	 *
+	 * @param field the field name to set
 	 */
 	public void setField(String field) {
 		this.field = field;
 	}
 
 	/**
-	 * @return the error
+	 * Gets the error message.
+	 *
+	 * @return the error message
 	 */
 	public String getError() {
 		return error;
 	}
 
 	/**
-	 * @param error the error to set
+	 * Sets the error message.
+	 *
+	 * @param error the error message to set
 	 */
 	public void setError(String error) {
 		this.error = error;

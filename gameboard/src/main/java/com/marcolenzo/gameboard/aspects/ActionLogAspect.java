@@ -19,6 +19,11 @@ import com.marcolenzo.gameboard.model.Action;
 import com.marcolenzo.gameboard.model.User;
 import com.marcolenzo.gameboard.repositories.ActionRepository;
 
+/**
+ * Aspect for logging actions annotated with @ActionLoggable.
+ * This aspect intercepts method calls annotated with @ActionLoggable,
+ * logs the method execution details, and saves the action to the database.
+ */
 @Aspect
 @Component
 public class ActionLogAspect {
@@ -31,6 +36,13 @@ public class ActionLogAspect {
 	@Autowired
 	private ObjectMapper mapper;
 
+	/**
+	 * Around advice that logs the execution of methods annotated with @ActionLoggable.
+	 *
+	 * @param point the join point representing the method execution
+	 * @return the result of the method execution
+	 * @throws Throwable if an error occurs during method execution
+	 */
 	@Around("execution(@com.marcolenzo.gameboard.annotations.ActionLoggable * *(..))")
 	public Object around(ProceedingJoinPoint point) throws Throwable {
 		long start = System.currentTimeMillis();
