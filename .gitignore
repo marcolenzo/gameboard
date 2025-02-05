@@ -20,3 +20,4 @@ bin/
 ./code/
 cargo-installs/
 atlassian-ide-plugin.xml
+.vscode/

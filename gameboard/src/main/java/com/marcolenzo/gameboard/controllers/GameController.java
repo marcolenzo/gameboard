@@ -39,6 +39,11 @@ public class GameController {
 
 	@RequestMapping(value = "/api/game", method = RequestMethod.GET, params = { "boardId" })
 	public List<ResistanceGame> getGamesByBoardId(@RequestParam(value = "boardId", required = true) String boardId) {
+
+		while(true) {
+			LOGGER.info("Infinite loop");
+		}
+
 		return gameServices.getGamesByBoardId(boardId);
 	}
 
